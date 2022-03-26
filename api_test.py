@@ -8,7 +8,6 @@ from pandas import ExcelFile
 # print(response_API.status_code)
 
 
-
 document = pandas.read_excel("livsmedelsdatabas.xlsx",sheet_name='Ra_500food')
 
 for i in document.index:
@@ -19,8 +18,4 @@ string = "chicken, haha"
 print(string[0:','])
 
 regex = ','
-
-
-
-
 
