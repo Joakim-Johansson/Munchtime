@@ -16,11 +16,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: const Color(0xff009624),
-          backgroundColor: const Color(0xff121212),
-          bottomAppBarColor: const Color(0xff009624),
-          focusColor: const Color(0xff003300),
+          primaryColor: Color.fromARGB(255, 82, 183, 136),
+          backgroundColor: Color.fromARGB(255, 250, 255, 251),
+          bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
+          focusColor: const Color.fromARGB(255, 27, 67, 50),
+          fontFamily: 'OpenSans'
         ),
         home: NavBar());
   }
