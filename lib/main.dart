@@ -55,6 +55,9 @@ class _NavBarState extends State<NavBar> {
             case 0:
               _pageNavigatorKey.currentState!.pushNamed("/home");
               break;
+            case 1:
+              _pageNavigatorKey.currentState!.pushNamed("/recipelist");
+              break;
           }
           setState(() {
             _currentindex = index;
