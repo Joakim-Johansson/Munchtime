@@ -8,7 +8,7 @@ from pandas import ExcelFile
 # print(response_API.status_code)
 
 
-document = pandas.read_excel("livsmedelsdatabas.xlsx",sheet_name='Ra_500food')
+document = pandas.read_excel("braformatlivsmeedelsdata.xlsx",sheet_name='Ra_500food')
 
 for i in document.index:
     print(document['Name'][i])
