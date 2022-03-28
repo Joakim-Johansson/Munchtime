@@ -7,6 +7,7 @@ class RecipeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           title: Text("Recipes",
@@ -16,6 +17,7 @@ class RecipeList extends StatelessWidget {
             fontSize: 30,
            ),
           ),
+          
           centerTitle: false,
           automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).bottomAppBarColor,
