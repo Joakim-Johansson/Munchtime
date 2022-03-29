@@ -37,11 +37,13 @@ def getDataFromIngredient(ingredient):
     document = pandas.read_excel("food.xlsx",sheet_name='Ra_500food')
     row = document.loc[ingredient == document['Name']]
 
+
     name = "".join(filter(lambda x: not x.isdigit(), row['Name'].to_string())).strip()
     co2 = re.sub(r".[0-9]","",row['CO2-eq/kg'].to_string(),1).replace(" ","")
 
     obj = Ingredient(name,co2)
     return obj
+
 
 
 def createRecipe(name, *ingredients):
@@ -91,5 +93,3 @@ print(x.toFirebase())
 # print(out)
 
 # regex = ','
-
-
