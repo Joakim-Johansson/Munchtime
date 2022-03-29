@@ -18,7 +18,7 @@ class Recipe:
     def toString(self):
         str = ""
         for i in self.ingredients:
-            str += "|" + i[0].name + "," + i[0].co2 + "|"
+            str += "(" + i[0].name + "," + i[0].co2 + ")" + "\n"
         return str
     
     def toFirebase(self):
@@ -56,40 +56,18 @@ def createRecipe(name, *ingredients):
 x = createRecipe(('Granola bar',2) , ('Potato, raw',4), 
                 ('Nutella, nut cream',100), ('Cold chocolate',1))
 
-print(x.toString())
-print(x.toFirebase())
-
-# list = list()
-# list.append("List of foods")
-
-# for i in document.index:
-#     if(',' in document['Name'][i]):
-#         temp = re.search(r"^.*?(?=\,)", document['Name'][i])[0]
-#     else:
-#         temp = document['Name'][i]
-#     shouldAdd = True
-#     for element in list:
-#         if temp == element:
-#             shouldAdd = False
-#     if shouldAdd:
-#         list.append(temp)
 
 
-# def lookup(element, list):
-#     for e in list:
-#         if(e == element):
-#             print("Found " + element)
-#             return
-#     print("Couldn't found " + element)
+document = pandas.read_excel("food.xlsx",sheet_name='Ra_500food')
 
-# lookup('Chicken',list)
-# lookup('Nocco',list)
+co2 = []
 
-# print(list)
+#for i in range(500):
+    #co2.append(float(document['CO2-eq/kg'][i]))
 
-# string = "chicken, haha"
-# out = re.search(r"^.*?(?=\,)", string)[0]
 
-# print(out)
+# m = sum(co2) / len(co2)
 
-# regex = ','
+# print(min(co2))
+# print(m)
+# print(max(co2))
