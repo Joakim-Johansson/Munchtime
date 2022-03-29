@@ -51,7 +51,7 @@ class ProfileEditWidget extends State<ProfileEdit> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
           Padding(
-              padding: EdgeInsets.fromLTRB(20, 8, 12, 4),
+              padding: EdgeInsets.fromLTRB(20, 20, 12, 0),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: RichText(text: const TextSpan(
@@ -60,7 +60,7 @@ class ProfileEditWidget extends State<ProfileEdit> {
                       text: 'About me:\n', 
                       style: TextStyle(
                         color: Color.fromARGB(255, 27, 67, 50),
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold, 
                         )
                       ),                    
@@ -70,11 +70,11 @@ class ProfileEditWidget extends State<ProfileEdit> {
               )
               ), 
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 12, 4),
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: Container(
-
               child: TextField(
                 controller: controller,
+                maxLines: 15,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -83,14 +83,14 @@ class ProfileEditWidget extends State<ProfileEdit> {
                 style: const TextStyle(
                       color: Color.fromARGB(255, 27, 67, 50),
                       fontSize: 18,
-                      fontWeight: FontWeight.bold, 
+                      fontWeight: FontWeight.bold
                       ),
                 
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+            padding: const EdgeInsets.fromLTRB(14, 0, 14, 6),
             child: Align(
               alignment: Alignment.bottomRight,
               child: TextButton(
@@ -109,7 +109,7 @@ class ProfileEditWidget extends State<ProfileEdit> {
                   ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                padding: const EdgeInsets.fromLTRB(10, 6, 10, 4),
                 child: Text("Save",
                   style: TextStyle(
                         color: Theme.of(context).focusColor,
