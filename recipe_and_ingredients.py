@@ -27,26 +27,5 @@ def createRecipe(name, *ingredients):
     return Recipe(name,1,ings)
 
 
-# x = createRecipe("test",('Pumpkin, raw',2) , ('Potato, raw',4), 
-#                 ('Nutella, nut cream',100), ('Cold chocolate',1))
-
-
-# for i in x.ingredients:
-#    print(i[0].name)
-#    print("Fett =" + i[0].fat, "Protein = " + i[0].protein, "Kolhydrater  =" + i[0].carbohydrates, "Energi = " + i[0].kcal + "\n")
-
-
-
-document = pandas.read_excel("braformatlivsmedelsdata.xlsx",sheet_name='Ra_500food')
-
-co2 = []
-
-#for i in range(500):
-    #co2.append(float(document['CO2-eq/kg'][i]))
-
-
-# m = sum(co2) / len(co2)
-
-# print(min(co2))
-# print(m)
-# print(max(co2))
+#x = createRecipe(('Granola bar',2) , ('Potato, raw',4), 
+                #('Nutella, nut cream',100), ('Cold chocolate',1))
