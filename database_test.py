@@ -10,7 +10,6 @@ db = firestore.client()
 
 db.collection('test').add({'name':'Misha'})
 
-
 document = pandas.read_excel("braformatlivsmedelsdata.xlsx",sheet_name='Ra_500food')
 
 
