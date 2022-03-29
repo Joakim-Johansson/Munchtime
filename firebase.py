@@ -9,7 +9,7 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-x = recipe_and_ingredients.createRecipe("test6", ('Granola bar',50) , ('Potato, raw',60), 
+x = recipe_and_ingredients.createRecipe("TESTing", ('Granola bar',50) , ('Potato, raw',60), 
                 ('Nutella, nut cream',10), ('Cold chocolate',30))
 
 #db.collection('Recipes').add({'ingredients' : ["(" + str(i[1]) + "g" + ", " + i[0].name + ")" for i in x.ingredients]})
