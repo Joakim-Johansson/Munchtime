@@ -9,7 +9,7 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-x = recipe_and_ingredients.createRecipe("test5", ('Granola bar',50) , ('Potato, raw',60), 
+x = recipe_and_ingredients.createRecipe("test6", ('Granola bar',50) , ('Potato, raw',60), 
                 ('Nutella, nut cream',10), ('Cold chocolate',30))
 
 #db.collection('Recipes').add({'ingredients' : ["(" + str(i[1]) + "g" + ", " + i[0].name + ")" for i in x.ingredients]})
@@ -29,7 +29,6 @@ def addData(recipe):
         print("Recipe couldn't be added, choose another name!")
         return
     ref.set({'ingredients' : ["(" + str(i[1]) + "g" + ", " + i[0].name + ")" for i in x.ingredients]})
-    ref.update({db.field_path('CO2-eq/kg') : [i[0].co2 for i in x.ingredients]})
     ref.update({db.field_path('Total CO2-eq') : "{:.2f}".format(getTotalco2(recipe))})
     ref.update({db.field_path('nutrition') : ["Fat: " + str(nt.getTotalFat(recipe)//1), 
                                               "Carbs: " + str(nt.getTotalCarbs(recipe)//1),                                             
