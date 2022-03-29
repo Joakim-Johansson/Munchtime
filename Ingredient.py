@@ -1,5 +1,5 @@
 class Ingredient:
-    def __init__(self,name,co2,fat,protein,kcal,carbohydrates):
+    def __init__(self,name,co2,fat,protein,kcal,carbohydrates): 
         self.name = name
         self.co2 = co2 
         self.fat = fat
