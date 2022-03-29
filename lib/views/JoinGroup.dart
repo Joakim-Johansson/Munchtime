@@ -43,7 +43,7 @@ class JoinGroupWidget extends State<JoinGroup> {
         constraints: BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/hills2.png"),
+            image: AssetImage("assets/images/blob2.png"),
             fit: BoxFit.cover)
             ),
         child: Column(
@@ -51,13 +51,13 @@ class JoinGroupWidget extends State<JoinGroup> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
           Padding(
-              padding: EdgeInsets.fromLTRB(20, 20, 12, 0),
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 60),
               child: Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: RichText(text: const TextSpan(
                 children: <TextSpan>[
                     TextSpan(
-                      text: 'Enter the 6-letter Group Code:\n', 
+                      text: 'Enter the 6-letter Invite Code:\n', 
                       style: TextStyle(
                         color: Color.fromARGB(255, 27, 67, 50),
                         fontSize: 20,
@@ -70,9 +70,10 @@ class JoinGroupWidget extends State<JoinGroup> {
               )
               ), 
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+            padding: const EdgeInsets.fromLTRB(75, 0, 75, 10),
             child: Container(
               child: TextField(
+                textAlign: TextAlign.center,
                 controller: controller,
                 maxLines: 1,
                 maxLength: 6,
@@ -83,7 +84,7 @@ class JoinGroupWidget extends State<JoinGroup> {
                 ),
                 style: const TextStyle(
                       color: Color.fromARGB(255, 27, 67, 50),
-                      fontSize: 18,
+                      fontSize: 50,
                       fontWeight: FontWeight.bold
                       ),
                 
@@ -91,7 +92,7 @@ class JoinGroupWidget extends State<JoinGroup> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(14, 0, 14, 6),
+            padding: const EdgeInsets.fromLTRB(80, 0, 80, 6),
             child: Align(
               alignment: Alignment.bottomRight,
               child: TextButton(
@@ -122,7 +123,9 @@ class JoinGroupWidget extends State<JoinGroup> {
                 ),
               ),
             ),
-          )
+          ),
+          SizedBox(height: 188.0),
+
         ],
         ),
       )
