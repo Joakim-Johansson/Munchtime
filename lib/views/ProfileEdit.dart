@@ -1,14 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:crunchtime/views/ProfileEdit.dart';
 
-class Profile extends StatelessWidget {
+class ProfileEdit extends StatefulWidget {
+  @override
+  ProfileEditWidget createState() => ProfileEditWidget();
+  
+}
+
+class ProfileEditWidget extends State<ProfileEdit> {
+  late final TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = TextEditingController(text: 'hej');
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text("Profile",
+          title: Text("Edit",
           style: TextStyle(
             color: Theme.of(context).focusColor,
             fontFamily: 'Pattaya',
@@ -29,22 +50,6 @@ class Profile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(22, 22, 22, 2),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/Will_Smith.jpg'),
-              radius: 125,
-              ),
-          ),
-          const Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Text("Will Smith",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 27, 67, 50),
-                  fontSize: 30,
-                ),
-                ),
-              ),
           Padding(
               padding: EdgeInsets.fromLTRB(20, 8, 12, 4),
               child: Align(
@@ -58,29 +63,38 @@ class Profile extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold, 
                         )
-                      ),
-                    TextSpan(
-                      text: "Hi! I'm Will and I just love food that has that little extra punch!", 
-                      style: TextStyle(
-                      color: Color.fromARGB(255, 27, 67, 50),
-                      fontSize: 18,
-                      ),
-                    )
-                    
+                      ),                    
                   ],
                   ),
-                ),   
+                ), 
               )
+              ), 
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 8, 12, 4),
+            child: Container(
+
+              child: TextField(
+                controller: controller,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  )
+                ),
+                style: const TextStyle(
+                      color: Color.fromARGB(255, 27, 67, 50),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold, 
+                      ),
+                
               ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
             child: Align(
               alignment: Alignment.bottomRight,
               child: TextButton(
-              onPressed: () {Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileEdit()),
-              );
+              onPressed: () {
                       // Respond to button press
               },
               style: ButtonStyle(
@@ -96,11 +110,12 @@ class Profile extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
-                child: Text("Edit bio",
-                style: TextStyle(
-                      color: Theme.of(context).focusColor,
-                      fontSize: 14,
-                    ),),
+                child: Text("Save",
+                  style: TextStyle(
+                        color: Theme.of(context).focusColor,
+                        fontSize: 14,
+                      ),
+                    ),
                 ),
               ),
             ),
