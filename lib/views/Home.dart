@@ -1,3 +1,4 @@
+import 'package:crunchtime/views/JoinGroup.dart';
 import 'package:crunchtime/views/Profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,10 @@ class Home extends StatelessWidget {
               Padding(
               padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
               child: TextButton(
-              onPressed: () {
+              onPressed: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => JoinGroup()),
+              );
             // Respond to button press
               },
               style: ButtonStyle(
