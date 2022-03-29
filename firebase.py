@@ -1,5 +1,5 @@
 import firebase_admin
-import api_test
+import recipe_and_ingredients
 from firebase_admin import credentials
 from firebase_admin import firestore
 
@@ -8,7 +8,7 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-x = api_test.createRecipe("test", ('Granola bar',50) , ('Potato, raw',60), 
+x = recipe_and_ingredients.createRecipe("test", ('Granola bar',50) , ('Potato, raw',60), 
                 ('Nutella, nut cream',10), ('Cold chocolate',30))
 
 

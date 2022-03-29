@@ -2,7 +2,6 @@ import pandas
 from pandas import ExcelWriter
 from pandas import ExcelFile
 import re
-import json
 
 class Recipe:
     def __init__(self, name, id, ingredients):
@@ -15,10 +14,11 @@ class Recipe:
         for element in self.ingredients:
             sum = sum + float(element[0].co2)
         return sum
+        
     def toString(self):
         str = ""
         for i in self.ingredients:
-            str += "(" + i[0].name + "," + i[0].co2 + ")" + "\n"
+            str += "|" + i[0].name + "," + i[0].co2 + "|"
         return str
     
     def toFirebase(self):
@@ -56,18 +56,40 @@ def createRecipe(name, *ingredients):
 x = createRecipe(('Granola bar',2) , ('Potato, raw',4), 
                 ('Nutella, nut cream',100), ('Cold chocolate',1))
 
+print(x.toString())
+print(x.toFirebase())
+
+# list = list()
+# list.append("List of foods")
+
+# for i in document.index:
+#     if(',' in document['Name'][i]):
+#         temp = re.search(r"^.*?(?=\,)", document['Name'][i])[0]
+#     else:
+#         temp = document['Name'][i]
+#     shouldAdd = True
+#     for element in list:
+#         if temp == element:
+#             shouldAdd = False
+#     if shouldAdd:
+#         list.append(temp)
 
 
-document = pandas.read_excel("food.xlsx",sheet_name='Ra_500food')
+# def lookup(element, list):
+#     for e in list:
+#         if(e == element):
+#             print("Found " + element)
+#             return
+#     print("Couldn't found " + element)
 
-co2 = []
+# lookup('Chicken',list)
+# lookup('Nocco',list)
 
-#for i in range(500):
-    #co2.append(float(document['CO2-eq/kg'][i]))
+# print(list)
 
+# string = "chicken, haha"
+# out = re.search(r"^.*?(?=\,)", string)[0]
 
-# m = sum(co2) / len(co2)
+# print(out)
 
-# print(min(co2))
-# print(m)
-# print(max(co2))
+# regex = ','
