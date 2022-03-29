@@ -7,11 +7,7 @@ class RecipeInformation extends StatelessWidget {
     "100g Parmiggiano Reggiano",
     "500g Pork",
     "10g Garlic",
-    "300g Cream",
-    "10g Garlic",
-    "300g O2W",
-    "10g Garlic",
-    "300g O2W",
+    "300g Cream"
   ];
 
   List<Widget> dummylist =
@@ -30,11 +26,21 @@ class RecipeInformation extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.92,
           child: Column(
             children: [
-              Text("Tasty Carbonara"),
-              ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: tempIngredients.length * 2,
-                  itemBuilder: ((context, index) => getData(context, index))),
+              Text(
+                "Tasty Carbonara",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: tempIngredients.length * 2,
+                    itemBuilder: ((context, index) => getData(context, index))),
+              ),
+              Text(
+                  " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."),
             ],
           ),
         ),
