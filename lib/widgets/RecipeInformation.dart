@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
+import 'Tag.dart';
+
 class RecipeInformation extends StatelessWidget {
   final tempIngredients = [
     "600g Spaghetti",
@@ -16,6 +18,12 @@ class RecipeInformation extends StatelessWidget {
     "Fry pork",
     "Whisk Eggs",
     "Put Cheese on top"
+  ];
+
+  List tempTags = [
+    Tag("Eco", Colors.green),
+    Tag("low Carb", Colors.orange),
+    Tag("Vegan", Colors.blue)
   ];
 
   List<Widget> dummylist =
@@ -44,6 +52,14 @@ class RecipeInformation extends StatelessWidget {
                 value: 3,
                 valueLabelVisibility: false,
               ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: tempTags
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: e,
+                          ))
+                      .toList()),
               Align(
                 alignment: Alignment(-0.95, 0),
                 child: const Text(
