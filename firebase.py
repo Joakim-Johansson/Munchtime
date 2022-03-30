@@ -34,7 +34,19 @@ def addData(recipe):
                                               "Carbs: " + str(nt.getTotalCarbs(recipe)//1),                                             
                                               "Protein: " + str(nt.getTotalProtein(recipe)//1),
                                               "Kcal: " + str(nt.getTotalKcal(recipe)//1)]})
-    
 
-addData(x)
+def getRecipes(): 
+    result = db.collection('Recipes').document('TESTing').get()
+    if result.exists:
+        print(result.to_dict())
+
+def getCollection():
+    docs = db.collection('Recipes').get()
+    for i in docs:
+        print(i.to_dict())
+
+#getRecipes()
+#getCollection()
+
+#addData(x)
 
