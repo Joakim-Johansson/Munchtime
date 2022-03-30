@@ -60,6 +60,9 @@ class _NavBarState extends State<NavBar> {
               case 1:
                 _pageNavigatorKey.currentState!.pushNamed("/recipelist");
                 break;
+              case 2:
+                _pageNavigatorKey.currentState!.pushNamed("/group");
+                break;
             }
             setState(() {
               _currentindex = index;
