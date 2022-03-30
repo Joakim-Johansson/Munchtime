@@ -18,12 +18,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Color.fromARGB(255, 82, 183, 136),
-          backgroundColor: Color.fromARGB(255, 250, 255, 251),
-          bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
-          focusColor: const Color.fromARGB(255, 27, 67, 50),
-          fontFamily: 'OpenSans'
-        ),
+            primaryColor: Color.fromARGB(255, 82, 183, 136),
+            backgroundColor: Color.fromARGB(255, 250, 255, 251),
+            bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
+            focusColor: Color.fromARGB(255, 27, 67, 50),
+            fontFamily: 'OpenSans'),
         home: NavBar());
   }
 }
@@ -47,7 +46,6 @@ class _NavBarState extends State<NavBar> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       bottomNavigationBar: Container(
-        
         child: BottomNavigationBar(
           showUnselectedLabels: false,
           unselectedItemColor: _color,
@@ -98,12 +96,10 @@ class _NavBarState extends State<NavBar> {
                 color: _color,
               ),
             ),
-            
           ],
         ),
       ),
       body: Navigator(
-        
         key: _pageNavigatorKey,
         onGenerateRoute: RouteGenerator.generateRoute,
       ),

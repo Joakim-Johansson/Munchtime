@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class RecipeInformation extends StatelessWidget {
   final tempIngredients = [
@@ -8,6 +9,13 @@ class RecipeInformation extends StatelessWidget {
     "500g Pork",
     "10g Garlic",
     "300g Cream"
+  ];
+
+  final tempInstructions = [
+    "Cook Pasta",
+    "Fry pork",
+    "Whisk Eggs",
+    "Put Cheese on top"
   ];
 
   List<Widget> dummylist =
@@ -26,21 +34,50 @@ class RecipeInformation extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.92,
           child: Column(
             children: [
-              Text(
+              const Text(
                 "Tasty Carbonara",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.bold, height: 3),
                 textAlign: TextAlign.left,
               ),
+              const RatingStars(
+                value: 3,
+                valueLabelVisibility: false,
+              ),
+              Align(
+                alignment: Alignment(-0.95, 0),
+                child: const Text(
+                  "Ingredients:",
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold, height: 2),
+                ),
+              ),
               Container(
-                padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: tempIngredients.length * 2,
-                    itemBuilder: ((context, index) => getData(context, index))),
+                    itemBuilder: ((context, index) =>
+                        getIngredients(context, index))),
               ),
-              Text(
-                  " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."),
+              Align(
+                alignment: Alignment(-0.95, 0),
+                child: const Text(
+                  "Instructions:",
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold, height: 2),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: tempInstructions.length * 2,
+                    itemBuilder: ((context, index) =>
+                        getInstructions(context, index))),
+              ),
             ],
           ),
         ),
@@ -48,9 +85,17 @@ class RecipeInformation extends StatelessWidget {
     ]);
   }
 
-  Widget getData(BuildContext context, int i) {
+  Widget getIngredients(BuildContext context, int i) {
     if (i.isOdd) return const Divider();
     final index = i ~/ 2;
-    return Text(tempIngredients[index]);
+    return Text(tempIngredients[index],
+        style: const TextStyle(decorationStyle: TextDecorationStyle.dotted));
+  }
+
+  Widget getInstructions(BuildContext context, int i) {
+    if (i.isOdd) return const Divider();
+    final index = i ~/ 2;
+    return Text(
+        (i / 2 + 1).toInt().toString() + ". " + tempInstructions[index]);
   }
 }

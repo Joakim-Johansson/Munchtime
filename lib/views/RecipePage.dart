@@ -19,10 +19,9 @@ class _RecipesState extends State<RecipePage> {
       appBar: AppBar(
         title: const Text('Recipes',
             style: TextStyle(
-              color: Color.fromARGB(255, 41, 56, 45),
-              fontFamily: 'OpenSans',
-              fontStyle: FontStyle.italic,
-              fontSize: 26,
+              color: Color.fromARGB(255, 27, 67, 50),
+              fontFamily: 'Pattaya',
+              fontSize: 30,
             )),
         centerTitle: true,
         backgroundColor: Theme.of(context).bottomAppBarColor,

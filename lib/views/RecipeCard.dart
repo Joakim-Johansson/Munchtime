@@ -47,17 +47,18 @@ class _RecipeCardState extends State<RecipeCard> {
                 ),
               )),
           Container(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
             width: double.infinity,
             height: 50,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+              borderRadius:
+                  const BorderRadius.vertical(bottom: Radius.circular(15)),
               color: Colors.black.withOpacity(0.4),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Tasty Carbonara",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -65,7 +66,7 @@ class _RecipeCardState extends State<RecipeCard> {
                     color: Colors.white,
                   ),
                 ),
-                RatingStars(
+                const RatingStars(
                   value: 3,
                   valueLabelVisibility: false,
                 )
