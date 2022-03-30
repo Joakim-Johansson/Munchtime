@@ -44,29 +44,64 @@ class _GroupCardState extends State<GroupCard> {
                 ),
                   child: Column(
                     children:  [
-                      const Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(15, 10, 0, 5),
-                          child: Text(
-                            "Tha mandem",
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Color.fromARGB(255, 8, 28, 21),
-                               ),
+                      Row(
+                        children: [
+                          const Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(15, 10, 0, 5),
+                              child: Text(
+                                "Tha mandem",
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Color.fromARGB(255, 8, 28, 21),
+                                   ),
+                                
+                              ),
+                            ),
+                          ),
+                          Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(80, 10, 0, 0),
+                            child: TextButton(
+                            onPressed: () {      // Respond to button press
+                            },
+                            style: ButtonStyle(
+                              
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             
+                            RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                                side: const BorderSide(
+                                  color: Color.fromARGB(255, 27, 67, 50))
+                                ),
+                                ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                              child: Text("Leave",
+                              style: TextStyle(
+                                    color: Theme.of(context).focusColor,
+                                    fontSize: 14,
+                                  ),),
+                              ),
+                            ),
                           ),
                         ),
+                        ],
+                        
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Align(
+                          
+                        Align(
                             alignment: Alignment.bottomRight,
                             child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 2, 15, 5),
+                            padding: EdgeInsets.fromLTRB(12, 2, 15, 5),
                             child: Container(
-                              height: 40,
+                              height: 35,
                               width: 100,
                               decoration: BoxDecoration(
                                 color: Color.fromARGB(255, 45, 106, 79),
@@ -76,7 +111,6 @@ class _GroupCardState extends State<GroupCard> {
                                 child: Text(
                                   '15 Recipes',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
                                     fontSize: 15,
                                     color: Color.fromARGB(255, 216, 243, 220),
                                    ),
@@ -86,13 +120,13 @@ class _GroupCardState extends State<GroupCard> {
                             ),
                             
                           ),
-                        Align(
+                          Align(
                             alignment: Alignment.bottomRight,
                             child: Padding(
                             padding: EdgeInsets.fromLTRB(0, 2, 15, 5),
                             child: Container(
-                              height: 40,
-                              width: 40,
+                              height: 36,
+                              width: 36,
                               decoration: BoxDecoration(
                                 color: Color.fromARGB(255, 199,	183,	228),
                                 borderRadius: new BorderRadius.all(Radius.circular(30)),
@@ -104,8 +138,7 @@ class _GroupCardState extends State<GroupCard> {
                                       TextSpan(
                                         text: "10",
                                         style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
                                           color: Color.fromARGB(255, 8, 28, 21),
                                         ),
                                       ),
