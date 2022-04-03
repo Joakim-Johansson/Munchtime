@@ -69,38 +69,41 @@ def recipeContains(string):
 def deleteRecipes(name):
     db.collection('Recipes').document(name).delete()
             
-class RecipeGet(Resource):
-    def get(self,name):
-        if(name == 'all'):
+class Recipes(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument("name",type=str,help = "name of recipe is required",required = True)
+        args = parser.parse_args()
+
+        if(args["name"] == 'all'):
             hej = getCollection()
             return {'data': hej},200
-        
-        recipes = getRecipes(name)
+
+        recipes = getRecipes(args["name"])
         if(recipes != None):
             return recipes,200
-        result = recipeContains(name)
+        result = recipeContains(args["name"])
         if result != []:
             return result,200
-        return "bajs"
+        return "No results"
 
-class RecipePost(Resource):
-    def post(self,name,ingredients):
-        pass
-    
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument("name",type=str,help = "name of recipe is required",required = True,location = 'form')
+        parser.add_argument("ingredients", action = 'append',help = "ingredients are required",required = True, location = 'form')
+        parser.add_argument("amount", action = 'append', help = "amounts are required",required = True, location = 'form')
+        args = parser.parse_args()
+        ings = list(zip(args['ingredients'],args['amount']))
+        
+        r = Recipe(args['name'], *ings)
+        addData(r)
+        return {'Successfully added':args['name']}
 
-class userSaved(Resource):
-    pass
-
-api.add_resource(RecipeGet,'/recipes/<string:name>')
-api.add_resource(RecipePost,'/recipes/<string:name>/<string:ingredients>')
-#print(getRecipes('test1'))
+api.add_resource(Recipes,'/recipes')
 
 if __name__ == "__main__":
     app.run(debug=True)
 
-# print(getCollection())
-
-# print(recipeContains('Bacon'))
 
 
 
