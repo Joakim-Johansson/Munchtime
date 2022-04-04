@@ -24,14 +24,32 @@ class RecipeList extends StatelessWidget {
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(6.0),
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                  child: IconButton(
-                    icon: Icon(Icons.search),
-                    color: Theme.of(context).focusColor,
-                    onPressed: () {},
-                  ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                      child: IconButton(
+                        icon: Icon(Icons.add),
+                        color: Theme.of(context).focusColor,
+                        onPressed: () {
+                          Navigator.of(context).pushNamed("/createRecipe");
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                      child: IconButton(
+                        icon: Icon(Icons.search),
+                        color: Theme.of(context).focusColor,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ]),

@@ -1,3 +1,4 @@
+import 'package:crunchtime/views/CreateRecipe.dart';
 import 'package:crunchtime/views/Groups.dart';
 import 'package:crunchtime/views/Home.dart';
 import 'package:crunchtime/views/Profile.dart';
@@ -18,6 +19,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RecipePage());
       case '/group':
         return MaterialPageRoute(builder: (_) => Groups());
+      case '/createRecipe':
+        return MaterialPageRoute(builder: (_) => CreateRecipe());
     }
 
     return MaterialPageRoute(builder: (_) => Home()); // Default
