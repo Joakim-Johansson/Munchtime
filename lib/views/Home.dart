@@ -3,6 +3,8 @@ import 'package:crunchtime/views/Profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Login.dart';
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class Home extends StatelessWidget {
               child: TextButton(
               onPressed: () {Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Profile()),
+              MaterialPageRoute(builder: (context) => Login()),
               );
             // Respond to button press
               },

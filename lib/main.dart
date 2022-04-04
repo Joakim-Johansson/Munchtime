@@ -1,7 +1,20 @@
+import 'package:crunchtime/provider/google_sign_in.dart';
 import 'package:crunchtime/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      // apiKey: "AAAAiEoizRw:APA91bEdylRZhbitZi2wHIPF4fQA5KUrl7i8Cnd34bkEZlm5G8WdHbbcKSNSxdHjJ6bFiloci8H1nphIR9mV_4fSTnyTDShlvayC4HpKS7sHCHsD0JOuybzi_e5Boc7KI7hm8pP_rjPn",
+      apiKey: "AIzaSyDfZUtf8OSxoOytCivkWZycf5nBulEtREI",
+      appId: "1:585359346972:android:31e610f23394e2922c3ed9",
+      messagingSenderId: "585359346972",
+      projectId: "Munchtime",
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -14,8 +27,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+      create: (context) => GoogleSignInProvider(),
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primaryColor: Color.fromARGB(255, 82, 183, 136),
@@ -23,9 +37,10 @@ class _MyAppState extends State<MyApp> {
             bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
             focusColor: Color.fromARGB(255, 27, 67, 50),
             fontFamily: 'OpenSans'),
-        home: NavBar());
+        home: NavBar(),
+        ),
+  );
   }
-}
 
 class NavBar extends StatefulWidget {
   // May not need to be stateful at all
