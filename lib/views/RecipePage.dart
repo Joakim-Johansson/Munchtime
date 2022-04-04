@@ -1,4 +1,3 @@
-import 'package:crunchtime/widgets/RecipeImageWidget.dart';
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +32,7 @@ class _RecipesState extends State<RecipePage> {
           Align(
             child: ShaderMask(
               shaderCallback: (rect) {
-                return LinearGradient(
+                return const LinearGradient(
                   begin: Alignment(0, 0.7),
                   end: Alignment.bottomCenter,
                   colors: [Colors.black, Colors.transparent],

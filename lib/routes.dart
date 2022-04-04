@@ -1,7 +1,6 @@
 import 'package:crunchtime/views/CreateRecipe.dart';
 import 'package:crunchtime/views/Groups.dart';
 import 'package:crunchtime/views/Home.dart';
-import 'package:crunchtime/views/Profile.dart';
 import 'package:crunchtime/views/RecipeList.dart';
 import 'package:crunchtime/views/RecipePage.dart';
 import 'package:flutter/material.dart';
@@ -12,17 +11,17 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/home':
-        return MaterialPageRoute(builder: (_) => Home());
+        return MaterialPageRoute(builder: (_) => const Home());
       case '/recipelist':
         return MaterialPageRoute(builder: (_) => RecipeList());
       case '/recipepage':
-        return MaterialPageRoute(builder: (_) => RecipePage());
+        return MaterialPageRoute(builder: (_) => const RecipePage());
       case '/group':
         return MaterialPageRoute(builder: (_) => Groups());
       case '/createRecipe':
-        return MaterialPageRoute(builder: (_) => CreateRecipe());
+        return MaterialPageRoute(builder: (_) => const CreateRecipe());
     }
 
-    return MaterialPageRoute(builder: (_) => Home()); // Default
+    return MaterialPageRoute(builder: (_) => const Home()); // Default
   }
 }

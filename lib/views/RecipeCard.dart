@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class RecipeCard extends StatefulWidget {
+  const RecipeCard({Key? key}) : super(key: key);
+
   @override
   State<RecipeCard> createState() => _RecipeCardState();
 }
@@ -57,8 +59,8 @@ class _RecipeCardState extends State<RecipeCard> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
+              children: const [
+                Text(
                   "Tasty Carbonara",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -66,7 +68,7 @@ class _RecipeCardState extends State<RecipeCard> {
                     color: Colors.white,
                   ),
                 ),
-                const RatingStars(
+                RatingStars(
                   value: 3,
                   valueLabelVisibility: false,
                 )

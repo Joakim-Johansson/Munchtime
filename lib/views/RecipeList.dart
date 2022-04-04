@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'RecipeCard.dart';
 
 class RecipeList extends StatelessWidget {
-  final List<RecipeCard> dummyList = List.filled(5, RecipeCard());
+  final List<RecipeCard> dummyList = List.filled(5, const RecipeCard());
+
+  RecipeList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +30,23 @@ class RecipeList extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 20,
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                       child: IconButton(
-                        icon: Icon(Icons.add),
+                        icon: const Icon(Icons.add),
                         color: Theme.of(context).focusColor,
                         onPressed: () {
                           Navigator.of(context).pushNamed("/createRecipe");
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     CircleAvatar(
                       radius: 20,
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                       child: IconButton(
-                        icon: Icon(Icons.search),
+                        icon: const Icon(Icons.search),
                         color: Theme.of(context).focusColor,
                         onPressed: () {},
                       ),
@@ -57,7 +59,7 @@ class RecipeList extends StatelessWidget {
           crossAxisSpacing: 5.0,
           mainAxisSpacing: 5.0,
           crossAxisCount: 1,
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           children: dummyList,
         ));
   }

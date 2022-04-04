@@ -18,16 +18,18 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primaryColor: Color.fromARGB(255, 82, 183, 136),
-            backgroundColor: Color.fromARGB(255, 250, 255, 251),
-            bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
-            focusColor: Color.fromARGB(255, 27, 67, 50),
+            primaryColor: const Color.fromARGB(255, 82, 183, 136),
+            backgroundColor: const Color.fromARGB(255, 250, 255, 251),
+            bottomAppBarColor: const Color.fromARGB(255, 82, 183, 136),
+            focusColor: const Color.fromARGB(255, 27, 67, 50),
             fontFamily: 'OpenSans'),
-        home: NavBar());
+        home: const NavBar());
   }
 }
 
 class NavBar extends StatefulWidget {
+  const NavBar({Key? key}) : super(key: key);
+
   // May not need to be stateful at all
   @override
   State<NavBar> createState() => _NavBarState();
@@ -45,62 +47,60 @@ class _NavBarState extends State<NavBar> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      bottomNavigationBar: Container(
-        child: BottomNavigationBar(
-          showUnselectedLabels: false,
-          unselectedItemColor: _color,
-          selectedItemColor: _activeColor,
-          currentIndex: _currentindex,
-          backgroundColor: Theme.of(context).bottomAppBarColor,
-          onTap: (index) {
-            switch (index) {
-              case 0:
-                _pageNavigatorKey.currentState!.pushNamed("/home");
-                break;
-              case 1:
-                _pageNavigatorKey.currentState!.pushNamed("/recipelist");
-                break;
-              case 2:
-                _pageNavigatorKey.currentState!.pushNamed("/group");
-                break;
-            }
-            setState(() {
-              _currentindex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-              activeIcon: Icon(
-                Icons.home,
-                color: _activeColor,
-              ),
-              label: "Home",
-              icon: Icon(
-                Icons.home,
-                color: _color,
-              ),
+      bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: false,
+        unselectedItemColor: _color,
+        selectedItemColor: _activeColor,
+        currentIndex: _currentindex,
+        backgroundColor: Theme.of(context).bottomAppBarColor,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              _pageNavigatorKey.currentState!.pushNamed("/home");
+              break;
+            case 1:
+              _pageNavigatorKey.currentState!.pushNamed("/recipelist");
+              break;
+            case 2:
+              _pageNavigatorKey.currentState!.pushNamed("/group");
+              break;
+          }
+          setState(() {
+            _currentindex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.home,
+              color: _activeColor,
             ),
-            BottomNavigationBarItem(
-              activeIcon: Icon(
-                Icons.restaurant_menu,
-                color: _activeColor,
-              ),
-              label: "Recipes",
-              icon: Icon(Icons.restaurant_menu, color: _color),
+            label: "Home",
+            icon: Icon(
+              Icons.home,
+              color: _color,
             ),
-            BottomNavigationBarItem(
-              activeIcon: Icon(
-                Icons.group,
-                color: _activeColor,
-              ),
-              label: "Group",
-              icon: Icon(
-                Icons.group,
-                color: _color,
-              ),
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.restaurant_menu,
+              color: _activeColor,
             ),
-          ],
-        ),
+            label: "Recipes",
+            icon: Icon(Icons.restaurant_menu, color: _color),
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.group,
+              color: _activeColor,
+            ),
+            label: "Group",
+            icon: Icon(
+              Icons.group,
+              color: _color,
+            ),
+          ),
+        ],
       ),
       body: Navigator(
         key: _pageNavigatorKey,

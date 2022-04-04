@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CreateRecipe extends StatefulWidget {
+  const CreateRecipe({Key? key}) : super(key: key);
+
   @override
   State<CreateRecipe> createState() => _CreateRecipeState();
 }
 
 class _CreateRecipeState extends State<CreateRecipe> {
-  TextEditingController TitleController = TextEditingController();
-  TextEditingController DescriptionController = TextEditingController();
-  List<TextEditingController> IngredientControllers = [TextEditingController()];
-  List<TextEditingController> InstructionControllers = [
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  List<List<Object>> ingredientControllers = [
+    [TextEditingController(), "100g"]
+  ];
+  List<TextEditingController> instructionControllers = [
     TextEditingController()
   ];
 
@@ -30,7 +34,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   height: 15,
                 ),
                 TextField(
-                    controller: TitleController,
+                    controller: titleController,
                     decoration: InputDecoration(
                       fillColor: const Color(0xffc8e6c9),
                       filled: true, // dont forget this line
@@ -68,7 +72,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 TextField(
                     maxLength: null,
                     maxLines: null,
-                    controller: DescriptionController,
+                    controller: descriptionController,
                     decoration: InputDecoration(
                       fillColor: const Color(0xffc8e6c9),
 
@@ -114,27 +118,14 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       border: Border.all(color: Colors.green, width: 4)),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: IngredientControllers.map((e) {
-                      return Row(children: [
-                        Flexible(
-                          child: TextField(
-                              controller: e,
-                              decoration: const InputDecoration(
-                                hintText: "Next Step",
-                              )),
-                        ),
-                        IconButton(
-                            onPressed: IngredientControllers.length != 1
-                                ? () => setState(() {
-                                      IngredientControllers.remove(e);
-                                    })
-                                : () {},
-                            icon: IngredientControllers.length == 1
-                                ? Icon(
-                                    Icons.abc,
-                                    size: 0.0,
-                                  )
-                                : Icon(Icons.remove))
+                    children: ingredientControllers.map((e) {
+                      return Column(children: [
+                        createRow(e),
+                        ingredientControllers.last == e
+                            ? Container()
+                            : const Divider(
+                                thickness: 2,
+                              )
                       ]);
                     }).toList(),
                   ),
@@ -142,14 +133,15 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      IngredientControllers.add(TextEditingController());
+                      ingredientControllers
+                          .add([TextEditingController(), "100g"]);
                     });
                   },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Add ingredient"),
-                        const Icon(Icons.add),
+                      children: const [
+                        Text("Add ingredient"),
+                        Icon(Icons.add),
                       ]),
                 ),
                 const Align(
@@ -165,7 +157,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       border: Border.all(color: Colors.green, width: 4)),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: InstructionControllers.map((e) {
+                    children: instructionControllers.map((e) {
                       return Row(children: [
                         Flexible(
                           child: TextField(
@@ -175,17 +167,17 @@ class _CreateRecipeState extends State<CreateRecipe> {
                               )),
                         ),
                         IconButton(
-                            onPressed: InstructionControllers.length != 1
+                            onPressed: instructionControllers.length != 1
                                 ? () => setState(() {
-                                      InstructionControllers.remove(e);
+                                      instructionControllers.remove(e);
                                     })
                                 : () {},
-                            icon: InstructionControllers.length == 1
-                                ? Icon(
+                            icon: instructionControllers.length == 1
+                                ? const Icon(
                                     Icons.abc,
                                     size: 0.0,
                                   )
-                                : Icon(Icons.remove))
+                                : const Icon(Icons.remove))
                       ]);
                     }).toList(),
                   ),
@@ -193,14 +185,14 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      InstructionControllers.add(TextEditingController());
+                      instructionControllers.add(TextEditingController());
                     });
                   },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Add instruction"),
-                        const Icon(Icons.add),
+                      children: const [
+                        Text("Add instruction"),
+                        Icon(Icons.add),
                       ]),
                 ),
                 TextButton(
@@ -220,5 +212,58 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   fontFamily: 'Pattaya',
                   fontSize: 30,
                 ))));
+  }
+
+  Row createRow(List<Object> e) {
+    return Row(children: [
+      Flexible(
+        child: TextField(
+            controller: e.first as TextEditingController,
+            decoration: const InputDecoration.collapsed(
+              hintText: "Next Step",
+            )),
+      ),
+      DropdownButton(
+          value: e.last,
+          items: [
+            "10g",
+            "15g",
+            "25g",
+            "50g",
+            "75g",
+            "100g",
+            "200g",
+            "300g",
+            "400g",
+            "500g",
+            "600g",
+            "700g",
+            "800g",
+            "900g",
+            "1000g"
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (Object? value) => {
+                setState(() {
+                  e.last = value!;
+                })
+              }),
+      IconButton(
+          onPressed: ingredientControllers.length != 1
+              ? () => setState(() {
+                    ingredientControllers.remove(e);
+                  })
+              : () {},
+          icon: ingredientControllers.length == 1
+              ? const Icon(
+                  Icons.abc,
+                  size: 0.0,
+                )
+              : const Icon(Icons.remove)),
+    ]);
   }
 }
