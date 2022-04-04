@@ -1,3 +1,4 @@
+from this import d
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -17,13 +18,7 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-x = Recipe("Granola", ('Granola bar',50) , ('Potato, raw',60), 
-                ('Nutella, nut cream',10), ('Cold chocolate',30))
-
-carbonara = Recipe("Carbonara", ('Bacon',160), ('Pasta, raw',400), ('Egg',180),('Parmesan',85))
-baconAndEgg = Recipe("Bacon and Eggs", ('Bacon',160),('Egg',180))
-nutCream = Recipe("Nut cream",('Nutella, nut cream',100))
-
+#Lägger upp recept på databasen 
 def addData(recipe:Recipe):
     ref = db.collection(u"Recipes").document(recipe.name)
     if(ref.get().exists):
@@ -37,12 +32,14 @@ def addData(recipe:Recipe):
                                               "Kcal: " + str(recipe.getTotalKcal())]})
     ref.update({db.field_path('name') : recipe.name})
 
+#Returnerar receptet name
 def getRecipes(name): 
     result = db.collection('Recipes').document(name).get()
     if result.exists:
         return (result.to_dict())
     return None
 
+#Returnerar hela collectionen Recipes
 def getCollection():
     docs = db.collection('Recipes').get()
     a = list()
@@ -50,6 +47,7 @@ def getCollection():
         a.append(i.to_dict())
     return a
 
+#Returnerar en lista av alla recept som innehåller ingrediensen string
 def recipeContains(string):
     reference = db.collection('Recipes').get()
     recipes = list()
@@ -70,9 +68,16 @@ def deleteRecipes(name):
     db.collection('Recipes').document(name).delete()
             
 class Recipes(Resource):
+
+    # Hämtar data om recept
+    # argument: all -> returnerar dictionary med lista av alla recept i databasen
+    # argument: namn på ingrediens -> returnerar lista med namn på alla recept som innehåller den ingrediensen
+    # argument: namn på recept -> returnerar det receptet om det finns
+    # no results returneras om ingrediensen eller receptet inte finns
+    # automatiskt felmeddelande om argumentet saknas
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("name",type=str,help = "name of recipe is required",required = True)
+        parser.add_argument("name",type=str,help = "name of recipe or ingredient is required",required = True)
         args = parser.parse_args()
 
         if(args["name"] == 'all'):
@@ -87,6 +92,10 @@ class Recipes(Resource):
             return result,200
         return "No results"
 
+    #Lägger till recept
+    #argument: lista av ingredienser & lista av mängden av varje ingrediens, ingrediens[0] hör ihop med mängd[0] osv
+    #          anledning till detta är för att requestparser ej kan tolka nästlade strukturer såsom [(bacon,100g),...]
+    # automatiskt felmeddelande om något av argumenten saknas
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("name",type=str,help = "name of recipe is required",required = True,location = 'form')
