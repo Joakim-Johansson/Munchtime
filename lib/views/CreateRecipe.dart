@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:crunchtime/jsonRecipe.dart';
 
 class CreateRecipe extends StatefulWidget {
   const CreateRecipe({Key? key}) : super(key: key);
@@ -196,7 +199,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       ]),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: sendRecipe,
                   child: const Text('Done'),
                 )
               ]),
@@ -265,5 +268,33 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 )
               : const Icon(Icons.remove)),
     ]);
+  }
+
+  void sendRecipe() {
+    List<List<Object>> ingredientList = [];
+    List<String> instructionList = [];
+
+    for (var i = 0; i < ingredientControllers.length; i++) {
+      List<Object> tempList = [];
+      for (var p = 0; p < ingredientControllers[i].length; p++) {
+        if (ingredientControllers[i][p] is TextEditingController) {
+          var tempVar = ingredientControllers[i][p] as TextEditingController;
+          tempList.add(tempVar.text);
+        } else {
+          var tempVar = ingredientControllers[i][p] as String;
+          tempList.add(int.parse(tempVar.substring(0, tempVar.length - 1)));
+        }
+      }
+      ingredientList.add(tempList);
+    }
+
+    for (var i = 0; i < instructionControllers.length; i++) {
+      instructionList.add(instructionControllers[i].text);
+    }
+
+    JsonRecipe completeRecipe = JsonRecipe(titleController.text,
+        descriptionController.text, ingredientList, instructionList);
+
+    String json = jsonEncode(completeRecipe);
   }
 }
