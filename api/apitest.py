@@ -7,7 +7,7 @@ print(response.json())
 
 # input()
 
-# response = requests.get(BASE + "recipes", {"name":"all"})
+# response = requests.get(BASE + "recipes", {"name":"Carbonara"})
 # print(response.json())
 
 
