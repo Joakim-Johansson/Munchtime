@@ -1,20 +1,20 @@
+import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/provider/google_sign_in.dart';
 import 'package:crunchtime/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {
+  
+  
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      // apiKey: "AAAAiEoizRw:APA91bEdylRZhbitZi2wHIPF4fQA5KUrl7i8Cnd34bkEZlm5G8WdHbbcKSNSxdHjJ6bFiloci8H1nphIR9mV_4fSTnyTDShlvayC4HpKS7sHCHsD0JOuybzi_e5Boc7KI7hm8pP_rjPn",
-      apiKey: "AIzaSyDfZUtf8OSxoOytCivkWZycf5nBulEtREI",
-      appId: "1:585359346972:android:31e610f23394e2922c3ed9",
-      messagingSenderId: "585359346972",
-      projectId: "Munchtime",
-    ),
-  );
+
+  await Firebase.initializeApp();
+
+//  UserCredential user = await AuthService().signInWithGoogle();
+//  
   runApp(const MyApp());
 }
 

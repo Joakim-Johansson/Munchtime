@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/auth.dart';
 import '../provider/google_sign_in.dart';
 
 class Sign_In_Widget extends StatelessWidget {
@@ -21,10 +23,8 @@ class Sign_In_Widget extends StatelessWidget {
         ),
         icon: const FaIcon(FontAwesomeIcons.google, color: Color.fromARGB(255, 216, 243, 220)),
         label: const Text('Sign-in with google'),
-        onPressed: () {
-            final provider =
-              Provider.of<GoogleSignInProvider>(context, listen: false);
-              provider.googleLogin();
+        onPressed: () async {
+            UserCredential user = await AuthService().signInWithGoogle();
           },
       ),
     );
