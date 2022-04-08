@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class RecipeCard extends StatefulWidget {
-  String name;
+  QueryDocumentSnapshot recipe;
 
-  RecipeCard(this.name) {}
+  RecipeCard(this.recipe) {}
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -38,7 +39,10 @@ class _RecipeCardState extends State<RecipeCard> {
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed("/recipepage"),
+              onTap: () => Navigator.of(context).pushNamed(
+                    "/recipepage",
+                    arguments: widget.recipe,
+                  ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Container(
@@ -63,7 +67,7 @@ class _RecipeCardState extends State<RecipeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.name,
+                  widget.recipe["name"],
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,

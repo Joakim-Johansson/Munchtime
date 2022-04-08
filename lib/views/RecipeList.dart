@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'RecipeCard.dart';
 
 class RecipeList extends StatelessWidget {
-  final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
+  // final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
 
   FirebaseFirestore instance = FirebaseFirestore.instance;
 
@@ -48,9 +48,8 @@ class RecipeList extends StatelessWidget {
                     mainAxisSpacing: 5.0,
                     crossAxisCount: 1,
                     padding: EdgeInsets.all(10),
-                    children: snapshot.data!.docs
-                        .map((e) => RecipeCard(e["name"]))
-                        .toList());
+                    children:
+                        snapshot.data!.docs.map((e) => RecipeCard(e)).toList());
               }
               return Container();
             }));
