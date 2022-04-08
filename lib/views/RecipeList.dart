@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'RecipeCard.dart';
 
 class RecipeList extends StatelessWidget {
-  final List<RecipeCard> dummyList = List.filled(5, RecipeCard());
+  final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
+
+  FirebaseFirestore instance = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +38,25 @@ class RecipeList extends StatelessWidget {
                 ),
               ),
             ]),
-        body: GridView.count(
-          crossAxisSpacing: 5.0,
-          mainAxisSpacing: 5.0,
-          crossAxisCount: 1,
-          padding: EdgeInsets.all(10),
-          children: dummyList,
-        ));
+        body: FutureBuilder(
+            future: instance.collection("Recipes").get(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasData) {
+                return GridView.count(
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 5.0,
+                    crossAxisCount: 1,
+                    padding: EdgeInsets.all(10),
+                    children: snapshot.data!.docs
+                        .map((e) => RecipeCard(e["name"]))
+                        .toList());
+              }
+              return Container();
+            }));
   }
+
+  // Future<List<Widget>> createList() async {
+  //   QuerySnapshot recipes = await instance.collection("Recipes").snapshots().map()
+  // }
 }

@@ -6,15 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
+
 Future main() async {
-  
-  
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyDfZUtf8OSxoOytCivkWZycf5nBulEtREI",
+      appId: "1:585359346972:android:31e610f23394e2922c3ed9",
+      messagingSenderId: "585359346972",
+      projectId: "Munchtime",
+    ),
+  );
 
-//  UserCredential user = await AuthService().signInWithGoogle();
-//  
+  // UserCredential user = await AuthService().signInWithGoogle();
+//
   runApp(const MyApp());
 }
 
@@ -28,19 +34,19 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            primaryColor: Color.fromARGB(255, 82, 183, 136),
-            backgroundColor: Color.fromARGB(255, 250, 255, 251),
-            bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
-            focusColor: Color.fromARGB(255, 27, 67, 50),
-            fontFamily: 'OpenSans'),
-        home: NavBar(),
+        create: (context) => GoogleSignInProvider(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              primaryColor: Color.fromARGB(255, 82, 183, 136),
+              backgroundColor: Color.fromARGB(255, 250, 255, 251),
+              bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
+              focusColor: Color.fromARGB(255, 27, 67, 50),
+              fontFamily: 'OpenSans'),
+          home: NavBar(),
         ),
-  );
-  }
+      );
+}
 
 class NavBar extends StatefulWidget {
   // May not need to be stateful at all

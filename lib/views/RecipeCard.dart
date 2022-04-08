@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class RecipeCard extends StatefulWidget {
+  String name;
+
+  RecipeCard(this.name) {}
+
   @override
   State<RecipeCard> createState() => _RecipeCardState();
 }
@@ -58,9 +62,9 @@ class _RecipeCardState extends State<RecipeCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Tasty Carbonara",
-                  style: TextStyle(
+                Text(
+                  widget.name,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                     color: Colors.white,
