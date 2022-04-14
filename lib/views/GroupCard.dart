@@ -2,6 +2,8 @@ import 'package:crunchtime/views/Groupview.dart';
 import 'package:flutter/material.dart';
 
 class GroupCard extends StatefulWidget {
+  const GroupCard({Key? key}) : super(key: key);
+
   @override
   State<GroupCard> createState() => _GroupCardState();
 }
