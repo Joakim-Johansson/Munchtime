@@ -6,10 +6,10 @@ import 'Tag.dart';
 
 class RecipeInformation extends StatelessWidget {
   QueryDocumentSnapshot recipe;
-  late List<String> tempIngredients;
+  late List<String> ingredientList;
 
   RecipeInformation(this.recipe) {
-    tempIngredients = translateIngredients();
+    ingredientList = translateIngredients(recipe["ingredients"]);
   }
 
   final tempInstructions = [
@@ -66,7 +66,7 @@ class RecipeInformation extends StatelessWidget {
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: tempIngredients.length * 2,
+                    itemCount: ingredientList.length * 2,
                     itemBuilder: ((context, index) =>
                         getIngredients(context, index))),
               ),
@@ -97,7 +97,7 @@ class RecipeInformation extends StatelessWidget {
   Widget getIngredients(BuildContext context, int i) {
     if (i.isOdd) return const Divider();
     final index = i ~/ 2;
-    return Text(tempIngredients[index],
+    return Text(ingredientList[index],
         style: const TextStyle(decorationStyle: TextDecorationStyle.dotted));
   }
 
@@ -108,8 +108,7 @@ class RecipeInformation extends StatelessWidget {
         (i / 2 + 1).toInt().toString() + ". " + tempInstructions[index]);
   }
 
-  List<String> translateIngredients() {
-    List<dynamic> newIngredients = recipe["ingredients"];
+  static List<String> translateIngredients(List<dynamic> newIngredients) {
     return newIngredients
         .map((item) => item.substring(1, item.length - 1).toString())
         .toList();

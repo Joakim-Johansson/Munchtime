@@ -54,8 +54,4 @@ class RecipeList extends StatelessWidget {
               return Container();
             }));
   }
-
-  // Future<List<Widget>> createList() async {
-  //   QuerySnapshot recipes = await instance.collection("Recipes").snapshots().map()
-  // }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 class RecipeCard extends StatefulWidget {
   QueryDocumentSnapshot recipe;
 
-  RecipeCard(this.recipe) {}
+  RecipeCard(this.recipe);
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
