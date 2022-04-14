@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 import 'Tag.dart';
 
@@ -47,10 +46,6 @@ class RecipeInformation extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.bold, height: 3),
                 textAlign: TextAlign.left,
-              ),
-              const RatingStars(
-                value: 3,
-                valueLabelVisibility: false,
               ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,

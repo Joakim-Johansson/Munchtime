@@ -11,7 +11,7 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/home':
-        return MaterialPageRoute(builder: (_) => const Home());
+        return MaterialPageRoute(builder: (_) => Home());
       case '/recipelist':
         return MaterialPageRoute(builder: (_) => RecipeList());
       case '/recipepage':
@@ -22,6 +22,6 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CreateRecipe());
     }
 
-    return MaterialPageRoute(builder: (_) => const Home()); // Default
+    return MaterialPageRoute(builder: (_) => Home()); // Default
   }
 }

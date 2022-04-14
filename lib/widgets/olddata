@@ -1,7 +1,7 @@
 const SizedBox(height: 6.0),
             Center(
               child: Text(
-                'Delicious pasta with cheese and bacon. \nRating: $rating/5',
+                'Delicious pasta with cheese and bacon.',
                 style: const TextStyle(
                   color: Color.fromARGB(255, 49, 49, 49),
                   fontFamily: 'OpenSans',

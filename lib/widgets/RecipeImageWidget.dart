@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class RecipeImageWidget extends StatefulWidget {
   @override
@@ -49,10 +48,6 @@ class _RecipeImageWidgetState extends State<RecipeImageWidget> {
                   color: Colors.white,
                 ),
               ),
-              RatingStars(
-                value: 3,
-                valueLabelVisibility: false,
-              )
             ],
           ),
         )

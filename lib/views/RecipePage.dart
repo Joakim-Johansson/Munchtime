@@ -9,7 +9,6 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipesState extends State<RecipePage> {
-  int rating = 3;
 
   @override
   Widget build(BuildContext context) {
