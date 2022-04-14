@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:crunchtime/jsonRecipe.dart';
 
@@ -271,30 +271,39 @@ class _CreateRecipeState extends State<CreateRecipe> {
   }
 
   void sendRecipe() {
-    List<List<Object>> ingredientList = [];
+    List<String> ingredientList = [];
+    List<int> amountList = [];
     List<String> instructionList = [];
 
+    //Parses list of ingredient entries and amounts
+    //Extracts info to seperate lists
     for (var i = 0; i < ingredientControllers.length; i++) {
-      List<Object> tempList = [];
       for (var p = 0; p < ingredientControllers[i].length; p++) {
         if (ingredientControllers[i][p] is TextEditingController) {
           var tempVar = ingredientControllers[i][p] as TextEditingController;
-          tempList.add(tempVar.text);
+          ingredientList.add(tempVar.text);
         } else {
           var tempVar = ingredientControllers[i][p] as String;
-          tempList.add(int.parse(tempVar.substring(0, tempVar.length - 1)));
+          amountList.add(int.parse(tempVar.substring(0, tempVar.length - 1)));
         }
       }
-      ingredientList.add(tempList);
     }
 
     for (var i = 0; i < instructionControllers.length; i++) {
       instructionList.add(instructionControllers[i].text);
     }
 
-    JsonRecipe completeRecipe = JsonRecipe(titleController.text,
-        descriptionController.text, ingredientList, instructionList);
+    JsonRecipe completeRecipe = JsonRecipe(
+        titleController.text,
+        descriptionController.text,
+        ingredientList,
+        amountList,
+        instructionList);
 
     String json = jsonEncode(completeRecipe);
+
+    var response = http.post(
+        Uri.parse("https://cohesive-photon-346611.ew.r.appspot.com/recipes)"),
+        body: json);
   }
 }
