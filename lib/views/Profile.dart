@@ -38,7 +38,7 @@ class Profile extends StatelessWidget {
           ),
           const Padding(
               padding: EdgeInsets.all(4.0),
-              child: Text("Will Smith",
+              child: Text("Hans Mikaelsson",
                 style: TextStyle(
                   color: Color.fromARGB(255, 27, 67, 50),
                   fontSize: 30,
@@ -60,7 +60,7 @@ class Profile extends StatelessWidget {
                         )
                       ),
                     TextSpan(
-                      text: "Hi! I'm Will and I just love food that has that little extra punch!", 
+                      text: "Hi! I'm Hans and I just love food that has that little extra punch!", 
                       style: TextStyle(
                       color: Color.fromARGB(255, 27, 67, 50),
                       fontSize: 18,

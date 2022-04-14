@@ -58,7 +58,7 @@ class _GroupCardState extends State<GroupCard> {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(15, 10, 0, 5),
                                 child: Text(
-                                  "Tha mandem",
+                                  "Grupp",
                                   style: TextStyle(
                                       fontSize: 25,
                                       color: Color.fromARGB(255, 8, 28, 21),
@@ -70,7 +70,7 @@ class _GroupCardState extends State<GroupCard> {
                             Align(
                             alignment: Alignment.topRight,
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(80, 10, 0, 0),
+                              padding: const EdgeInsets.fromLTRB(150, 10, 0, 0),
                               child: TextButton(
                               onPressed: () {      // Respond to button press
                               },
