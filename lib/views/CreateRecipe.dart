@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchtime/jsonRecipe.dart';
 
@@ -270,7 +272,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
     ]);
   }
 
-  void sendRecipe() {
+  void sendRecipe() async {
     List<String> ingredientList = [];
     List<int> amountList = [];
     List<String> instructionList = [];
@@ -294,16 +296,23 @@ class _CreateRecipeState extends State<CreateRecipe> {
     }
 
     JsonRecipe completeRecipe = JsonRecipe(
-        titleController.text,
-        descriptionController.text,
-        ingredientList,
-        amountList,
-        instructionList);
+      titleController.text,
+      "yes",
+      /*descriptionController.text,*/
+      ingredientList,
+      amountList, /*instructionList*/
+    );
 
-    String json = jsonEncode(completeRecipe);
+    Dio dio = Dio();
+    Response<dynamic> response = await dio
+        .post("https://cohesive-photon-346611.ew.r.appspot.com/recipes", data: {
+      'name': "BaconAndEggs",
+      "user": "Hej",
+      "ingredients": ["Bacon", "Egg"],
+      "amount": [100, 100]
+    });
 
-    var response = http.post(
-        Uri.parse("https://cohesive-photon-346611.ew.r.appspot.com/recipes)"),
-        body: json);
+    var checkit = json.encode(completeRecipe);
+    response.statusCode;
   }
 }
