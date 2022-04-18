@@ -1,4 +1,6 @@
+import 'package:crunchtime/views/JoinGroup.dart';
 import 'package:flutter/material.dart';
+import 'package:crunchtime/views/CreateGroup.dart';
 
 class ManageGroups extends StatefulWidget{
   @override
@@ -78,7 +80,10 @@ class ManageGroupsWidget extends State<ManageGroups>{
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   onPressed: () {
-                    
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CreateGroup()),
+                    );
                   }, 
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -114,7 +119,10 @@ class ManageGroupsWidget extends State<ManageGroups>{
               alignment: Alignment.bottomRight,
               child: TextButton(
                 onPressed:(){
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => JoinGroup()),
+                  );
                 },
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
