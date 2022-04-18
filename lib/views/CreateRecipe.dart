@@ -1,7 +1,7 @@
-// import 'dart:io';
+import 'dart:io';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:crunchtime/jsonRecipe.dart';
 
@@ -303,9 +303,15 @@ class _CreateRecipeState extends State<CreateRecipe> {
       amountList, /*instructionList*/
     );
 
-    http.Response response = await http.post(
-        Uri.parse("https://cohesive-photon-346611.ew.r.appspot.com/recipes"),
-        body: json.encode(completeRecipe));
+    Dio dio = Dio();
+
+    Response response = await dio
+        .post("https://cohesive-photon-346611.ew.r.appspot.com/recipes", data: {
+      "name": "BaconAndEggs",
+      "user": "Hej",
+      "ingredients": ["Bacon", "Egg"],
+      "amount": [100, 100]
+    });
 
     var checkit = json.encode(completeRecipe);
     response.statusCode;
