@@ -1,6 +1,7 @@
 import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/views/JoinGroup.dart';
 import 'package:crunchtime/views/Profile.dart';
+import 'package:crunchtime/views/ManageGroups.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -122,10 +123,47 @@ class Home extends StatelessWidget {
                 ),
                 
                 ),
-                  )
+                  ),
                   ]
               ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+            child: TextButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ManageGroups()),
+                );
+
+                // Respond to button press
+
+              },
+
+              style: ButtonStyle(
+
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(
+                          color: Color.fromARGB(255, 27, 67, 50))
+                  ),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(22, 6, 22, 6),
+                child: Text("Manage Groups",
+                  style: TextStyle(
+                    color: Theme.of(context).focusColor,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            ),
+          ),
               ],
+
       ),
     ),  
     
