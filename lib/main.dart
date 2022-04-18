@@ -95,7 +95,7 @@ class _NavBarState extends State<NavBar> {
                 Icons.group,
                 color: _activeColor,
               ),
-              label: "Group",
+              label: "My Groups",
               icon: Icon(
                 Icons.group,
                 color: _color,
