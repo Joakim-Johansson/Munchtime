@@ -1,9 +1,13 @@
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class RecipePage extends StatefulWidget {
   QueryDocumentSnapshot recipe;
+
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
 
   RecipePage(this.recipe);
 
@@ -12,9 +16,16 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipesState extends State<RecipePage> {
+  Future<firebase_storage.ListResult> listFiles() async {
+    firebase_storage.ListResult results =
+        await widget.storage.ref('test').listAll();
+    print(results);
+    return results;
+  }
 
   @override
   Widget build(BuildContext context) {
+    listFiles();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 248, 247, 247),
       appBar: AppBar(
