@@ -14,7 +14,7 @@ class ProfileEditWidget extends State<ProfileEdit> {
   void initState() {
     super.initState();
 
-    controller = TextEditingController(text: 'hej');
+    controller = TextEditingController(text: "Hi! I'm William and I just love food that has that little extra punch!");
   }
 
   @override

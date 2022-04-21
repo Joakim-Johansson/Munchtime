@@ -1,15 +1,17 @@
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipePage extends StatefulWidget {
-  const RecipePage({Key? key}) : super(key: key);
+  QueryDocumentSnapshot recipe;
+
+  RecipePage(this.recipe);
 
   @override
   State<RecipePage> createState() => _RecipesState();
 }
 
 class _RecipesState extends State<RecipePage> {
-  int rating = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class _RecipesState extends State<RecipePage> {
             alignment: Alignment.topCenter,
           ),
           SingleChildScrollView(
-            child: RecipeInformation(),
+            child: RecipeInformation(widget.recipe),
           ),
         ],
       ),

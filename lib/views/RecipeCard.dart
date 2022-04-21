@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class RecipeCard extends StatefulWidget {
-  const RecipeCard({Key? key}) : super(key: key);
+  QueryDocumentSnapshot recipe;
+
+  RecipeCard(this.recipe);
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -36,7 +39,10 @@ class _RecipeCardState extends State<RecipeCard> {
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed("/recipepage"),
+              onTap: () => Navigator.of(context).pushNamed(
+                    "/recipepage",
+                    arguments: widget.recipe,
+                  ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Container(
@@ -59,19 +65,15 @@ class _RecipeCardState extends State<RecipeCard> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  "Tasty Carbonara",
-                  style: TextStyle(
+                  widget.recipe["name"],
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                     color: Colors.white,
                   ),
                 ),
-                RatingStars(
-                  value: 3,
-                  valueLabelVisibility: false,
-                )
               ],
             ),
           )
