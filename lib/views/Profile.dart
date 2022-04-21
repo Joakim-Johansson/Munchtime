@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchtime/views/ProfileEdit.dart';
 
 class Profile extends StatelessWidget {
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,16 +32,16 @@ class Profile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-          const Padding(
+           Padding(
             padding: EdgeInsets.fromLTRB(22, 22, 22, 2),
             child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/Will_Smith.jpg'),
+              backgroundImage: NetworkImage(user.photoURL!),
               radius: 125,
               ),
           ),
-          const Padding(
+           Padding(
               padding: EdgeInsets.all(4.0),
-              child: Text("William Smed",
+              child: Text(user.displayName!,
                 style: TextStyle(
                   color: Color.fromARGB(255, 27, 67, 50),
                   fontSize: 30,
