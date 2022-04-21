@@ -1,10 +1,7 @@
 import 'package:crunchtime/views/CreateGroup.dart';
-import 'package:crunchtime/provider/auth.dart';
-import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/views/JoinGroup.dart';
 import 'package:crunchtime/views/Login.dart';
 import 'package:crunchtime/views/Profile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -142,9 +139,7 @@ class _HomeState extends State<Home> {
     );
   }
   Widget _buildWidget() {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-
-    final User? user = FirebaseAuth.instance.currentUser;
+    GoogleSignInAccount? user = _currentUser;
 
     if(user == null){
         return Padding(
@@ -247,10 +242,9 @@ class _HomeState extends State<Home> {
     }
   
 }
-void SignIn() async {
+Future<void> SignIn() async {
     try{
       await _googleSignIn.signIn();
-      await AuthService().signInWithGoogle();
     } catch(e){
       print('sign in error $e');
     }
@@ -258,8 +252,6 @@ void SignIn() async {
 
 void signOut(){
     _googleSignIn.disconnect();
-    FirebaseAuth.instance.signOut();
-    
   }
 }
   
