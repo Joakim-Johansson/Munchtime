@@ -251,6 +251,7 @@ void SignIn() async {
     try{
       await _googleSignIn.signIn();
       await AuthService().signInWithGoogle();
+      setState(() {});
     } catch(e){
       print('sign in error $e');
     }
