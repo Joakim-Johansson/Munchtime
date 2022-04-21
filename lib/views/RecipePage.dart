@@ -1,3 +1,4 @@
+import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,9 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class RecipePage extends StatefulWidget {
   QueryDocumentSnapshot recipe;
-
-  firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instance;
+  Storage storage = Storage();
 
   RecipePage(this.recipe);
 
@@ -16,16 +15,8 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipesState extends State<RecipePage> {
-  Future<firebase_storage.ListResult> listFiles() async {
-    firebase_storage.ListResult results =
-        await widget.storage.ref('test').listAll();
-    print(results);
-    return results;
-  }
-
   @override
   Widget build(BuildContext context) {
-    listFiles();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 248, 247, 247),
       appBar: AppBar(
@@ -44,19 +35,32 @@ class _RecipesState extends State<RecipePage> {
         children: <Widget>[
           Align(
             child: ShaderMask(
-              shaderCallback: (rect) {
-                return const LinearGradient(
-                  begin: Alignment(0, 0.7),
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.black, Colors.transparent],
-                ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
-              },
-              blendMode: BlendMode.dstIn,
-              child: Image.asset(
-                'assets/images/carbonara.jpg',
-                fit: BoxFit.fitWidth,
-              ),
-            ),
+                shaderCallback: (rect) {
+                  return const LinearGradient(
+                    begin: Alignment(0, 0.7),
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.black, Colors.transparent],
+                  ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+                },
+                blendMode: BlendMode.dstIn,
+                child: FutureBuilder(
+                  future: widget.storage.downloadURL(widget.recipe["img"]),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        height: 400,
+                        width: 400,
+                        child: Image.network(
+                          snapshot.data!,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                )),
             alignment: Alignment.topCenter,
           ),
           SingleChildScrollView(
