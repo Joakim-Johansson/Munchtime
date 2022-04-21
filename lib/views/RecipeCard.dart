@@ -74,10 +74,6 @@ class _RecipeCardState extends State<RecipeCard> {
                     color: Colors.white,
                   ),
                 ),
-                const RatingStars(
-                  value: 3,
-                  valueLabelVisibility: false,
-                )
               ],
             ),
           )

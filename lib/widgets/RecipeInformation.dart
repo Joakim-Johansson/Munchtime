@@ -55,7 +55,7 @@ class RecipeInformation extends StatelessWidget {
                   )),
               Align(
                 alignment: Alignment(-0.95, 0),
-                child: const Text(
+                child: Text(
                   "Ingredients:",
                   style: TextStyle(
                       fontSize: 20, fontWeight: FontWeight.bold, height: 2),
@@ -70,9 +70,9 @@ class RecipeInformation extends StatelessWidget {
                     itemBuilder: ((context, index) =>
                         getIngredients(context, index))),
               ),
-              Align(
+              const Align(
                 alignment: Alignment(-0.95, 0),
-                child: const Text(
+                child: Text(
                   "Instructions:",
                   style: TextStyle(
                       fontSize: 20, fontWeight: FontWeight.bold, height: 2),

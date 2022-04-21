@@ -1,3 +1,4 @@
+import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/views/JoinGroup.dart';
 import 'package:crunchtime/views/Profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,36 +62,71 @@ class Home extends StatelessWidget {
               ),
               ),
                 ),
-              Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-              child: TextButton(
-              onPressed: () {Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => JoinGroup()),
-              );
-            // Respond to button press
-              },
-              style: ButtonStyle(
+              Row(
+                children: [ Padding(
+                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                child: TextButton(
+                onPressed: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JoinGroup()),
+                );
+                          // Respond to button press
+                },
+                style: ButtonStyle(
+                  
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+
+                RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(
+                      color: Color.fromARGB(255, 27, 67, 50))
+                    ),
+                    ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
+                  child: Text("Join Group",
+                  style: TextStyle(
+                        color: Theme.of(context).focusColor,
+                        fontSize: 30,
+                      ),),
+                ),
                 
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              
-              RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-                  side: const BorderSide(
-                    color: Color.fromARGB(255, 27, 67, 50))
+                ),
                   ),
-                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                child: TextButton(
+                onPressed: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CreateGroup()),
+                );
+                          // Respond to button press
+                },
+                style: ButtonStyle(
+                  
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  
+                RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(
+                      color: Color.fromARGB(255, 27, 67, 50))
+                    ),
+                    ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+                  child: Text("+",
+                  style: TextStyle(
+                        color: Theme.of(context).focusColor,
+                        fontSize: 30,
+                      ),),
+                ),
+                
+                ),
+                  )
+                  ]
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                child: Text("Join a Group",
-                style: TextStyle(
-                      color: Theme.of(context).focusColor,
-                      fontSize: 30,
-                    ),),
-              ),
-              ),
-                )
               ],
       ),
     ),  

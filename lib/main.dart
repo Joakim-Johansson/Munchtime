@@ -49,6 +49,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class NavBar extends StatefulWidget {
+  const NavBar({Key? key}) : super(key: key);
+
   // May not need to be stateful at all
   @override
   State<NavBar> createState() => _NavBarState();
@@ -66,62 +68,60 @@ class _NavBarState extends State<NavBar> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      bottomNavigationBar: Container(
-        child: BottomNavigationBar(
-          showUnselectedLabels: false,
-          unselectedItemColor: _color,
-          selectedItemColor: _activeColor,
-          currentIndex: _currentindex,
-          backgroundColor: Theme.of(context).bottomAppBarColor,
-          onTap: (index) {
-            switch (index) {
-              case 0:
-                _pageNavigatorKey.currentState!.pushNamed("/home");
-                break;
-              case 1:
-                _pageNavigatorKey.currentState!.pushNamed("/recipelist");
-                break;
-              case 2:
-                _pageNavigatorKey.currentState!.pushNamed("/group");
-                break;
-            }
-            setState(() {
-              _currentindex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-              activeIcon: Icon(
-                Icons.home,
-                color: _activeColor,
-              ),
-              label: "Home",
-              icon: Icon(
-                Icons.home,
-                color: _color,
-              ),
+      bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: false,
+        unselectedItemColor: _color,
+        selectedItemColor: _activeColor,
+        currentIndex: _currentindex,
+        backgroundColor: Theme.of(context).bottomAppBarColor,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              _pageNavigatorKey.currentState!.pushNamed("/home");
+              break;
+            case 1:
+              _pageNavigatorKey.currentState!.pushNamed("/recipelist");
+              break;
+            case 2:
+              _pageNavigatorKey.currentState!.pushNamed("/group");
+              break;
+          }
+          setState(() {
+            _currentindex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.home,
+              color: _activeColor,
             ),
-            BottomNavigationBarItem(
-              activeIcon: Icon(
-                Icons.restaurant_menu,
-                color: _activeColor,
-              ),
-              label: "Recipes",
-              icon: Icon(Icons.restaurant_menu, color: _color),
+            label: "Home",
+            icon: Icon(
+              Icons.home,
+              color: _color,
             ),
-            BottomNavigationBarItem(
-              activeIcon: Icon(
-                Icons.group,
-                color: _activeColor,
-              ),
-              label: "Group",
-              icon: Icon(
-                Icons.group,
-                color: _color,
-              ),
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.restaurant_menu,
+              color: _activeColor,
             ),
-          ],
-        ),
+            label: "Recipes",
+            icon: Icon(Icons.restaurant_menu, color: _color),
+          ),
+          BottomNavigationBarItem(
+            activeIcon: Icon(
+              Icons.group,
+              color: _activeColor,
+            ),
+            label: "Group",
+            icon: Icon(
+              Icons.group,
+              color: _color,
+            ),
+          ),
+        ],
       ),
       body: Navigator(
         key: _pageNavigatorKey,
