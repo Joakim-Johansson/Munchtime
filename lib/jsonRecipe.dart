@@ -1,21 +1,34 @@
 class JsonRecipe {
-  final String title;
-  final String description;
-  final List<List<Object>> ingredients;
-  final List<String> instructions;
+  final String name;
+  final String user;
+  // final String description;
+  final List<String> ingredients;
+  final List<int> amount;
+  // final List<String> instructions;
 
-  JsonRecipe(this.title, this.description, this.ingredients, this.instructions);
+  JsonRecipe(
+    this.name,
+    this.user /*this.description*/,
+    this.ingredients,
+    this.amount,
+    /*this.instructions*/
+  );
 
   JsonRecipe.fromJson(Map<String, dynamic> json)
-      : title = json['title'],
-        description = json['description'],
+      : name = json['name'],
+        user = json['user'],
+        // description = json['description'],
         ingredients = json['ingredients'],
-        instructions = json['instructions'];
+        amount = json['amount']
+  // instructions = json['instructions']
+  ;
 
   Map<String, dynamic> toJson() => {
-        'title': title,
-        'description': description,
+        'name': name,
+        'user': user,
+        //  'description': description,
         'ingredients': ingredients,
-        'instructions': instructions,
+        'amount': amount,
+        // 'instructions': instructions,
       };
 }
