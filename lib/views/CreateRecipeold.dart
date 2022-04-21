@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:crunchtime/jsonRecipe.dart';
 
 class CreateRecipe extends StatefulWidget {
-    Storage storage = Storage();
-
+  Storage storage = Storage();
 
   @override
   State<CreateRecipe> createState() => _CreateRecipeState();
@@ -26,8 +25,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
     TextEditingController()
   ];
 
-  String fileName = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,8 +38,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
-
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -67,7 +62,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                         }
 
                         final path = results.files.single.path!;
-                        fileName = results.files.single.name;
+                        final fileName = results.files.single.name;
 
                         widget.storage
                             .uploadFile(path, fileName)
@@ -338,19 +333,18 @@ class _CreateRecipeState extends State<CreateRecipe> {
     }
 
 
+
     Dio dio = Dio();
 
     Response response = await dio
         .post("https://cohesive-photon-346611.ew.r.appspot.com/recipes", data: {
       "name": titleController.text,
       "user": AuthService().auth.currentUser!.uid,
-      "instruction": instructionList,
       "ingredients": ingredientList,
       "amount": amountList,
-      "img": fileName
+      
     });
 
-    
     response.statusCode;
   }
 }
