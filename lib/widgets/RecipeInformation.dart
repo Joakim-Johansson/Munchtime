@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'Tag.dart';
 
 class RecipeInformation extends StatelessWidget {
-  final tempIngredients = [
-    "600g Spaghetti",
-    "20g Egg",
-    "100g Parmiggiano Reggiano",
-    "500g Pork",
-    "10g Garlic",
-    "300g Cream"
-  ];
+  QueryDocumentSnapshot recipe;
+  late List<String> ingredientList;
+
+  RecipeInformation(this.recipe) {
+    ingredientList = translateIngredients(recipe["ingredients"]);
+  }
 
   final tempInstructions = [
     "Cook Pasta",
     "Fry pork",
     "Whisk Eggs",
     "Put Cheese on top"
-  ];
-
-  List tempTags = [
-    Tag("Eco", Colors.green),
-    Tag("low Carb", Colors.orange),
-    Tag("Vegan", Colors.blue)
   ];
 
   List<Widget> dummylist =
@@ -41,21 +35,25 @@ class RecipeInformation extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.92,
           child: Column(
             children: [
-              const Text(
-                "Tasty Carbonara",
+              Text(
+                recipe["name"],
                 style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.bold, height: 3),
                 textAlign: TextAlign.left,
               ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: tempTags
-                      .map((e) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: e,
-                          ))
-                      .toList()),
-              const Align(
+              const RatingStars(
+                value: 3,
+                valueLabelVisibility: false,
+              ),
+              Container(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Tag(
+                        "Eco-impact: " + recipe["Total CO2-eq"].toString(),
+                        Colors.green),
+                  )),
+              Align(
                 alignment: Alignment(-0.95, 0),
                 child: Text(
                   "Ingredients:",
@@ -68,7 +66,7 @@ class RecipeInformation extends StatelessWidget {
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: tempIngredients.length * 2,
+                    itemCount: ingredientList.length * 2,
                     itemBuilder: ((context, index) =>
                         getIngredients(context, index))),
               ),
@@ -99,7 +97,7 @@ class RecipeInformation extends StatelessWidget {
   Widget getIngredients(BuildContext context, int i) {
     if (i.isOdd) return const Divider();
     final index = i ~/ 2;
-    return Text(tempIngredients[index],
+    return Text(ingredientList[index],
         style: const TextStyle(decorationStyle: TextDecorationStyle.dotted));
   }
 
@@ -108,5 +106,11 @@ class RecipeInformation extends StatelessWidget {
     final index = i ~/ 2;
     return Text(
         (i / 2 + 1).toInt().toString() + ". " + tempInstructions[index]);
+  }
+
+  static List<String> translateIngredients(List<dynamic> newIngredients) {
+    return newIngredients
+        .map((item) => item.substring(1, item.length - 1).toString())
+        .toList();
   }
 }
