@@ -296,22 +296,24 @@ class _CreateRecipeState extends State<CreateRecipe> {
     }
 
     JsonRecipe completeRecipe = JsonRecipe(
-      titleController.text,
-      "yes",
-      /*descriptionController.text,*/
-      ingredientList,
-      amountList, /*instructionList*/
-    );
+        titleController.text,
+        "yes",
+        descriptionController.text,
+        ingredientList,
+        amountList,
+        instructionList);
 
     Dio dio = Dio();
 
     Response response = await dio
         .post("https://cohesive-photon-346611.ew.r.appspot.com/recipes", data: {
-      "name": "BaconAndEggs",
+      "name": titleController.text,
       "user": "Hej",
-      "ingredients": ["Bacon", "Egg"],
-      "amount": [100, 100]
+      "ingredients": ingredientList,
+      "amount": amountList
     });
+
+    
 
     var checkit = json.encode(completeRecipe);
     response.statusCode;
