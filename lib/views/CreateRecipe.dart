@@ -344,7 +344,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
         .post("https://cohesive-photon-346611.ew.r.appspot.com/recipes", data: {
       "name": titleController.text,
       "user": AuthService().auth.currentUser!.uid,
-      "instruction": instructionList,
+      "instructions": instructionList,
       "ingredients": ingredientList,
       "amount": amountList,
       "img": fileName
