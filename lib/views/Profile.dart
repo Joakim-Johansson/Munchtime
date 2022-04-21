@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:crunchtime/views/ProfileEdit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+
 
 class Profile extends StatelessWidget {
+  final FirebaseUser user = await auth.currentUser();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,13 +36,13 @@ class Profile extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.fromLTRB(22, 22, 22, 2),
             child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/Will_Smith.jpg'),
+              backgroundImage: AssetImage('assets/images/Will_Smith.jpg'), //GoogleUserCircleAvatar(identity: user)
               radius: 125,
               ),
           ),
           const Padding(
               padding: EdgeInsets.all(4.0),
-              child: Text("William Smed",
+              child: Text("William Smed", //user.displayName ?? ''
                 style: TextStyle(
                   color: Color.fromARGB(255, 27, 67, 50),
                   fontSize: 30,
@@ -104,7 +108,8 @@ class Profile extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
+          
         ],
         ),
       )
@@ -112,3 +117,8 @@ class Profile extends StatelessWidget {
     );
 }
 }
+
+//add sign out buttonStyle
+// void signOut(){
+//   _googleSignIn.disconnect();
+// }
