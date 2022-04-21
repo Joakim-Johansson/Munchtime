@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:crunchtime/data/storage.dart';
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:crunchtime/jsonRecipe.dart';
 
 class CreateRecipe extends StatefulWidget {
-  const CreateRecipe({Key? key}) : super(key: key);
+  Storage storage = Storage();
 
   @override
   State<CreateRecipe> createState() => _CreateRecipeState();
@@ -35,6 +37,40 @@ class _CreateRecipeState extends State<CreateRecipe> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Add a photo",
+                      style: TextStyle(
+                        color: Theme.of(context).focusColor,
+                        fontSize: 23,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        final results = await FilePicker.platform.pickFiles(
+                            type: FileType.image, allowMultiple: false);
+
+                        if (results == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("No file selected")));
+
+                          return null;
+                        }
+
+                        final path = results.files.single.path!;
+                        final fileName = results.files.single.name;
+
+                        widget.storage
+                            .uploadFile(path, fileName)
+                            .then((value) => print("done"));
+                      },
+                      icon: Icon(Icons.add, size: 30),
+                    )
+                  ],
+                ),
                 const SizedBox(
                   height: 15,
                 ),
