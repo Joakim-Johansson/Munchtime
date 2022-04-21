@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:crunchtime/jsonRecipe.dart';
 
@@ -22,6 +20,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
     TextEditingController()
   ];
 
+  ///Builds the form widget for creating recipes
+  ///
+  ///Contains several textfields for all info for recipes
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +30,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
           constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
+
+                  ///Background image
                   image: AssetImage("assets/images/hills2.png"),
                   fit: BoxFit.fill)),
           child: SingleChildScrollView(
@@ -38,6 +41,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 const SizedBox(
                   height: 15,
                 ),
+
+                ///Title entry
                 TextField(
                     controller: titleController,
                     decoration: InputDecoration(
@@ -74,6 +79,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 const SizedBox(
                   height: 15,
                 ),
+
+                ///Description
                 TextField(
                     maxLength: null,
                     maxLines: null,
@@ -110,6 +117,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       labelStyle:
                           const TextStyle(fontSize: 34, color: Colors.black),
                     )),
+                ///Ingredients
                 const Align(
                   alignment: Alignment(-0.81, 0),
                   child: Text(
@@ -126,6 +134,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                     children: ingredientControllers.map((e) {
                       return Column(children: [
                         createRow(e),
+                        ///Set [divider] unless last item
                         ingredientControllers.last == e
                             ? Container()
                             : const Divider(
@@ -149,6 +158,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                         Icon(Icons.add),
                       ]),
                 ),
+                ///Instructions
                 const Align(
                   alignment: Alignment(-0.81, 0),
                   child: Text(
@@ -163,26 +173,34 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: instructionControllers.map((e) {
-                      return Row(children: [
-                        Flexible(
-                          child: TextField(
-                              controller: e,
-                              decoration: const InputDecoration(
-                                hintText: "Next Step",
-                              )),
-                        ),
-                        IconButton(
-                            onPressed: instructionControllers.length != 1
-                                ? () => setState(() {
-                                      instructionControllers.remove(e);
-                                    })
-                                : () {},
-                            icon: instructionControllers.length == 1
-                                ? const Icon(
-                                    Icons.abc,
-                                    size: 0.0,
-                                  )
-                                : const Icon(Icons.remove))
+                      return Column(children: [
+                        Row(children: [
+                          Flexible(
+                            child: TextField(
+                                controller: e,
+                                decoration: const InputDecoration.collapsed(
+                                  hintText: "Next Step",
+                                )),
+                          ),
+                          ///Write a minus icon if the user has added extra steps
+                          IconButton(
+                              onPressed: instructionControllers.length != 1
+                                  ? () => setState(() {
+                                        instructionControllers.remove(e);
+                                      })
+                                  : () {},
+                              icon: instructionControllers.length == 1
+                                  ? const Icon(
+                                      Icons.abc,
+                                      size: 0.0,
+                                    )
+                                  : const Icon(Icons.remove))
+                        ]),
+                        instructionControllers.last == e
+                            ? Container()
+                            : const Divider(
+                                thickness: 2,
+                              ),
                       ]);
                     }).toList(),
                   ),
@@ -219,13 +237,17 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 ))));
   }
 
+
+  ///Creates a row containing all Objects for ingredients
+  ///
+  ///A row object containing a 
   Row createRow(List<Object> e) {
     return Row(children: [
       Flexible(
         child: TextField(
             controller: e.first as TextEditingController,
             decoration: const InputDecoration.collapsed(
-              hintText: "Next Step",
+              hintText: "Next Ingredient",
             )),
       ),
       DropdownButton(
@@ -312,8 +334,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
       "ingredients": ingredientList,
       "amount": amountList
     });
-
-    
 
     var checkit = json.encode(completeRecipe);
     response.statusCode;
