@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 class Profile extends StatelessWidget {
-  final FirebaseUser user = await auth.currentUser();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
