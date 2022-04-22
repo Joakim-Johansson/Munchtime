@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class JoinGroup extends StatefulWidget {
@@ -90,8 +91,17 @@ class JoinGroupWidget extends State<JoinGroup> {
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: TextButton(
-                    onPressed: () {
-                      // Respond to button press
+                    onPressed: () async {
+                      QuerySnapshot snap = await FirebaseFirestore.instance
+                          .collection('groups')
+                          .where("code", isEqualTo: controller.text)
+                          .get();
+
+                      if (snap.docs.isNotEmpty) {
+                        print("group exists");
+                      } else {
+                        print("Doc doesn't exits");
+                      }
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
