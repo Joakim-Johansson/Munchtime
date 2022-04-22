@@ -102,10 +102,19 @@ class JoinGroupWidget extends State<JoinGroup> {
                         print("exits");
 
                         await FirebaseFirestore.instance
-                          .collection('Users').doc(AuthService().auth.currentUser?.uid).
-                          set({"groups": FieldValue.arrayUnion([controller.text])}, SetOptions(merge: true));
+                            .collection('Users')
+                            .doc(AuthService().auth.currentUser?.uid)
+                            .set({
+                          "groups": FieldValue.arrayUnion([controller.text])
+                        }, SetOptions(merge: true));
                       } else {
-                        print("Doc doesn't exits");
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  "No group with that code exists",
+                                  style: TextStyle(color: Colors.black),
+                                )));
                       }
                     },
                     style: ButtonStyle(
