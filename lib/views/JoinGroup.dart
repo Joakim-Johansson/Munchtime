@@ -16,7 +16,7 @@ class JoinGroupWidget extends State<JoinGroup> {
   void initState() {
     super.initState();
 
-    controller = TextEditingController(text: 'hej');
+    controller = TextEditingController(text: '');
   }
 
   @override
@@ -107,6 +107,16 @@ class JoinGroupWidget extends State<JoinGroup> {
                             .set({
                           "groups": FieldValue.arrayUnion([controller.text])
                         }, SetOptions(merge: true));
+
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text(
+                                  "Succesfully joined group!",
+                                  style: TextStyle(color: Colors.white),
+                                )));
+
+                        controller.clear();
                       } else {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(

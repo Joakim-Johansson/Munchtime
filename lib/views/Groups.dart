@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crunchtime/provider/auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'GroupCard.dart';
 
 class Groups extends StatelessWidget {
-  final List<GroupCard> dummyList = List.filled(3, const GroupCard());
 
   Groups({Key? key}) : super(key: key);
 
@@ -24,10 +26,21 @@ class Groups extends StatelessWidget {
           backgroundColor: Theme.of(context).bottomAppBarColor,
           elevation: 0,
         ),
-        body: GridView.count(
-          crossAxisCount: 1,
-          childAspectRatio: 3 / 1,
-          children: dummyList,
-        ));
+        body: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection("Users")
+                .doc(AuthService().auth.currentUser?.uid)
+                .get(),
+            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasData) {
+                DocumentSnapshot x = snapshot.data!;
+                return Column(
+                  children: x["groups"].map<Widget>((e) {
+                    return GroupCard(code: e);
+                  }).toList(),
+                );
+              }
+              return Container();
+            }));
   }
 }

@@ -18,7 +18,7 @@ Future main() async {
     ),
   );
 
-  AuthService().signInAnon();
+ // AuthService().signInAnon();
   // UserCredential user = await AuthService().signInWithGoogle();
 //
   runApp(const MyApp());
