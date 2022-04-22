@@ -46,12 +46,14 @@ class ManageGroupsWidget extends State<ManageGroups>{
             fit: BoxFit.cover)
           ),
 
+      //Here goes the buttons for group management.
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
 
         children: [
 
+          //Button for creating groups.
           Padding(
             padding: const EdgeInsets.fromLTRB(80, 0, 80, 6),
             child: Align(
@@ -93,6 +95,7 @@ class ManageGroupsWidget extends State<ManageGroups>{
 
           SizedBox(height: 10.0),
 
+          //Button for joining groups.
           Padding(
             padding: const EdgeInsets.fromLTRB(80, 0, 80, 6),
             child: Align(
