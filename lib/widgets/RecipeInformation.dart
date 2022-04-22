@@ -53,7 +53,7 @@ class RecipeInformation extends StatelessWidget {
                         "Eco-impact: " + recipe["Total CO2-eq"].toString(),
                         Colors.green),
                   )),
-              Align(
+              const Align(
                 alignment: Alignment(-0.95, 0),
                 child: Text(
                   "Ingredients:",

@@ -2,9 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'RecipeCard.dart';
 
-class RecipeList extends StatelessWidget {
-  // final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
 
+class RecipeList extends StatelessWidget {
   FirebaseFirestore instance = FirebaseFirestore.instance;
 
   @override
