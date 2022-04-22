@@ -94,14 +94,46 @@ class CreateGroupWidget extends State<CreateGroup> {
                   alignment: Alignment.bottomRight,
                   child: TextButton(
                     onPressed: () async {
-                      await instance
-                          .collection("groups")
-                          .doc(controller.text)
-                          .set({
-                        "owner": AuthService().auth.currentUser!.uid,
-                        "members": 1,
-                        "code": controller.text
-                      });
+                      QuerySnapshot snap = await FirebaseFirestore.instance
+                          .collection('groups')
+                          .where("code", isEqualTo: controller.text)
+                          .get();
+
+                      if (snap.docs.isEmpty) {
+                        await instance
+                            .collection("groups")
+                            .doc(controller.text)
+                            .set({
+                          "owner": AuthService().auth.currentUser!.uid,
+                          "members": 1,
+                          "code": controller.text
+                        });
+                        await FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(AuthService().auth.currentUser?.uid)
+                            .set({
+                          "groups": FieldValue.arrayUnion([controller.text])
+                        }, SetOptions(merge: true));
+
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text(
+                                  "Succesfully created group!",
+                                  style: TextStyle(color: Colors.white),
+                                )));
+
+                        controller.clear();
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  "A group with that code already exists",
+                                  style: TextStyle(color: Colors.black),
+                                )));
+                      }
+
                       // Check if group id is unique
 
                       // Respond to button press

@@ -33,22 +33,24 @@ class Groups extends StatelessWidget {
             builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasData) {
                 DocumentSnapshot x = snapshot.data!;
-                return Column(
-                  children: x["groups"].map<Widget>((e) {
-                    return FutureBuilder(
-                        future: FirebaseFirestore.instance
-                            .collection("groups")
-                            .doc(e)
-                            .get(),
-                        builder: (context,
-                            AsyncSnapshot<DocumentSnapshot> snapshot) {
-                          if (snapshot.hasData) {
-                            return GroupCard(group: snapshot.data!);
-                          } else {
-                            return Container();
-                          }
-                        });
-                  }).toList(),
+                return Center(
+                  child: Column(
+                    children: x["groups"].map<Widget>((e) {
+                      return FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection("groups")
+                              .doc(e)
+                              .get(),
+                          builder: (context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              return GroupCard(group: snapshot.data!);
+                            } else {
+                              return Container();
+                            }
+                          });
+                    }).toList(),
+                  ),
                 );
               }
               return Container();
