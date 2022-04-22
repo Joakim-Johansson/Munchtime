@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crunchtime/provider/auth.dart';
 import 'package:flutter/material.dart';
 
 class JoinGroup extends StatefulWidget {
@@ -98,7 +99,11 @@ class JoinGroupWidget extends State<JoinGroup> {
                           .get();
 
                       if (snap.docs.isNotEmpty) {
-                        print("group exists");
+                        print("exits");
+
+                        await FirebaseFirestore.instance
+                          .collection('Users').doc(AuthService().auth.currentUser?.uid).
+                          set({"groups": FieldValue.arrayUnion(["ooss"])}, SetOptions(merge: true));
                       } else {
                         print("Doc doesn't exits");
                       }
