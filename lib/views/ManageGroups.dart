@@ -51,26 +51,6 @@ class ManageGroupsWidget extends State<ManageGroups>{
         mainAxisAlignment: MainAxisAlignment.center,
 
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: RichText(text: const TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text:"Temporary",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 27, 67, 50),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-
-              )
-            ),
-          ),
 
           Padding(
             padding: const EdgeInsets.fromLTRB(80, 0, 80, 6),
