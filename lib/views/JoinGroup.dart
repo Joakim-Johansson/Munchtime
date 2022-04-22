@@ -103,7 +103,7 @@ class JoinGroupWidget extends State<JoinGroup> {
 
                         await FirebaseFirestore.instance
                           .collection('Users').doc(AuthService().auth.currentUser?.uid).
-                          set({"groups": FieldValue.arrayUnion(["ooss"])}, SetOptions(merge: true));
+                          set({"groups": FieldValue.arrayUnion([controller.text])}, SetOptions(merge: true));
                       } else {
                         print("Doc doesn't exits");
                       }
