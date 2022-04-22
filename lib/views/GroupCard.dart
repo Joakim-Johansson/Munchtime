@@ -1,10 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/views/Groupview.dart';
 import 'package:flutter/material.dart';
 
 class GroupCard extends StatefulWidget {
-  GroupCard({required this.code});
-  String code = ' ';
-
+  GroupCard({required this.group});
+  DocumentSnapshot group;
   @override
   State<GroupCard> createState() => _GroupCardState();
 }
@@ -48,7 +48,7 @@ class _GroupCardState extends State<GroupCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Grupp " + widget.code,
+                          "Grupp " + widget.group.id,
                           style: TextStyle(
                             fontSize: 25,
                             color: Color.fromARGB(255, 8, 28, 21),
@@ -82,7 +82,8 @@ class _GroupCardState extends State<GroupCard> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 5),
+                    padding:
+                        EdgeInsets.only(left: 10.0, right: 10.0, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -96,8 +97,8 @@ class _GroupCardState extends State<GroupCard> {
                                 borderRadius: new BorderRadius.all(
                                     Radius.elliptical(40, 40)),
                               ),
-                              child: const Center(
-                                  child: Text('15 Recipes',
+                              child: Center(
+                                  child: Text("15 recipes",
                                       style: TextStyle(
                                         fontSize: 15,
                                         color:
@@ -114,10 +115,10 @@ class _GroupCardState extends State<GroupCard> {
                           ),
                           child: Center(
                               child: RichText(
-                            text: const TextSpan(
+                            text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: "10",
+                                  text: widget.group["members"].toString(),
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color.fromARGB(255, 8, 28, 21),

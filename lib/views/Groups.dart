@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'GroupCard.dart';
 
 class Groups extends StatelessWidget {
-
   Groups({Key? key}) : super(key: key);
 
   @override
@@ -36,7 +35,19 @@ class Groups extends StatelessWidget {
                 DocumentSnapshot x = snapshot.data!;
                 return Column(
                   children: x["groups"].map<Widget>((e) {
-                    return GroupCard(code: e);
+                    return FutureBuilder(
+                        future: FirebaseFirestore.instance
+                            .collection("groups")
+                            .doc(e)
+                            .get(),
+                        builder: (context,
+                            AsyncSnapshot<DocumentSnapshot> snapshot) {
+                          if (snapshot.hasData) {
+                            return GroupCard(group: snapshot.data!);
+                          } else {
+                            return Container();
+                          }
+                        });
                   }).toList(),
                 );
               }
