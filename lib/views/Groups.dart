@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'GroupCard.dart';
 
+///Shows groups user has joined using groupcards
+///
+///Is accessed through bottom bar
+///Shows a similar page to recipelist when a group is chosen
 class Groups extends StatelessWidget {
   final List<GroupCard> dummyList = List.filled(3, const GroupCard());
 

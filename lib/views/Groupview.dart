@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'RecipeCard.dart';
 
+///Shows a specific groups recipes
+///
+///Will use a recipelist version which can take sorting queries
 class Groupview extends StatelessWidget {
   // final List<RecipeCard> dummyList = List.filled(5, RecipeCard());
   // Recipecard behöver querydocumentsnapshot. Fixar det senare

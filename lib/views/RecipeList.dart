@@ -2,7 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'RecipeCard.dart';
 
-
+///Shows a List of recipes
+///
+///Gets recipes from firebase and displays them using recipecards
+///This is the main way to explore new recipes
+///Links to Recipepage and createrecipe
+///Is accessed by the bottom bar
 class RecipeList extends StatelessWidget {
   FirebaseFirestore instance = FirebaseFirestore.instance;
 
@@ -10,6 +15,8 @@ class RecipeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
+
+        ///Top information
         appBar: AppBar(
             title: Text(
               "Recipes",
@@ -28,6 +35,7 @@ class RecipeList extends StatelessWidget {
                 padding: const EdgeInsets.all(6.0),
                 child: Row(
                   children: [
+                    ///Button for adding recipes
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -42,6 +50,8 @@ class RecipeList extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
+
+                    ///Searchbutton, will sort the recipelist
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -55,6 +65,8 @@ class RecipeList extends StatelessWidget {
                 ),
               ),
             ]),
+
+        ///The list itself
         body: FutureBuilder(
             future: instance.collection("Recipes").get(),
             builder:
