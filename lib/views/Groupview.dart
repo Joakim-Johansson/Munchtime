@@ -4,6 +4,8 @@ import 'RecipeCard.dart';
 
 class Groupview extends StatelessWidget {
   String group = '';
+
+  Groupview({required this.group});
   // final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
 
   FirebaseFirestore instance = FirebaseFirestore.instance;
@@ -14,7 +16,7 @@ class Groupview extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
             title: Text(
-              "Group "+group+ "recipes",
+              "Group " + group + "recipes",
               style: TextStyle(
                 color: Theme.of(context).focusColor,
                 fontFamily: 'Pattaya',
@@ -58,7 +60,11 @@ class Groupview extends StatelessWidget {
               ),
             ]),
         body: FutureBuilder(
-            future: instance.collection("groups").doc(group).collection("recipes").get(),
+            future: instance
+                .collection("groups")
+                .doc(group)
+                .collection("recipes")
+                .get(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
@@ -67,15 +73,16 @@ class Groupview extends StatelessWidget {
                     mainAxisSpacing: 5.0,
                     crossAxisCount: 1,
                     padding: EdgeInsets.all(10),
-                    children:
-                        snapshot.data!.docs.map((e) => 
-                        FutureBuilder(
-                          future: instance.collection("Recipes").doc(e.id).get(),
-                        
-                          builder:(BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) =>
-                           RecipeCard(e))
-                        
-                        ).toList());
+                    children: snapshot.data!.docs
+                        .map((e) => FutureBuilder(
+                            future:
+                                instance.collection("Recipes").doc(e.id).get(),
+                            builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) =>
+                                snapshot.hasData
+                                    ? RecipeCard(snapshot.data!)
+                                    : Container()))
+                        .toList());
               }
               return Container();
             }));

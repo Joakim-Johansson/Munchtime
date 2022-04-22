@@ -15,7 +15,7 @@ class CreateGroupWidget extends State<CreateGroup> {
   void initState() {
     super.initState();
 
-    controller = TextEditingController(text: 'hej');
+    controller = TextEditingController(text: '');
   }
 
   @override
@@ -133,6 +133,8 @@ class CreateGroupWidget extends State<CreateGroup> {
                                   style: TextStyle(color: Colors.black),
                                 )));
                       }
+
+                      controller.clear();
 
                       // Check if group id is unique
 

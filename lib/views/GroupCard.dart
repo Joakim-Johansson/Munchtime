@@ -21,7 +21,7 @@ class _GroupCardState extends State<GroupCard> {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Groupview()));
+            context, MaterialPageRoute(builder: (context) => Groupview(group: widget.group.id,)));
       },
       child: Container(
         decoration: BoxDecoration(

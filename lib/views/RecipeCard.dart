@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class RecipeCard extends StatefulWidget {
-  QueryDocumentSnapshot recipe;
+  DocumentSnapshot recipe;
   Storage storage = Storage();
 
   RecipeCard(this.recipe);
