@@ -78,7 +78,7 @@ class ManageGroupsWidget extends State<ManageGroups>{
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 8, 5, 8),
                     child: Center(
-                      child: Text("Create Group",
+                      child: Text("Create a Group",
                         style: TextStyle(
                             color: Theme.of(context).focusColor,
                             fontSize: 25,
@@ -116,7 +116,7 @@ class ManageGroupsWidget extends State<ManageGroups>{
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(5, 8, 5, 8),
                   child: Center(
-                    child: Text("Join Group",
+                    child: Text("Join a Group",
                       style: TextStyle(
                         color: Theme.of(context).focusColor,
                         fontSize: 25,

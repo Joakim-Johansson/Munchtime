@@ -29,7 +29,7 @@ class CreateGroupWidget extends State<CreateGroup> {
         
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text("Create Group",
+          title: Text("Create a Group",
           style: TextStyle(
             color: Theme.of(context).focusColor,
             fontFamily: 'Pattaya',

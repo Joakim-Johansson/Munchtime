@@ -29,7 +29,7 @@ class JoinGroupWidget extends State<JoinGroup> {
         
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text("Join Group",
+          title: Text("Join a Group",
           style: TextStyle(
             color: Theme.of(context).focusColor,
             fontFamily: 'Pattaya',

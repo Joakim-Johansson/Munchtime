@@ -10,7 +10,7 @@ class Groups extends StatelessWidget {
 
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text("Groups",
+          title: Text("My Groups",
           style: TextStyle(
             color: Theme.of(context).focusColor,
             fontFamily: 'Pattaya',
