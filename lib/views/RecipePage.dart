@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipePage extends StatefulWidget {
-  QueryDocumentSnapshot recipe;
+  Map<String, dynamic> recipe;
 
   RecipePage(this.recipe);
 
@@ -12,7 +12,6 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipesState extends State<RecipePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
