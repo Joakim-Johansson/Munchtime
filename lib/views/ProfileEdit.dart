@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crunchtime/provider/auth.dart';
 import 'package:flutter/material.dart';
-
 
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class ProfileEdit extends StatefulWidget {
 
 class ProfileEditWidget extends State<ProfileEdit> {
   late final TextEditingController controller;
-  String bio = "";
+  late String bio = "";
 
   @override
   void initState() {
@@ -27,25 +27,7 @@ class ProfileEditWidget extends State<ProfileEdit> {
     super.dispose();
   }
 
- 
-
   @override
-  CollectionReference users = FirebaseFirestore.instance.collection('Users');
-void getData()async{ //use a Async-await function to get the data
-    final data =  await FirebaseFirestore.instance.collection("listofprods").get(bio) ; //get the data
-     DocumentSnapshot snapshot = data;
-  }
-  Future<void> changeBio() {
-      // Call the user's CollectionReference to add a new user
-
-      return users
-          .add({
-            'bio': bio, // John Doe// 42
-          })
-          .then((value) => print("Bio changed"))
-          .catchError((error) => print("Failed to change bio"));
-    }
-  
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -91,28 +73,46 @@ void getData()async{ //use a Async-await function to get the data
                   )),
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                child: TextField(
-                  controller: controller,
-                  maxLines: 15,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  )),
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 27, 67, 50),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
+                child: FutureBuilder(
+                    future: FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(AuthService().auth.currentUser!.uid)
+                        .get(),
+                    builder:
+                        (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                      if (snapshot.hasData) {
+                        controller.text = snapshot.data!["bio"];
+
+                        return TextField(
+                          controller: controller,
+                          maxLines: 15,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          )),
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 27, 67, 50),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(14, 0, 14, 6),
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        bio = controller.text;
-                      });
+                    onPressed: () async {
+                      bio = controller.text;
+                      await FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(AuthService().auth.currentUser!.uid)
+                          .set({"bio": bio}, SetOptions(merge: true));
+                      setState(() {});
+
                       // Respond to button press
                     },
                     style: ButtonStyle(
