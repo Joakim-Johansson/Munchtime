@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Tag.dart';
 
 class RecipeInformation extends StatelessWidget {
-  QueryDocumentSnapshot recipe;
+  Map<String, dynamic> recipe;
   late List<String> ingredientList;
 
   RecipeInformation(this.recipe) {

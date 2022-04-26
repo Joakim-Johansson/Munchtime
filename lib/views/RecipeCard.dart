@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class RecipeCard extends StatefulWidget {
-  QueryDocumentSnapshot recipe;
+  Map<String, dynamic> recipe;
 
   RecipeCard(this.recipe);
 
@@ -67,7 +67,7 @@ class _RecipeCardState extends State<RecipeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.recipe["name"],
+                  widget.recipe["name"] as String,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
