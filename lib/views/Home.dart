@@ -13,17 +13,15 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-final GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: [
-    'email'
-    ]
-);
+final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
+///First page that is loaded
+///
+///Contains buttons for login, group creating and joining groups
+///Bottom bar leads to all other pages
 class Home extends StatefulWidget {
-
   @override
   State<Home> createState() => _HomeState();
-  
 }
 
 class _HomeState extends State<Home> {
@@ -31,245 +29,218 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    _googleSignIn.onCurrentUserChanged.listen((account){
+    _googleSignIn.onCurrentUserChanged.listen((account) {
       setState(() {
         _currentUser = account;
-        });
+      });
     });
 
     _googleSignIn.signInSilently();
     super.initState();
-    
   }
-
-///First page that is loaded
-///
-///Contains buttons for login, group creating and joining groups
-///Bottom bar leads to all other pages
-class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/hills3.png"),
-                fit: BoxFit.cover)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Welcome to Munch!',
-                style: TextStyle(
-                  color: Theme.of(context).focusColor,
-                  fontFamily: 'Pattaya',
-                  fontSize: 80,
-                ),
-              ),
-            ),
-            Padding(
-
-              padding: const EdgeInsets.all(10.0),
-              child: _buildWidget(),
-                ),
-              ),
-            ),
-            Row(children: [
+        body: Container(
+            constraints: const BoxConstraints.expand(),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/hills3.png"),
+                    fit: BoxFit.cover)),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => JoinGroup()),
-                    );
-                    // Respond to button press
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: const BorderSide(
-                              color: Color.fromARGB(255, 27, 67, 50))),
-
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
-                    child: Text(
-                      "Join Group",
-                      style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 30,
-                      ),
-                    ),
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Welcome to Munch!',
+                  style: TextStyle(
+                    color: Theme.of(context).focusColor,
+                    fontFamily: 'Pattaya',
+                    fontSize: 80,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CreateGroup()),
-                    );
-                    // Respond to button press
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: const BorderSide(
-                              color: Color.fromARGB(255, 27, 67, 50))),
+                padding: const EdgeInsets.all(10.0),
+                child: _buildWidget(context),
+              ),
+              Row(children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const JoinGroup()),
+                      );
+                      // Respond to button press
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: const BorderSide(
+                                color: Color.fromARGB(255, 27, 67, 50))),
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                    child: Text(
-                      "+",
-                      style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
+                      child: Text(
+                        "Join Group",
+                        style: TextStyle(
+                          color: Theme.of(context).focusColor,
+                          fontSize: 30,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              )
-            ]),
-          ],
-        ),
-      ),
-
-    ), 
-     
-    
-    );
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CreateGroup()),
+                      );
+                      // Respond to button press
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: const BorderSide(
+                                color: Color.fromARGB(255, 27, 67, 50))),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+                      child: Text(
+                        "+",
+                        style: TextStyle(
+                          color: Theme.of(context).focusColor,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ]),
+            ])));
   }
-  Widget _buildWidget() {
+
+  Widget _buildWidget(BuildContext context) {
     final FirebaseAuth auth = FirebaseAuth.instance;
 
     final User? user = FirebaseAuth.instance.currentUser;
 
-    if(user == null){
-        return Padding(
+    if (user == null) {
+      return Padding(
         padding: const EdgeInsets.all(0),
         child: TextButton.icon(
-        onPressed: SignIn,
-      // Respond to button press
-        
-        style: ButtonStyle(
-          
-          
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        
-        RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0),
-            side: const BorderSide(
-              color: Color.fromARGB(255, 27, 67, 50))
+          onPressed: SignIn,
+          // Respond to button press
+
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side:
+                      const BorderSide(color: Color.fromARGB(255, 27, 67, 50))),
             ),
+          ),
+          icon: const FaIcon(FontAwesomeIcons.google,
+              color: Color.fromARGB(255, 82, 183, 136)),
+          label: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
+            child: Text(
+              "Sign In",
+              style: TextStyle(
+                color: Theme.of(context).focusColor,
+                fontSize: 30,
+              ),
             ),
+          ),
         ),
-        icon: const FaIcon(FontAwesomeIcons.google, color: Color.fromARGB(255, 82, 183, 136)), 
-        label: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
-          child: Text("Sign In",
-            style: TextStyle(
-                  color: Theme.of(context).focusColor,
-                  fontSize: 30,
-                ),),
-        ),
-        
-        ),
-          );
-          }
-    else{
+      );
+    } else {
       return Row(
         children: [
           Padding(
             padding: const EdgeInsets.all(0),
             child: TextButton.icon(
-            onPressed: () {Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Profile()),
-            );
-          // Respond to button press
-            },
-            style: ButtonStyle(
-              
-              
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            
-            RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-                side: const BorderSide(
-                  color: Color.fromARGB(255, 27, 67, 50))
-                ),
-                ),
-            ),
-            icon: const FaIcon(FontAwesomeIcons.google, color: Color.fromARGB(255, 82, 183, 136)), 
-            label: Padding(
-              padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
-              child: Text("Profile",
-                style: TextStyle(
-                      color: Theme.of(context).focusColor,
-                      fontSize: 30,
-                    ),),
-            ),
-            ),
-              ),
-              Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                child: TextButton(
-                onPressed: signOut,
-                          // Respond to button pres
-                style: ButtonStyle(
-                  
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Profile()),
+                );
+                // Respond to button press
+              },
+              style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  
-                RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: Color.fromARGB(255, 27, 67, 50))
-                    ),
-                    ),
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(
+                          color: Color.fromARGB(255, 27, 67, 50))),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                  child: Text("Sign Out",
+              ),
+              icon: const FaIcon(FontAwesomeIcons.google,
+                  color: Color.fromARGB(255, 82, 183, 136)),
+              label: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
+                child: Text(
+                  "Profile",
                   style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 30,
-                      ),
-                    ),
+                    color: Theme.of(context).focusColor,
+                    fontSize: 30,
                   ),
                 ),
-
-                  )
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+            child: TextButton(
+              onPressed: signOut,
+              // Respond to button pres
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(
+                          color: Color.fromARGB(255, 27, 67, 50))),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+                child: Text(
+                  "Sign Out",
+                  style: TextStyle(
+                    color: Theme.of(context).focusColor,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            ),
+          )
         ],
       );
-          
-
     }
-  
-}
-void SignIn() async {
-    try{
+  }
+
+  void SignIn() async {
+    try {
       await _googleSignIn.signIn();
       await AuthService().signInWithGoogle();
       setState(() {});
-    } catch(e){
+    } catch (e) {
       print('sign in error $e');
     }
   }
 
-void signOut(){
+  void signOut() {
     _googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
   }
