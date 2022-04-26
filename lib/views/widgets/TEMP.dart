@@ -1,15 +1,9 @@
 import 'package:crunchtime/views/CreateGroup.dart';
-import 'package:crunchtime/provider/auth.dart';
-import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/views/JoinGroup.dart';
 import 'package:crunchtime/views/Login.dart';
 import 'package:crunchtime/views/Profile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -28,6 +22,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   GoogleSignInAccount? _currentUser;
+  
 
   @override
   void initState() {
@@ -42,120 +37,109 @@ class _HomeState extends State<Home> {
     
   }
 
-///First page that is loaded
-///
-///Contains buttons for login, group creating and joining groups
-///Bottom bar leads to all other pages
-class Home extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
+      
       body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/hills3.png"),
-                fit: BoxFit.cover)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Welcome to Munch!',
-                style: TextStyle(
+      constraints: BoxConstraints.expand(),
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/hills3.png"),
+            fit: BoxFit.cover)
+            ),
+      
+      child: Column(
+        crossAxisAlignment : CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Welcome to Munch!',style: TextStyle(
                   color: Theme.of(context).focusColor,
                   fontFamily: 'Pattaya',
                   fontSize: 80,
-                ),
-              ),
-            ),
+                 ),
+                 ),
+          ),
             Padding(
-
               padding: const EdgeInsets.all(10.0),
               child: _buildWidget(),
                 ),
-              ),
-            ),
-            Row(children: [
-              Padding(
+              Row(
+                children: [ Padding(
                 padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => JoinGroup()),
-                    );
-                    // Respond to button press
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: const BorderSide(
-                              color: Color.fromARGB(255, 27, 67, 50))),
+                onPressed: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JoinGroup()),
+                );
+                          // Respond to button press
+                },
+                style: ButtonStyle(
+                  
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
 
+                RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(
+                      color: Color.fromARGB(255, 27, 67, 50))
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
-                    child: Text(
-                      "Join Group",
-                      style: TextStyle(
+                    ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
+                  child: Text("Join Group",
+                  style: TextStyle(
                         color: Theme.of(context).focusColor,
                         fontSize: 30,
-                      ),
-                    ),
-                  ),
+                      ),),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                
+                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CreateGroup()),
-                    );
-                    // Respond to button press
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: const BorderSide(
-                              color: Color.fromARGB(255, 27, 67, 50))),
+                onPressed: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CreateGroup()),
+                );
+                          // Respond to button press
+                },
+                style: ButtonStyle(
+                  
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  
+                RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(
+                      color: Color.fromARGB(255, 27, 67, 50))
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                    child: Text(
-                      "+",
-                      style: TextStyle(
+                    ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+                  child: Text("+",
+                  style: TextStyle(
                         color: Theme.of(context).focusColor,
                         fontSize: 30,
-                      ),
-                    ),
-                  ),
+                      ),),
                 ),
-              )
-            ]),
-          ],
-        ),
+                
+                ),
+                  )
+                  ]
+              ),
+              ],
       ),
-
     ), 
      
     
     );
   }
   Widget _buildWidget() {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-
-    final User? user = FirebaseAuth.instance.currentUser;
+    GoogleSignInAccount? user = _currentUser;
 
     if(user == null){
         return Padding(
@@ -246,11 +230,10 @@ class Home extends StatelessWidget {
                   style: TextStyle(
                         color: Theme.of(context).focusColor,
                         fontSize: 30,
-                      ),
-                    ),
-                  ),
+                      ),),
                 ),
-
+                
+                ),
                   )
         ],
       );
@@ -259,11 +242,9 @@ class Home extends StatelessWidget {
     }
   
 }
-void SignIn() async {
+Future<void> SignIn() async {
     try{
       await _googleSignIn.signIn();
-      await AuthService().signInWithGoogle();
-      setState(() {});
     } catch(e){
       print('sign in error $e');
     }
@@ -271,6 +252,6 @@ void SignIn() async {
 
 void signOut(){
     _googleSignIn.disconnect();
-    FirebaseAuth.instance.signOut();
   }
 }
+  

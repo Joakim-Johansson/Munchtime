@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
+///Shows a recipe as a small box with an image and name
+///
+///Needs a QueryDocumentSnapshot which it can get from firebase
+///Generally used to create the lists showing different recipes
+///Those pages themselves get the information from firebase
 class RecipeCard extends StatefulWidget {
-  QueryDocumentSnapshot recipe;
-  Storage storage = Storage();
 
-  RecipeCard(this.recipe);
+  Storage storage = Storage();
+  Map<String, dynamic> recipe;
+
+  const RecipeCard(this.recipe);
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -20,6 +26,7 @@ class _RecipeCardState extends State<RecipeCard> {
     setState(() => {boxColor = Colors.red});
   }
 
+  ///The function which creates the widget itself
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,6 +48,8 @@ class _RecipeCardState extends State<RecipeCard> {
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           GestureDetector(
+            ///When tapped it will send the user to a recipepage which uses the
+            ///recipe specified in the card to build the actual recipe
               onTap: () => Navigator.of(context).pushNamed(
                     "/recipepage",
                     arguments: widget.recipe,
@@ -80,11 +89,12 @@ class _RecipeCardState extends State<RecipeCard> {
                   const BorderRadius.vertical(bottom: Radius.circular(15)),
               color: Colors.black.withOpacity(0.4),
             ),
+            ///Writes out the text with background at the bottom of the image
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.recipe["name"],
+                  widget.recipe["name"] as String,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
