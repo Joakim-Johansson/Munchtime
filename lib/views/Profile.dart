@@ -5,6 +5,8 @@ import 'package:crunchtime/views/ProfileEdit.dart';
 class Profile extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

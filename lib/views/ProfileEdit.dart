@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({Key? key}) : super(key: key);
@@ -9,12 +11,13 @@ class ProfileEdit extends StatefulWidget {
 
 class ProfileEditWidget extends State<ProfileEdit> {
   late final TextEditingController controller;
+  String bio = "";
 
   @override
   void initState() {
     super.initState();
 
-    controller = TextEditingController(text: "Hi! I'm William and I just love food that has that little extra punch!");
+    controller = TextEditingController(text: bio);
   }
 
   @override
@@ -24,7 +27,25 @@ class ProfileEditWidget extends State<ProfileEdit> {
     super.dispose();
   }
 
+ 
+
   @override
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+void getData()async{ //use a Async-await function to get the data
+    final data =  await FirebaseFirestore.instance.collection("listofprods").get(bio) ; //get the data
+     DocumentSnapshot snapshot = data;
+  }
+  Future<void> changeBio() {
+      // Call the user's CollectionReference to add a new user
+
+      return users
+          .add({
+            'bio': bio, // John Doe// 42
+          })
+          .then((value) => print("Bio changed"))
+          .catchError((error) => print("Failed to change bio"));
+    }
+  
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -89,6 +110,9 @@ class ProfileEditWidget extends State<ProfileEdit> {
                   alignment: Alignment.bottomRight,
                   child: TextButton(
                     onPressed: () {
+                      setState(() {
+                        bio = controller.text;
+                      });
                       // Respond to button press
                     },
                     style: ButtonStyle(
