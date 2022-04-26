@@ -8,7 +8,7 @@ import 'Tag.dart';
 ///
 ///Creates a column which contains all the parts of a recipe
 class RecipeInformation extends StatelessWidget {
-  QueryDocumentSnapshot recipe;
+  Map<String, dynamic> recipe;
   late List<String> ingredientList;
 
   RecipeInformation(this.recipe) {

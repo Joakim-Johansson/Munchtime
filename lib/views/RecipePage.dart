@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 ///Uses recipeinformation.dart to display the Recipes
 ///Needs a QueryDocumentSnapshot from firebase in order to work properly
 class RecipePage extends StatefulWidget {
-  QueryDocumentSnapshot recipe;
+  Map<String, dynamic> recipe;
 
   RecipePage(this.recipe);
 

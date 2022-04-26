@@ -8,7 +8,8 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 ///Generally used to create the lists showing different recipes
 ///Those pages themselves get the information from firebase
 class RecipeCard extends StatefulWidget {
-  final QueryDocumentSnapshot recipe;
+
+  Map<String, dynamic> recipe;
 
   const RecipeCard(this.recipe);
 
@@ -76,7 +77,7 @@ class _RecipeCardState extends State<RecipeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.recipe["name"],
+                  widget.recipe["name"] as String,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,

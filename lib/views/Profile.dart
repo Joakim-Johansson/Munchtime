@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchtime/views/ProfileEdit.dart';
 
@@ -5,6 +6,8 @@ import 'package:crunchtime/views/ProfileEdit.dart';
 ///
 ///Contains an image, name, and a description which users can edit
 class Profile extends StatelessWidget {
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,21 +24,32 @@ class Profile extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
           elevation: 0,
         ),
-        body: Container(
-          constraints: BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/hills2.png"),
-                  fit: BoxFit.cover)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(22, 22, 22, 2),
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/Will_Smith.jpg'),
-                  radius: 125,
+
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/hills2.png"),
+            fit: BoxFit.cover)
+            ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+           Padding(
+            padding: EdgeInsets.fromLTRB(22, 22, 22, 2),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(user.photoURL!),
+              radius: 125,
+              ),
+          ),
+           Padding(
+              padding: EdgeInsets.all(4.0),
+              child: Text(user.displayName!,
+                style: TextStyle(
+                  color: Color.fromARGB(255, 27, 67, 50),
+                  fontSize: 30,
+                ),
                 ),
               ),
               const Padding(
