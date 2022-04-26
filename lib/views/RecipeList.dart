@@ -2,6 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchtime/widgets/RecipeListFuture.dart';
 
+
+///Shows a List of recipes
+///
+///Gets recipes from firebase and displays them using recipecards
+///This is the main way to explore new recipes
+///Links to Recipepage and createrecipe
+///Is accessed by the bottom bar
+
 class RecipeList extends StatefulWidget {
   // final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
 
@@ -21,6 +29,8 @@ class _RecipeListState extends State<RecipeList> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
+
+        ///Top information
         appBar: AppBar(
             title: Text(
               "Recipes",
@@ -39,6 +49,7 @@ class _RecipeListState extends State<RecipeList> {
                 padding: const EdgeInsets.all(6.0),
                 child: Row(
                   children: [
+                    ///Button for adding recipes
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -53,6 +64,7 @@ class _RecipeListState extends State<RecipeList> {
                     const SizedBox(
                       width: 5,
                     ),
+
                     Container(
                       height: 40,
                       decoration: BoxDecoration(
@@ -74,6 +86,7 @@ class _RecipeListState extends State<RecipeList> {
                 ),
               ),
             ]),
+
         body: RecipeListFuture(widget.searchTerm));
   }
 

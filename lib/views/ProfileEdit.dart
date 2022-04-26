@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+///Screen where users can edit their bio
+///
+///Is accessed through Profile
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({Key? key}) : super(key: key);
 
@@ -14,7 +17,9 @@ class ProfileEditWidget extends State<ProfileEdit> {
   void initState() {
     super.initState();
 
-    controller = TextEditingController(text: "Hi! I'm William and I just love food that has that little extra punch!");
+    controller = TextEditingController(
+        text:
+            "Hi! I'm William and I just love food that has that little extra punch!");
   }
 
   @override

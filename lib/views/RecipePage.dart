@@ -2,6 +2,10 @@ import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+///Recipepage displays all the information about a recipe
+///
+///Uses recipeinformation.dart to display the Recipes
+///Needs a QueryDocumentSnapshot from firebase in order to work properly
 class RecipePage extends StatefulWidget {
   Map<String, dynamic> recipe;
 

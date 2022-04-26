@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'Tag.dart';
 
+///Is the scrollable part of RecipePage
+///
+///Creates a column which contains all the parts of a recipe
 class RecipeInformation extends StatelessWidget {
   Map<String, dynamic> recipe;
   late List<String> ingredientList;
@@ -53,7 +56,7 @@ class RecipeInformation extends StatelessWidget {
                         "Eco-impact: " + recipe["Total CO2-eq"].toString(),
                         Colors.green),
                   )),
-              Align(
+              const Align(
                 alignment: Alignment(-0.95, 0),
                 child: Text(
                   "Ingredients:",
@@ -94,6 +97,7 @@ class RecipeInformation extends StatelessWidget {
     ]);
   }
 
+  ///Builds the list of ingredients using itembuilder
   Widget getIngredients(BuildContext context, int i) {
     if (i.isOdd) return const Divider();
     final index = i ~/ 2;
@@ -101,6 +105,7 @@ class RecipeInformation extends StatelessWidget {
         style: const TextStyle(decorationStyle: TextDecorationStyle.dotted));
   }
 
+  ///Works similarly to getIngredients
   Widget getInstructions(BuildContext context, int i) {
     if (i.isOdd) return const Divider();
     final index = i ~/ 2;
@@ -108,6 +113,7 @@ class RecipeInformation extends StatelessWidget {
         (i / 2 + 1).toInt().toString() + ". " + tempInstructions[index]);
   }
 
+  ///Builds a list containing all the ingredients to display
   static List<String> translateIngredients(List<dynamic> newIngredients) {
     return newIngredients
         .map((item) => item.substring(1, item.length - 1).toString())
