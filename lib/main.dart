@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -19,6 +18,7 @@ Future main() async {
     ),
   );
 
+  AuthService().signInAnon();
   // UserCredential user = await AuthService().signInWithGoogle();
 //
   runApp(const MyApp());

@@ -7,6 +7,9 @@ import 'package:crunchtime/views/Profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -25,7 +28,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   GoogleSignInAccount? _currentUser;
-  
 
   @override
   void initState() {
@@ -59,6 +61,7 @@ class Home extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -94,6 +97,7 @@ class Home extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18.0),
                           side: const BorderSide(
                               color: Color.fromARGB(255, 27, 67, 50))),
+
                     ),
                   ),
                   child: Padding(
@@ -242,10 +246,11 @@ class Home extends StatelessWidget {
                   style: TextStyle(
                         color: Theme.of(context).focusColor,
                         fontSize: 30,
-                      ),),
+                      ),
+                    ),
+                  ),
                 ),
-                
-                ),
+
                   )
         ],
       );
@@ -267,6 +272,5 @@ void SignIn() async {
 void signOut(){
     _googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
-    
   }
 }

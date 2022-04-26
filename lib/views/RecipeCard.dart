@@ -1,3 +1,4 @@
+import 'package:crunchtime/data/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 ///Those pages themselves get the information from firebase
 class RecipeCard extends StatefulWidget {
 
+  Storage storage = Storage();
   Map<String, dynamic> recipe;
 
   const RecipeCard(this.recipe);
@@ -58,9 +60,24 @@ class _RecipeCardState extends State<RecipeCard> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Image.asset(
-                    'assets/images/carbonara.jpg',
-                  ),
+                  child: FutureBuilder(
+                  future: widget.storage.downloadURL(widget.recipe["img"]),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        height: 400,
+                        width: 400,
+                        child: Image.network(
+                          snapshot.data!,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                )
                 ),
               )),
           Container(
