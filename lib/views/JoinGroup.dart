@@ -99,7 +99,11 @@ class JoinGroupWidget extends State<JoinGroup> {
                           .get();
 
                       if (snap.docs.isNotEmpty) {
-                        print("exits");
+                        DocumentSnapshot group = snap.docs[0];
+                        await FirebaseFirestore.instance
+                            .collection('groups')
+                            .doc(group.id)
+                            .set({"members": FieldValue.increment(1)}, SetOptions(merge: true));
 
                         await FirebaseFirestore.instance
                             .collection('Users')

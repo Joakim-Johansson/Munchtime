@@ -35,25 +35,30 @@ class Groups extends StatelessWidget {
                 DocumentSnapshot x = snapshot.data!;
                 return Center(
                   child: Column(
-                    children: x["groups"].map<Widget>((e) {
-                      return FutureBuilder(
-                          future: FirebaseFirestore.instance
-                              .collection("groups")
-                              .doc(e)
-                              .get(),
-                          builder: (context,
-                              AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            if (snapshot.hasData) {
-                              return GroupCard(group: snapshot.data!);
-                            } else {
-                              return Container();
-                            }
-                          });
-                    }).toList(),
+                    children: x["groups"] == null
+                        ? Container(
+                            child: Text("You haven't joined any groups yet."),
+                          )
+                        : x["groups"].map<Widget>((e) {
+                            return FutureBuilder(
+                                future: FirebaseFirestore.instance
+                                    .collection("groups")
+                                    .doc(e)
+                                    .get(),
+                                builder: (context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.hasData) {
+                                    return GroupCard(group: snapshot.data!);
+                                  } else {
+                                    return Container();
+                                  }
+                                });
+                          }).toList(),
                   ),
                 );
+              } else {
+                return Container();
               }
-              return Container();
             }));
   }
 }

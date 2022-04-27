@@ -83,8 +83,9 @@ class Groupview extends StatelessWidget {
                                     ? RecipeCard(snapshot.data!)
                                     : Container()))
                         .toList());
+              } else {
+                return Container();
               }
-              return Container();
             }));
   }
 }
