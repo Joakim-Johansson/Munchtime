@@ -10,95 +10,35 @@ import 'Login.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/hills3.png"),
-                fit: BoxFit.cover)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Welcome to Munch!',
-                style: TextStyle(
-                  color: Theme.of(context).focusColor,
-                  fontFamily: 'Pattaya',
-                  fontSize: 80,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
-                  // Respond to button press
-                },
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: const BorderSide(
-                            color: Color.fromARGB(255, 27, 67, 50))),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                  child: Text(
-                    "User Profile",
-                    style: TextStyle(
-                      color: Theme.of(context).focusColor,
-                      fontSize: 30,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Row(children: [
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          constraints: BoxConstraints.expand(),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/hills3.png"),
+                  fit: BoxFit.cover)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => JoinGroup()),
-                    );
-                    // Respond to button press
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: const BorderSide(
-                              color: Color.fromARGB(255, 27, 67, 50))),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
-                    child: Text(
-                      "Join Group",
-                      style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 30,
-                      ),
-                    ),
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Welcome to Munch!',
+                  style: TextStyle(
+                    color: Theme.of(context).focusColor,
+                    fontFamily: 'Pattaya',
+                    fontSize: 80,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                padding: const EdgeInsets.all(8.0),
                 child: TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateGroup()),
+                      MaterialPageRoute(builder: (context) => Login()),
                     );
                     // Respond to button press
                   },
@@ -113,7 +53,7 @@ class Home extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
                     child: Text(
-                      "+",
+                      "User Profile",
                       style: TextStyle(
                         color: Theme.of(context).focusColor,
                         fontSize: 30,
@@ -121,9 +61,71 @@ class Home extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
-            ]),
-          ],
+              ),
+              Row(children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => JoinGroup()),
+                      );
+                      // Respond to button press
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: const BorderSide(
+                                color: Color.fromARGB(255, 27, 67, 50))),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
+                      child: Text(
+                        "Join Group",
+                        style: TextStyle(
+                          color: Theme.of(context).focusColor,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CreateGroup()),
+                      );
+                      // Respond to button press
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: const BorderSide(
+                                color: Color.fromARGB(255, 27, 67, 50))),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+                      child: Text(
+                        "+",
+                        style: TextStyle(
+                          color: Theme.of(context).focusColor,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ]),
+            ],
+          ),
         ),
       ),
     );

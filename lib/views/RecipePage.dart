@@ -44,19 +44,60 @@ class _RecipesState extends State<RecipePage> {
                               .get(),
                           builder: (context,
                               AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            Map<String, dynamic> map = snapshot.data!.data() as Map<String, dynamic>;
-                             return SimpleDialog(
-                              title: Text('Share to group'),
-                              children: map["groups"]!.map<Widget>((key) => SimpleDialogOption(
-                                  onPressed: () {
+                            if (snapshot.hasData) {
+                              Map<String, dynamic> map =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              return SimpleDialog(
+                                title: Text('Share to group'),
+                                children: map["groups"]!
+                                    .map<Widget>((key) => SimpleDialogOption(
+                                        onPressed: () async {
+                                          CollectionReference recipeColl =
+                                              await FirebaseFirestore.instance
+                                                  .collection("groups")
+                                                  .doc(key)
+                                                  .collection("recipes");
 
-                                    
-                                  },
-                                  child: Text(key.toString())
-                                )).toList(),
-                              elevation: 10,
-                              //backgroundColor: Colors.green,
-                            );
+                                          DocumentSnapshot foundDoc =
+                                              await recipeColl
+                                                  .doc(widget.recipe.id)
+                                                  .get();
+                                          if (foundDoc.exists) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    backgroundColor: Colors.red,
+                                                    content: Text(
+                                                      "Already exists in that group",
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    )));
+                                          } else {
+                                            await FirebaseFirestore.instance
+                                                .collection("groups")
+                                                .doc(key)
+                                                .collection("recipes")
+                                                .doc(widget.recipe.id)
+                                                .set({});
+                                                                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    backgroundColor: Colors.green,
+                                                    content: Text(
+                                                      "Succesfully added!",
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    )));
+                                          }
+
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(key.toString())))
+                                    .toList(),
+                                elevation: 10,
+                                //backgroundColor: Colors.green,
+                              );
+                            } else {
+                              return Container();
+                            }
                           }));
                 },
                 child: Icon(
