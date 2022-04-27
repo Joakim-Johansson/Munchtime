@@ -56,8 +56,8 @@ class ManageGroupsWidget extends State<ManageGroups>{
           //Insert a picture representing a group.
           Image(
             image: AssetImage('assets/images/groupImage.png'),
-            width: 250.0,
-            height: 200.0,
+            width: 225.0,
+            height: 175.0,
           ),
 
           //Button for creating groups.
