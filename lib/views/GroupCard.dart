@@ -118,7 +118,7 @@ class _GroupCardState extends State<GroupCard> {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: widget.group["members"].toString(),
+                                  text: widget.group["members"].length.toString(),
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color.fromARGB(255, 8, 28, 21),

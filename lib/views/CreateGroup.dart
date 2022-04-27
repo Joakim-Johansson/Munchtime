@@ -105,14 +105,15 @@ class CreateGroupWidget extends State<CreateGroup> {
                             .doc(controller.text)
                             .set({
                           "owner": AuthService().auth.currentUser!.uid,
-                          "members": 1,
+                          "members": FieldValue.arrayUnion(
+                              [AuthService().auth.currentUser!.uid]),
                           "code": controller.text
                         });
                         await FirebaseFirestore.instance
                             .collection('Users')
                             .doc(AuthService().auth.currentUser?.uid)
                             .set({
-                          "groups": FieldValue.arrayUnion([controller.text])
+                          "groups": FieldValue.arrayUnion([controller.text]),
                         }, SetOptions(merge: true));
 
                         ScaffoldMessenger.of(context)
