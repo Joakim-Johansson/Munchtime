@@ -1,4 +1,5 @@
 import 'package:crunchtime/data/storage.dart';
+import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,6 +30,41 @@ class _RecipesState extends State<RecipePage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).bottomAppBarColor,
         elevation: 0,
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection("Users")
+                              .doc(AuthService().auth.currentUser?.uid)
+                              .get(),
+                          builder: (context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            Map<String, dynamic> map = snapshot.data!.data() as Map<String, dynamic>;
+                             return SimpleDialog(
+                              title: Text('Share to group'),
+                              children: map["groups"]!.map<Widget>((key) => SimpleDialogOption(
+                                  onPressed: () {
+
+                                    
+                                  },
+                                  child: Text(key.toString())
+                                )).toList(),
+                              elevation: 10,
+                              //backgroundColor: Colors.green,
+                            );
+                          }));
+                },
+                child: Icon(
+                  Icons.share,
+                  size: 26.0,
+                ),
+              )),
+        ],
       ),
       body: Stack(
         fit: StackFit.expand,
