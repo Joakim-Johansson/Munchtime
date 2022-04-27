@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/views/Groupview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class GroupCard extends StatefulWidget {
@@ -16,12 +18,39 @@ class _GroupCardState extends State<GroupCard> {
     setState(() => {boxColor = Colors.red});
   }
 
+  Future<bool> LeaveGroup(User user, String groupCode) async {
+    QuerySnapshot snap = await FirebaseFirestore.instance
+        .collection('groups')
+        .where("code", isEqualTo: groupCode)
+        .get();
+
+    if (snap.docs.isNotEmpty) {
+      DocumentSnapshot group = snap.docs[0];
+      await FirebaseFirestore.instance.collection('groups').doc(group.id).set({
+        "members": FieldValue.arrayRemove([AuthService().auth.currentUser!.uid])
+      }, SetOptions(merge: true));
+
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(AuthService().auth.currentUser?.uid)
+          .set({
+        "groups": FieldValue.arrayRemove([groupCode])
+      }, SetOptions(merge: true));
+    }
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Groupview(group: widget.group.id,)));
+            context,
+            MaterialPageRoute(
+                builder: (context) => Groupview(
+                      group: widget.group.id,
+                    )));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -55,8 +84,12 @@ class _GroupCardState extends State<GroupCard> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {
-                            // Respond to button press
+                          onPressed: () async {
+                            await LeaveGroup(AuthService().auth.currentUser!, widget.group["code"]);
+                            setState(() {
+                              
+                            });
+                            return;
                           },
                           style: ButtonStyle(
                             shape: MaterialStateProperty.all<
@@ -118,7 +151,8 @@ class _GroupCardState extends State<GroupCard> {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: widget.group["members"].length.toString(),
+                                  text:
+                                      widget.group["members"].length.toString(),
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Color.fromARGB(255, 8, 28, 21),

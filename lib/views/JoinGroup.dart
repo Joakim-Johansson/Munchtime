@@ -104,7 +104,7 @@ class JoinGroupWidget extends State<JoinGroup> {
                             .collection('groups')
                             .doc(group.id)
                             .set({
-                          "members": FieldValue.arrayUnion([AuthService().auth.currentUser])
+                          "members": FieldValue.arrayUnion([AuthService().auth.currentUser!.uid])
                         }, SetOptions(merge: true));
 
                         await FirebaseFirestore.instance
