@@ -53,9 +53,16 @@ class ManageGroupsWidget extends State<ManageGroups>{
 
         children: [
 
+          //Insert a picture representing a group.
+          Image(
+            image: AssetImage('assets/images/groupImage.png'),
+            width: 250.0,
+            height: 200.0,
+          ),
+
           //Button for creating groups.
           Padding(
-            padding: const EdgeInsets.fromLTRB(80, 0, 80, 6),
+            padding: const EdgeInsets.fromLTRB(80, 10, 80, 6),
             child: Align(
               alignment: Alignment.bottomRight,
               child: Align(
