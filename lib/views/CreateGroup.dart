@@ -109,6 +109,7 @@ class CreateGroupWidget extends State<CreateGroup> {
                               [AuthService().auth.currentUser!.uid]),
                           "code": controller.text
                         });
+                        
                         await FirebaseFirestore.instance
                             .collection('Users')
                             .doc(AuthService().auth.currentUser?.uid)

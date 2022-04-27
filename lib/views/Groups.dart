@@ -33,12 +33,17 @@ class Groups extends StatelessWidget {
             builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasData) {
                 DocumentSnapshot x = snapshot.data!;
+                Map<String, dynamic> data = x.data() as Map<String, dynamic>;
+
                 return Center(
                   child: Column(
-                    children: x["groups"] == null
-                        ? Container(
-                            child: Text("You haven't joined any groups yet."),
-                          )
+                    children: !data.containsKey("groups")
+                        ? [Padding(
+                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height/3),
+                          child: Container(
+                              child: Text("You haven't joined any groups yet."),
+                            ),
+                        )]
                         : x["groups"].map<Widget>((e) {
                             return FutureBuilder(
                                 future: FirebaseFirestore.instance
