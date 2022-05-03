@@ -1,257 +1,59 @@
-import 'package:crunchtime/views/CreateGroup.dart';
-import 'package:crunchtime/views/JoinGroup.dart';
-import 'package:crunchtime/views/Login.dart';
-import 'package:crunchtime/views/Profile.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crunchtime/provider/auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'GroupCard.dart';
 
-final GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: [
-    'email'
-    ]
-);
-
-class Home extends StatefulWidget {
-
-  @override
-  State<Home> createState() => _HomeState();
-  
-}
-
-class _HomeState extends State<Home> {
-  GoogleSignInAccount? _currentUser;
-  
-
-  @override
-  void initState() {
-    _googleSignIn.onCurrentUserChanged.listen((account){
-      setState(() {
-        _currentUser = account;
-        });
-    });
-
-    _googleSignIn.signInSilently();
-    super.initState();
-    
-  }
+class Groups extends StatelessWidget {
+  Groups({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      
-      body: Container(
-      constraints: BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/hills3.png"),
-            fit: BoxFit.cover)
-            ),
-      
-      child: Column(
-        crossAxisAlignment : CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('Welcome to Munch!',style: TextStyle(
-                  color: Theme.of(context).focusColor,
-                  fontFamily: 'Pattaya',
-                  fontSize: 80,
-                 ),
-                 ),
-          ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: _buildWidget(),
-                ),
-              Row(
-                children: [ Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                child: TextButton(
-                onPressed: () {Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => JoinGroup()),
-                );
-                          // Respond to button press
-                },
-                style: ButtonStyle(
-                  
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-
-                RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: Color.fromARGB(255, 27, 67, 50))
-                    ),
-                    ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
-                  child: Text("Join Group",
-                  style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 30,
-                      ),),
-                ),
-                
-                ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                child: TextButton(
-                onPressed: () {Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CreateGroup()),
-                );
-                          // Respond to button press
-                },
-                style: ButtonStyle(
-                  
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  
-                RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: Color.fromARGB(255, 27, 67, 50))
-                    ),
-                    ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                  child: Text("+",
-                  style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 30,
-                      ),),
-                ),
-                
-                ),
-                  )
-                  ]
-              ),
-              ],
-      ),
-    ), 
-     
-    
-    );
-  }
-  Widget _buildWidget() {
-    GoogleSignInAccount? user = _currentUser;
-
-    if(user == null){
-        return Padding(
-        padding: const EdgeInsets.all(0),
-        child: TextButton.icon(
-        onPressed: SignIn,
-      // Respond to button press
-        
-        style: ButtonStyle(
-          
-          
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        
-        RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0),
-            side: const BorderSide(
-              color: Color.fromARGB(255, 27, 67, 50))
-            ),
-            ),
-        ),
-        icon: const FaIcon(FontAwesomeIcons.google, color: Color.fromARGB(255, 82, 183, 136)), 
-        label: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
-          child: Text("Sign In",
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(
+          title: Text(
+            "Groups",
             style: TextStyle(
-                  color: Theme.of(context).focusColor,
-                  fontSize: 30,
-                ),),
+              color: Theme.of(context).focusColor,
+              fontFamily: 'Pattaya',
+              fontSize: 30,
+            ),
+          ),
+          centerTitle: false,
+          automaticallyImplyLeading: false,
+          backgroundColor: Theme.of(context).bottomAppBarColor,
+          elevation: 0,
         ),
-        
-        ),
-          );
-          }
-    else{
-      return Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(0),
-            child: TextButton.icon(
-            onPressed: () {Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Profile()),
-            );
-          // Respond to button press
-            },
-            style: ButtonStyle(
-              
-              
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            
-            RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-                side: const BorderSide(
-                  color: Color.fromARGB(255, 27, 67, 50))
-                ),
-                ),
-            ),
-            icon: const FaIcon(FontAwesomeIcons.google, color: Color.fromARGB(255, 82, 183, 136)), 
-            label: Padding(
-              padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
-              child: Text("Profile",
-                style: TextStyle(
-                      color: Theme.of(context).focusColor,
-                      fontSize: 30,
-                    ),),
-            ),
-            ),
-              ),
-              Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                child: TextButton(
-                onPressed: signOut,
-                          // Respond to button pres
-                style: ButtonStyle(
-                  
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  
-                RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: Color.fromARGB(255, 27, 67, 50))
-                    ),
-                    ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                  child: Text("Sign Out",
-                  style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 30,
-                      ),),
-                ),
-                
-                ),
-                  )
-        ],
-      );
-          
-
-    }
-  
-}
-Future<void> SignIn() async {
-    try{
-      await _googleSignIn.signIn();
-    } catch(e){
-      print('sign in error $e');
-    }
-  }
-
-void signOut(){
-    _googleSignIn.disconnect();
+        body: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection("Users")
+                .doc(AuthService().auth.currentUser?.uid)
+                .get(),
+            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasData) {
+                DocumentSnapshot x = snapshot.data!;
+                return Center(
+                  child: Column(
+                    children: x["groups"].map<Widget>((e) {
+                      return FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection("groups")
+                              .doc(e)
+                              .get(),
+                          builder: (context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              return GroupCard(group: snapshot.data!);
+                            } else {
+                              return Container();
+                            }
+                          });
+                    }).toList(),
+                  ),
+                );
+              }
+              return Container();
+            }));
   }
 }
-  
