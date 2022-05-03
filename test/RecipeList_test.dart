@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:crunchtime/FirebaseMock.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:crunchtime/views/RecipeList.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,16 +8,8 @@ void main() {
   // to work with. The WidgetTester allows you to build and interact
   // with widgets in the test environment.
   testWidgets('RecipeList works', (WidgetTester tester) async {
-    WidgetsFlutterBinding.ensureInitialized();
-
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: "AIzaSyDfZUtf8OSxoOytCivkWZycf5nBulEtREI",
-        appId: "1:585359346972:android:31e610f23394e2922c3ed9",
-        messagingSenderId: "585359346972",
-        projectId: "Munchtime",
-      ),
-    );
+    setupFirebaseAuthMocks();
+    await Firebase.initializeApp();
 
     await tester.pumpWidget(RecipeList());
 

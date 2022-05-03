@@ -1,9 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:crunchtime/views/RecipeCard.dart';
+import 'package:crunchtime/FirebaseMock.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   testWidgets('RecipeCard tests', (WidgetTester tester) async {
+    setupFirebaseAuthMocks();
+    await Firebase.initializeApp();
     Map<String, dynamic> test = {
       "name": "Carbonara",
       "description": "Nått",
@@ -16,5 +20,19 @@ void main() {
     };
 
     await tester.pumpWidget(RecipeCard(test));
+
+    final title = find.text("Carbonara");
+    final desc = find.text("Nått");
+    final ingredients = find.text("Bacon");
+    final amount = find.text("Fat: 24");
+
+    expect(title, findsOneWidget);
+    expect(desc, findsNothing);
+    expect(ingredients, findsNothing);
+    expect(amount, findsNothing);
+
+    final stack = find.byType(Stack);
+
+    expect(stack, findsOneWidget);
   });
 }

@@ -43,68 +43,71 @@ class _RecipeCardState extends State<RecipeCard> {
           ),
         ],
       ),
-      child: Stack(
-        alignment: AlignmentDirectional.bottomCenter,
-        children: [
-          GestureDetector(
-
-              ///When tapped it will send the user to a recipepage which uses the
-              ///recipe specified in the card to build the actual recipe
-              onTap: () => Navigator.of(context).pushNamed(
-                    "/recipepage",
-                    arguments: widget.recipe,
-                  ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            GestureDetector(
+      
+                ///When tapped it will send the user to a recipepage which uses the
+                ///recipe specified in the card to build the actual recipe
+                onTap: () => Navigator.of(context).pushNamed(
+                      "/recipepage",
+                      arguments: widget.recipe,
                     ),
-                    child: FutureBuilder(
-                      future: widget.storage.downloadURL(widget.recipe["img"]),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<String> snapshot) {
-                        if (snapshot.hasData) {
-                          return Container(
-                            height: 400,
-                            width: 400,
-                            child: Image.network(
-                              snapshot.data!,
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    )),
-              )),
-          Container(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
-            width: double.infinity,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius:
-                  const BorderRadius.vertical(bottom: Radius.circular(15)),
-              color: Colors.black.withOpacity(0.4),
-            ),
-
-            ///Writes out the text with background at the bottom of the image
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.recipe["name"] as String,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: Colors.white,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: FutureBuilder(
+                        future: widget.storage.downloadURL(widget.recipe["img"]),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.hasData) {
+                            return SizedBox(
+                              height: 400,
+                              width: 400,
+                              child: Image.network(
+                                snapshot.data!,
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      )),
+                )),
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(15)),
+                color: Colors.black.withOpacity(0.4),
+              ),
+      
+              ///Writes out the text with background at the bottom of the image
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.recipe["name"] as String,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     ); //DETTA ÄR FELET OM DET INTE FUNKAR MED BILD EFTER RESTART
   }
