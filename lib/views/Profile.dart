@@ -44,7 +44,7 @@ class Profile extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(4.0),
+                  padding: EdgeInsets.fromLTRB(22, 14, 22, 14),
                   child: Text(
                     user.displayName!,
                     style: TextStyle(
