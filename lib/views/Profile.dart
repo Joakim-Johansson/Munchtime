@@ -86,42 +86,43 @@ class Profile extends StatelessWidget {
                     } else {
                       return Container();
                     }
-                  }),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProfileEdit()),
-                      );
-                      // Respond to button press
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: const BorderSide(
-                                color: Color.fromARGB(255, 27, 67, 50))),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
-                      child: Text(
-                        "Edit bio",
-                        style: TextStyle(
-                          color: Theme.of(context).focusColor,
-                          fontSize: 14,
+                  }),                
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(3, 6, 14, 6),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => ProfileEdit()),
+                          );
+                          // Respond to button press
+                        },
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: const BorderSide(
+                                    color: Color.fromARGB(255, 27, 67, 50))),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                          child: Text(
+                            "Edit",
+                            style: TextStyle(
+                              color: Theme.of(context).focusColor,
+                              fontSize: 14,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              )
-            ],
+                  )
+                ],           
           ),
-        ));
+        )
+        );
   }
 }
