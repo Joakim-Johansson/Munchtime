@@ -4,10 +4,10 @@ import 'package:crunchtime/views/RecipeCard.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class RecipeListFuture extends StatelessWidget {
+class RecipeListFutureHorizontal extends StatelessWidget {
   late String command;
 
-  RecipeListFuture(this.command);
+  RecipeListFutureHorizontal(this.command);
 
   @override
   Widget build(BuildContext context) {
