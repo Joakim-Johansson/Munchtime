@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class RecipePage extends StatefulWidget {
-  QueryDocumentSnapshot recipe;
+  DocumentSnapshot recipe;
   Storage storage = Storage();
 
   RecipePage(this.recipe);

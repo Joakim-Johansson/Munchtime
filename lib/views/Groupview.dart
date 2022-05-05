@@ -77,9 +77,9 @@ class Groupview extends StatelessWidget {
                             future:
                                 instance.collection("Recipes").doc(e.id).get(),
                             builder: (BuildContext context,
-                                    AsyncSnapshot<DocumentSnapshot> snapshot) =>
-                                snapshot.hasData
-                                    ? RecipeCard(snapshot.data!)
+                                    AsyncSnapshot<DocumentSnapshot> asyncRecipe) =>
+                                asyncRecipe.hasData
+                                    ? RecipeCard(asyncRecipe.data!)
                                     : Container()))
                         .toList());
               } else {

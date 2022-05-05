@@ -17,7 +17,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RecipeList());
       case '/recipepage':
         return MaterialPageRoute(
-            builder: (_) => RecipePage(args as QueryDocumentSnapshot));
+            builder: (_) => RecipePage(args as DocumentSnapshot));
       case '/group':
         return MaterialPageRoute(builder: (_) => Groups());
       case '/createRecipe':
