@@ -9,14 +9,31 @@ import 'Tag.dart';
 ///Creates a column which contains all the parts of a recipe
 class RecipeInformation extends StatelessWidget {
   Map<String, dynamic> recipe;
+  late String name;
+  late String description;
+  late String climateGrade;
   late List<String> ingredientList;
   late List<String> instructionList;
   late List<String> nutrition;
 
   RecipeInformation(this.recipe) {
-    ingredientList = translateIngredients(recipe["ingredients"]);
-    instructionList = translateInstructions(recipe["instructions"]);
-    // nutrition = recipe["nutrition"];
+    try {
+      name = recipe["name"];
+      // description = recipe["description"];
+      description =
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ullamcorper arcu accumsan nulla gravida hendrerit. Aliquam fringilla massa quis congue tincidunt. Ut dolor mi, consequat eget tortor nec, porttitor tristique libero. Vivamus sit amet nisi fe";
+      climateGrade = recipe["Climate Grade"];
+      ingredientList = translateIngredients(recipe["ingredients"]);
+      instructionList = translateDynamicList(recipe["instructions"]);
+      nutrition = translateDynamicList(recipe["nutrition"]);
+    } catch (e) {
+      name = "Load Failed";
+      description = "";
+      climateGrade = "";
+      ingredientList = [];
+      instructionList = [];
+      nutrition = ["", "", "", ""];
+    }
   }
 
   List<Widget> dummylist =
@@ -36,7 +53,7 @@ class RecipeInformation extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                recipe["name"],
+                name,
                 style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.bold, height: 3),
                 textAlign: TextAlign.left,
@@ -49,13 +66,35 @@ class RecipeInformation extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Tag(
-                        "Eco-impact: " + recipe["Climate grade"], Colors.green),
+                    child: Tag("Climate Grade: " + climateGrade, Colors.green),
                   )),
-              /*Row(children: [
-                Tag(, color)
-              ],),*/
-              // Text(recipe["description"]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Tag(nutrition[0], Colors.greenAccent),
+                  Tag(nutrition[1], Colors.greenAccent),
+                  Tag(nutrition[2], Colors.greenAccent),
+                  Tag(nutrition[3], Colors.greenAccent),
+                ],
+              ),
+              Divider(
+                thickness: 3,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+                child: Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                    fontFamily: "Cambria",
+                  ),
+                ),
+              ),
+              Divider(
+                thickness: 3,
+              ),
               const Align(
                 alignment: Alignment(-0.95, 0),
                 child: Text(
@@ -120,7 +159,7 @@ class RecipeInformation extends StatelessWidget {
   }
 
   ///Builds a list containing all the instrucions to display
-  static List<String> translateInstructions(List<dynamic> newInstructions) {
+  static List<String> translateDynamicList(List<dynamic> newInstructions) {
     return newInstructions.map((item) => item.toString()).toList();
   }
 }
