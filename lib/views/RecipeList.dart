@@ -56,8 +56,8 @@ class RecipeList extends StatelessWidget {
                 ),
               ),
             ]),
-        body: FutureBuilder(
-            future: instance.collection("Recipes").get(),
+        body: StreamBuilder(
+            stream: instance.collection("Recipes").snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {

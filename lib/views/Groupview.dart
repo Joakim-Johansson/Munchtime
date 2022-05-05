@@ -59,12 +59,11 @@ class Groupview extends StatelessWidget {
                 ),
               ),
             ]),
-        body: FutureBuilder(
-            future: instance
+        body: StreamBuilder(
+            stream: instance
                 .collection("groups")
                 .doc(group)
-                .collection("recipes")
-                .get(),
+                .collection("recipes").snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
