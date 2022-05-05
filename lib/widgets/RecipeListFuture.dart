@@ -13,7 +13,7 @@ class RecipeListFuture extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<http.Response>(
         future: http.get(Uri.parse(
-            "https://cohesive-photon-346611.ew.r.appspot.com/search/" +
+            "https://cohesive-photon-346611.ew.r.appspot.com/search" +
                 command)),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchtime/widgets/RecipeListFuture.dart';
 
-
 ///Shows a List of recipes
 ///
 ///Gets recipes from firebase and displays them using recipecards
@@ -86,8 +85,7 @@ class _RecipeListState extends State<RecipeList> {
                 ),
               ),
             ]),
-
-        body: RecipeListFuture(widget.searchTerm));
+        body: RecipeListFuture("/" + widget.searchTerm));
   }
 
   void createSearchbar() {
