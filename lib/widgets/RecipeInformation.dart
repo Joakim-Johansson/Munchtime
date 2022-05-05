@@ -10,17 +10,14 @@ import 'Tag.dart';
 class RecipeInformation extends StatelessWidget {
   Map<String, dynamic> recipe;
   late List<String> ingredientList;
+  late List<String> instructionList;
+  late List<String> nutrition;
 
   RecipeInformation(this.recipe) {
     ingredientList = translateIngredients(recipe["ingredients"]);
+    instructionList = translateInstructions(recipe["instructions"]);
+    // nutrition = recipe["nutrition"];
   }
-
-  final tempInstructions = [
-    "Cook Pasta",
-    "Fry pork",
-    "Whisk Eggs",
-    "Put Cheese on top"
-  ];
 
   List<Widget> dummylist =
       List.filled(5, Container(color: Colors.red, height: 200, width: 50));
@@ -53,9 +50,12 @@ class RecipeInformation extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Tag(
-                        "Eco-impact: " + recipe["Total CO2-eq"].toString(),
-                        Colors.green),
+                        "Eco-impact: " + recipe["Climate grade"], Colors.green),
                   )),
+              /*Row(children: [
+                Tag(, color)
+              ],),*/
+              // Text(recipe["description"]),
               const Align(
                 alignment: Alignment(-0.95, 0),
                 child: Text(
@@ -86,7 +86,7 @@ class RecipeInformation extends StatelessWidget {
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: tempInstructions.length * 2,
+                    itemCount: instructionList.length * 2,
                     itemBuilder: ((context, index) =>
                         getInstructions(context, index))),
               ),
@@ -109,8 +109,7 @@ class RecipeInformation extends StatelessWidget {
   Widget getInstructions(BuildContext context, int i) {
     if (i.isOdd) return const Divider();
     final index = i ~/ 2;
-    return Text(
-        (i / 2 + 1).toInt().toString() + ". " + tempInstructions[index]);
+    return Text((i / 2 + 1).toInt().toString() + ". " + instructionList[index]);
   }
 
   ///Builds a list containing all the ingredients to display
@@ -118,5 +117,10 @@ class RecipeInformation extends StatelessWidget {
     return newIngredients
         .map((item) => item.substring(1, item.length - 1).toString())
         .toList();
+  }
+
+  ///Builds a list containing all the instrucions to display
+  static List<String> translateInstructions(List<dynamic> newInstructions) {
+    return newInstructions.map((item) => item.toString()).toList();
   }
 }
