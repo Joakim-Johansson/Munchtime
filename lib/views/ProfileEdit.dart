@@ -90,6 +90,7 @@ class ProfileEditWidget extends State<ProfileEdit> {
                           return TextField(
                             controller: controller,
                             maxLines: 15,
+                            maxLength: 255,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
