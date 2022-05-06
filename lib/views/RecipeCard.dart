@@ -9,7 +9,6 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 ///Generally used to create the lists showing different recipes
 ///Those pages themselves get the information from firebase
 class RecipeCard extends StatefulWidget {
-  DocumentSnapshot recipe;
   Storage storage = Storage();
   Map<String, dynamic> recipe;
 

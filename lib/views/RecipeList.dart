@@ -8,7 +8,6 @@ import 'package:crunchtime/widgets/RecipeListFuture.dart';
 ///This is the main way to explore new recipes
 ///Links to Recipepage and createrecipe
 ///Is accessed by the bottom bar
-
 class RecipeList extends StatefulWidget {
   // final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
 
@@ -85,20 +84,45 @@ class _RecipeListState extends State<RecipeList> {
                 ),
               ),
             ]),
-        body: StreamBuilder(
-            stream: instance.collection("Recipes").snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasData) {
-                return GridView.count(
-                    crossAxisSpacing: 5.0,
-                    mainAxisSpacing: 5.0,
-                    crossAxisCount: 1,
-                    padding: EdgeInsets.all(10),
-                    children:
-                        snapshot.data!.docs.map((e) => RecipeCard(e)).toList());
-              }
-              return Container();
-            }));
+        body: RecipeListFuture("/" + widget.searchTerm));
+  }
+
+  void createSearchbar() {
+    setState(() {
+      if (widget.searchBar is Container) {
+        widget.icon = Icon(Icons.clear);
+        widget.searchBar = SizedBox(
+          width: 150,
+          height: 50,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
+            child: TextField(
+              autofocus: true,
+              textInputAction: TextInputAction.search,
+              onSubmitted: (value) {
+                search(value);
+              },
+              controller: widget.searchContent,
+              decoration:
+                  InputDecoration(hintText: "Search", border: InputBorder.none),
+            ),
+          ),
+        );
+      } else {
+        widget.icon = Icon(Icons.search);
+        widget.searchBar = Container();
+        widget.searchContent.text = "";
+      }
+    });
+  }
+
+  void search(String value) {
+    setState(() {
+      if (value == "") {
+        widget.searchTerm = "all";
+      } else {
+        widget.searchTerm = value;
+      }
+    });
   }
 }

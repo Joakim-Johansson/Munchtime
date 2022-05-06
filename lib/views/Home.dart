@@ -41,17 +41,15 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         body: Container(
-          constraints: BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/hills3.png"),
-                  fit: BoxFit.cover)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            constraints: const BoxConstraints.expand(),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/hills3.png"),
+                    fit: BoxFit.cover)),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -64,34 +62,8 @@ class _HomeState extends State<Home> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                    // Respond to button press
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: const BorderSide(
-                              color: Color.fromARGB(255, 27, 67, 50))),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                    child: Text(
-                      "User Profile",
-                      style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 30,
-                      ),
-                    ),
-                  ),
-                ),
+                padding: const EdgeInsets.all(10.0),
+                child: _buildWidget(context),
               ),
               Row(children: [
                 Padding(
@@ -100,7 +72,8 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => JoinGroup()),
+                        MaterialPageRoute(
+                            builder: (context) => const JoinGroup()),
                       );
                       // Respond to button press
                     },
@@ -155,7 +128,40 @@ class _HomeState extends State<Home> {
                   ),
                 )
               ]),
-            ],
+            ])));
+  }
+
+  Widget _buildWidget(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      return Padding(
+        padding: const EdgeInsets.all(0),
+        child: TextButton.icon(
+          onPressed: SignIn,
+          // Respond to button press
+
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side:
+                      const BorderSide(color: Color.fromARGB(255, 27, 67, 50))),
+            ),
+          ),
+          icon: const FaIcon(FontAwesomeIcons.google,
+              color: Color.fromARGB(255, 82, 183, 136)),
+          label: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
+            child: Text(
+              "Sign In",
+              style: TextStyle(
+                color: Theme.of(context).focusColor,
+                fontSize: 30,
+              ),
+            ),
           ),
         ),
       );

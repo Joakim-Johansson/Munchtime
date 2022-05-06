@@ -10,7 +10,6 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 ///Uses recipeinformation.dart to display the Recipes
 ///Needs a QueryDocumentSnapshot from firebase in order to work properly
 class RecipePage extends StatefulWidget {
-  DocumentSnapshot recipe;
   Storage storage = Storage();
   Map<String, dynamic> recipe;
 
@@ -66,7 +65,7 @@ class _RecipesState extends State<RecipePage> {
 
                                           DocumentSnapshot foundDoc =
                                               await recipeColl
-                                                  .doc(widget.recipe.id)
+                                                  .doc(widget.recipe["name"])
                                                   .get();
                                           if (foundDoc.exists) {
                                             ScaffoldMessenger.of(context)
@@ -82,7 +81,7 @@ class _RecipesState extends State<RecipePage> {
                                                 .collection("groups")
                                                 .doc(key)
                                                 .collection("recipes")
-                                                .doc(widget.recipe.id)
+                                                .doc(widget.recipe["name"])
                                                 .set({});
                                                                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(

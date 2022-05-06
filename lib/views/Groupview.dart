@@ -82,7 +82,7 @@ class Groupview extends StatelessWidget {
                             builder: (BuildContext context,
                                     AsyncSnapshot<DocumentSnapshot> asyncRecipe) =>
                                 asyncRecipe.hasData
-                                    ? RecipeCard(asyncRecipe.data!)
+                                    ? RecipeCard(asyncRecipe.data!.data() as Map<String, dynamic>)
                                     : Container()))
                         .toList());
               } else {
