@@ -7,8 +7,8 @@ BASE = "http://127.0.0.1:5000/"
 
 # input()
 
-response = requests.get(BASE + "recipes", {"name":"all"})
-print(response.json())
+# response = requests.get(BASE + "recipes", {"name":"Carbonara"})
+# print(response.json())
 
 
 #[("Bacon",100),("Eggs",100)]

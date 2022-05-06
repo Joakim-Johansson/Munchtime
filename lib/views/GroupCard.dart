@@ -4,6 +4,12 @@ import 'package:crunchtime/views/Groupview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+///Displays short information about a group in a box
+///
+///Shows which groups the user is a part of
+///Show name member amount and how many recipes has been shared
+///It also has a leave button
+///Clicking the group shows all the shared recipes
 class GroupCard extends StatefulWidget {
   GroupCard({required this.group});
   DocumentSnapshot group;
