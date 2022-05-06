@@ -95,12 +95,6 @@ flutter:
     - family: Pattaya
       fonts:
         - asset: fonts/Pattaya-Regular.ttf
-
-    - family: Comfortaa
-      fonts:
-        - asset: fonts/Comfortaa-Regular.ttf
-        - asset: fonts/Comfortaa-Bold.ttf
-          style: italic
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

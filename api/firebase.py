@@ -68,6 +68,7 @@ def deleteRecipes(name):
     db.collection('Recipes').document(name).delete()
             
 class Recipes(Resource):
+
     # Hämtar data om recept
     # argument: all -> returnerar dictionary med lista av alla recept i databasen
     # argument: namn på ingrediens -> returnerar lista med namn på alla recept som innehåller den ingrediensen
@@ -107,21 +108,10 @@ class Recipes(Resource):
         addData(r)
         return {'Successfully added':args['name']}
 
-class Users(Resource):
-    def get(self):
-        pass
-    def post(self):
-        pass
-    def put(self):
-        pass
-
-
 api.add_resource(Recipes,'/recipes')
-api.add_resource(Users, '/users')
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 
 

@@ -4,10 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'GroupCard.dart';
 
-///Shows groups user has joined using groupcards
-///
-///Is accessed through bottom bar
-///Shows a similar page to recipelist when a group is chosen
 class Groups extends StatelessWidget {
   Groups({Key? key}) : super(key: key);
 

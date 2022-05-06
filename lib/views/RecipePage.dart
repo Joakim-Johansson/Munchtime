@@ -5,15 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-///Recipepage displays all the information about a recipe
-///
-///Uses recipeinformation.dart to display the Recipes
-///Needs a QueryDocumentSnapshot from firebase in order to work properly
 class RecipePage extends StatefulWidget {
   DocumentSnapshot recipe;
   Storage storage = Storage();
-  Map<String, dynamic> recipe;
-
 
   RecipePage(this.recipe);
 

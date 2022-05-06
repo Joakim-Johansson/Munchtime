@@ -1,10 +1,10 @@
+import 'dart:io';
 import 'dart:convert';
 import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:crunchtime/jsonRecipe.dart';
 
@@ -25,11 +25,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
   List<TextEditingController> instructionControllers = [
     TextEditingController()
   ];
-  String fileName = '';
 
-  ///Builds the form widget for creating recipes
-  ///
-  ///Contains several textfields for all info for recipes
+  String fileName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +35,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
           constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
-
-                  ///Background image
                   image: AssetImage("assets/images/hills2.png"),
                   fit: BoxFit.fill)),
           child: SingleChildScrollView(
@@ -85,8 +80,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 const SizedBox(
                   height: 15,
                 ),
-
-                ///Title entry
                 TextField(
                     controller: titleController,
                     decoration: InputDecoration(
@@ -123,8 +116,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 const SizedBox(
                   height: 15,
                 ),
-
-                ///Description
                 TextField(
                     maxLength: null,
                     maxLines: null,
@@ -161,8 +152,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       labelStyle:
                           const TextStyle(fontSize: 34, color: Colors.black),
                     )),
-
-                ///Ingredients
                 const Align(
                   alignment: Alignment(-0.81, 0),
                   child: Text(
@@ -179,8 +168,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
                     children: ingredientControllers.map((e) {
                       return Column(children: [
                         createRow(e),
-
-                        ///Set [divider] unless last item
                         ingredientControllers.last == e
                             ? Container()
                             : const Divider(
@@ -204,8 +191,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
                         Icon(Icons.add),
                       ]),
                 ),
-
-                ///Instructions
                 const Align(
                   alignment: Alignment(-0.81, 0),
                   child: Text(
@@ -220,35 +205,26 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: instructionControllers.map((e) {
-                      return Column(children: [
-                        Row(children: [
-                          Flexible(
-                            child: TextField(
-                                controller: e,
-                                decoration: const InputDecoration.collapsed(
-                                  hintText: "Next Step",
-                                )),
-                          ),
-
-                          ///Write a minus icon if the user has added extra steps
-                          IconButton(
-                              onPressed: instructionControllers.length != 1
-                                  ? () => setState(() {
-                                        instructionControllers.remove(e);
-                                      })
-                                  : () {},
-                              icon: instructionControllers.length == 1
-                                  ? const Icon(
-                                      Icons.abc,
-                                      size: 0.0,
-                                    )
-                                  : const Icon(Icons.remove))
-                        ]),
-                        instructionControllers.last == e
-                            ? Container()
-                            : const Divider(
-                                thickness: 2,
-                              ),
+                      return Row(children: [
+                        Flexible(
+                          child: TextField(
+                              controller: e,
+                              decoration: const InputDecoration(
+                                hintText: "Next Step",
+                              )),
+                        ),
+                        IconButton(
+                            onPressed: instructionControllers.length != 1
+                                ? () => setState(() {
+                                      instructionControllers.remove(e);
+                                    })
+                                : () {},
+                            icon: instructionControllers.length == 1
+                                ? const Icon(
+                                    Icons.abc,
+                                    size: 0.0,
+                                  )
+                                : const Icon(Icons.remove))
                       ]);
                     }).toList(),
                   ),
@@ -285,25 +261,15 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 ))));
   }
 
-  ///Creates a row containing all Objects for ingredients
-  ///
-  ///A row object containing a [TextEditingController] for an ingredient as well as
-  ///a dropdown menu containing different choices for an amount of each ingredient.
-  ///The function requires a list containing one [TextEditingController] and a
-  ///[String] representing one of the dropdownvalues
   Row createRow(List<Object> e) {
     return Row(children: [
       Flexible(
         child: TextField(
-
-            ///First is the TextEditingController
             controller: e.first as TextEditingController,
             decoration: const InputDecoration.collapsed(
-              hintText: "Next Ingredient",
+              hintText: "Next Step",
             )),
       ),
-
-      ///Last is the String
       DropdownButton(
           value: e.last,
           items: [
@@ -323,22 +289,17 @@ class _CreateRecipeState extends State<CreateRecipe> {
             "900g",
             "1000g"
           ].map<DropdownMenuItem<String>>((String value) {
-            ///Adds all the above values to the dropdownmenu
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),
             );
           }).toList(),
-
-          ///Changes the value when the user chooses a new one from the menu
           onChanged: (Object? value) => {
                 setState(() {
                   e.last = value!;
                 })
               }),
       IconButton(
-
-          ///Logic for removal of an added item
           onPressed: ingredientControllers.length != 1
               ? () => setState(() {
                     ingredientControllers.remove(e);
@@ -353,13 +314,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
     ]);
   }
 
-  ///Sends the entered information as a jsonobject to the api
-  ///
-  ///Asynchronus function as it has to wait for a response from the api
-  ///Gathers the information entered in the form and translates it to
-  ///Lists and strings which the api can interpret. In the case of a mistake
-  ///on the users or system's part there is an exception check which will
-  ///display an alert window showing an error message
   void sendRecipe() async {
     List<String> ingredientList = [];
     List<int> amountList = [];
@@ -383,13 +337,14 @@ class _CreateRecipeState extends State<CreateRecipe> {
       instructionList.add(instructionControllers[i].text);
     }
 
+
     Dio dio = Dio();
 
     Response response = await dio
         .post("https://cohesive-photon-346611.ew.r.appspot.com/recipes", data: {
       "name": titleController.text,
       "user": AuthService().auth.currentUser!.uid,
-      "instructions": instructionList,
+      "instruction": instructionList,
       "ingredients": ingredientList,
       "amount": amountList,
       "img": fileName

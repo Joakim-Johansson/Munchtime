@@ -2,9 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'RecipeCard.dart';
 
-///Shows a specific groups recipes
-///
-///Will use a recipelist version which can take sorting queries
 class Groupview extends StatelessWidget {
   String group = '';
 

@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/views/CreateRecipe.dart';
 import 'package:crunchtime/views/Groups.dart';
 import 'package:crunchtime/views/Home.dart';
 import 'package:crunchtime/views/RecipeList.dart';
 import 'package:crunchtime/views/RecipePage.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {

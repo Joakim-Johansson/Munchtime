@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: Color.fromARGB(255, 250, 255, 251),
               bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
               focusColor: Color.fromARGB(255, 27, 67, 50),
-              fontFamily: 'Comfortaa'),
+              fontFamily: 'OpenSans'),
           home: NavBar(),
         ),
       );
