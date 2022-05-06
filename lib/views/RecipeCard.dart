@@ -109,6 +109,6 @@ class _RecipeCardState extends State<RecipeCard> {
           )
         ],
       ),
-    ); //DETTA ÄR FELET OM DET INTE FUNKAR MED BILD EFTER RESTART
+    );
   }
 }

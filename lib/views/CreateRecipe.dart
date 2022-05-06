@@ -1,16 +1,13 @@
-import 'dart:convert';
+import 'dart:io';
 import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:http/http.dart' as http;
-
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:crunchtime/jsonRecipe.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class CreateRecipe extends StatefulWidget {
-    Storage storage = Storage();
-
+  Storage storage = Storage();
 
   @override
   State<CreateRecipe> createState() => _CreateRecipeState();
@@ -26,6 +23,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
     TextEditingController()
   ];
   String fileName = '';
+  var image;
+
+  int portions = 2;
 
   ///Builds the form widget for creating recipes
   ///
@@ -46,8 +46,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
-
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -60,28 +58,35 @@ class _CreateRecipeState extends State<CreateRecipe> {
                     ),
                     IconButton(
                       onPressed: () async {
-                        final results = await FilePicker.platform.pickFiles(
-                            type: FileType.image, allowMultiple: false);
+                        final tempImage = await ImagePicker()
+                            .pickImage(source: ImageSource.gallery);
 
-                        if (results == null) {
+                        if (tempImage == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text("No file selected")));
 
-                          return null;
+                          return;
                         }
 
-                        final path = results.files.single.path!;
-                        fileName = results.files.single.name;
+                        final path = tempImage.path;
+                        fileName = tempImage.name;
 
                         widget.storage
                             .uploadFile(path, fileName)
                             .then((value) => print("done"));
+                        setState(() {
+                          image = File(tempImage.path);
+                        });
                       },
                       icon: Icon(Icons.add, size: 30),
                     )
                   ],
                 ),
+                Container(
+                    child: image == null
+                        ? Container()
+                        : Image.file(File(image.path))),
                 const SizedBox(
                   height: 15,
                 ),
@@ -266,6 +271,18 @@ class _CreateRecipeState extends State<CreateRecipe> {
                         Icon(Icons.add),
                       ]),
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                  child: Text("Portions:"),
+                ),
+                NumberPicker(
+                  axis: Axis.horizontal,
+                  value: portions,
+                  maxValue: 20,
+                  minValue: 1,
+                  step: 1,
+                  onChanged: (value) => setState(() => portions = value),
+                ),
                 TextButton(
                   onPressed: sendRecipe,
                   child: const Text('Done'),
@@ -392,10 +409,10 @@ class _CreateRecipeState extends State<CreateRecipe> {
       "instructions": instructionList,
       "ingredients": ingredientList,
       "amount": amountList,
-      "img": fileName
+      "img": fileName,
+      "portions": portions
     });
 
-    
     response.statusCode;
   }
 }
