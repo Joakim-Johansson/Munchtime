@@ -48,28 +48,27 @@ class _RecipeCardState extends State<RecipeCard> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: FutureBuilder(
-                  future: widget.storage.downloadURL(widget.recipe["img"]),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    if (snapshot.hasData) {
-                      return Container(
-                        height: 400,
-                        width: 400,
-                        child: Image.network(
-                          snapshot.data!,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  },
-                )
-                ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: FutureBuilder(
+                      future: widget.storage.downloadURL(widget.recipe["img"]),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
+                        if (snapshot.hasData) {
+                          return Container(
+                            height: 400,
+                            width: 400,
+                            child: Image.network(
+                              snapshot.data!,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    )),
               )),
           Container(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),

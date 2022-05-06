@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,14 @@ class CreateGroup extends StatefulWidget {
 class CreateGroupWidget extends State<CreateGroup> {
   late final TextEditingController controller;
   FirebaseFirestore instance = FirebaseFirestore.instance;
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
+  }
 
   @override
   void initState() {
@@ -47,126 +57,130 @@ class CreateGroupWidget extends State<CreateGroup> {
               image: DecorationImage(
                   image: AssetImage("assets/images/blob4.png"),
                   fit: BoxFit.cover)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: RichText(
-                      text: const TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: 'Enter the Group Name\n',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 27, 67, 50),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: RichText(
+                        text: const TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'Enter the Group Name\n',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 27, 67, 50),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ],
+                        ),
                       ),
-                    ),
-                  )),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(75, 0, 75, 10),
-                child: Container(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    controller: controller,
-                    maxLines: 1,
-                    maxLength: 10,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
                     )),
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 27, 67, 50),
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(75, 0, 75, 10),
+                  child: Container(
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: controller,
+                      maxLines: 1,
+                      maxLength: 10,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      )),
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 27, 67, 50),
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(80, 0, 80, 6),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: TextButton(
-                    onPressed: () async {
-                      QuerySnapshot snap = await FirebaseFirestore.instance
-                          .collection('groups')
-                          .where("code", isEqualTo: controller.text)
-                          .get();
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(80, 0, 80, 6),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: TextButton(
+                      onPressed: () async {
+                        String code = generateRandomString(6);
+                        QuerySnapshot snap = await FirebaseFirestore.instance
+                            .collection('groups')
+                            .where("code", isEqualTo: controller.text)
+                            .get();
 
-                      if (snap.docs.isEmpty) {
-                        await instance
-                            .collection("groups")
-                            .doc(controller.text)
-                            .set({
-                          "owner": AuthService().auth.currentUser!.uid,
-                          "members": FieldValue.arrayUnion(
-                              [AuthService().auth.currentUser!.uid]),
-                          "code": controller.text
-                        });
-                        
-                        await FirebaseFirestore.instance
-                            .collection('Users')
-                            .doc(AuthService().auth.currentUser?.uid)
-                            .set({
-                          "groups": FieldValue.arrayUnion([controller.text]),
-                        }, SetOptions(merge: true));
+                        if (snap.docs.isEmpty) {
+                          await instance.collection("groups").doc(code).set({
+                            "owner": AuthService().auth.currentUser!.uid,
+                            "members": FieldValue.arrayUnion(
+                                [AuthService().auth.currentUser!.uid]),
+                            "name": controller.text,
+                            "code": code
+                            // add id
+                          });
 
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                backgroundColor: Colors.green,
-                                content: Text(
-                                  "Succesfully created group!",
-                                  style: TextStyle(color: Colors.white),
-                                )));
+                          await FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(AuthService().auth.currentUser?.uid)
+                              .set({
+                            "groups": FieldValue.arrayUnion([code]),
+                          }, SetOptions(merge: true));
+
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text(
+                                    "Succesfully created group!",
+                                    style: TextStyle(color: Colors.white),
+                                  )));
+
+                          controller.clear();
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    "A group with that code already exists",
+                                    style: TextStyle(color: Colors.black),
+                                  )));
+                        }
 
                         controller.clear();
-                      } else {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  "A group with that code already exists",
-                                  style: TextStyle(color: Colors.black),
-                                )));
-                      }
 
-                      controller.clear();
+                        // Check if group id is unique
 
-                      // Check if group id is unique
-
-                      // Respond to button press
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: const BorderSide(
-                                color: Color.fromARGB(255, 27, 67, 50))),
+                        // Respond to button press
+                      },
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: const BorderSide(
+                                  color: Color.fromARGB(255, 27, 67, 50))),
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 8, 5, 8),
-                      child: Center(
-                        child: Text(
-                          "Create",
-                          style: TextStyle(
-                            color: Theme.of(context).focusColor,
-                            fontSize: 25,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 8, 5, 8),
+                        child: Center(
+                          child: Text(
+                            "Create",
+                            style: TextStyle(
+                              color: Theme.of(context).focusColor,
+                              fontSize: 25,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 188.0),
-            ],
+                SizedBox(height: 188.0),
+              ],
+            ),
           ),
         ));
   }

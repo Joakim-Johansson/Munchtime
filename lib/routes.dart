@@ -21,7 +21,7 @@ class RouteGenerator {
       case '/group':
         return MaterialPageRoute(builder: (_) => Groups());
       case '/createRecipe':
-        return MaterialPageRoute(builder: (_) =>  CreateRecipe());
+        return MaterialPageRoute(builder: (_) => CreateRecipe());
     }
 
     return MaterialPageRoute(builder: (_) => Home()); // Default
