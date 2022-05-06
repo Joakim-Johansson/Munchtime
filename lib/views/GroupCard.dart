@@ -49,7 +49,7 @@ class _GroupCardState extends State<GroupCard> {
             context,
             MaterialPageRoute(
                 builder: (context) => Groupview(
-                      group: widget.group["name"],
+                      group: widget.group["code"],
                     )));
       },
       child: Container(
