@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:flutter/material.dart';
 
+///Page for joining a group
+///
+///You join a group by entering a 6 letter code
+///Each code is unique to one specific group
 class JoinGroup extends StatefulWidget {
   const JoinGroup({Key? key}) : super(key: key);
 
