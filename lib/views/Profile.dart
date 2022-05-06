@@ -147,7 +147,7 @@ class Profile extends StatelessWidget {
                               child: SizedBox(
                                 height: 200,
                                 width: 1000,
-                                  child: RecipeListFutureHorizontal("all"),
+                                  child: RecipeListFutureHorizontal(user.uid),
                               ),
                             )
                   ],           
