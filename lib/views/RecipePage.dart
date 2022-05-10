@@ -114,6 +114,6 @@ class _RecipesState extends State<RecipePage> {
             "/" +
             AuthService().auth.currentUser!.uid));
 
-    Navigator.pop(context);
+    Navigator.of(context).pushNamed("/recipelist");
   }
 }

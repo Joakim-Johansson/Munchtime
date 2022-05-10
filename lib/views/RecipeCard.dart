@@ -52,12 +52,10 @@ class _RecipeCardState extends State<RecipeCard> {
 
               ///When tapped it will send the user to a recipepage which uses the
               ///recipe specified in the card to build the actual recipe
-              onTap: () => Navigator.of(context)
-                  .pushNamed(
+              onTap: () => Navigator.of(context).pushNamed(
                     "/recipepage",
                     arguments: widget.recipe,
-                  )
-                  .then(onGoBack),
+                  ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Container(
@@ -114,9 +112,5 @@ class _RecipeCardState extends State<RecipeCard> {
         ],
       ),
     );
-  }
-
-  FutureOr onGoBack(dynamic value) {
-    setState(() {});
   }
 }

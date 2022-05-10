@@ -396,8 +396,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
   ///on the users or system's part there is an exception check which will
   ///display an alert window showing an error message
   void sendRecipe() async {
-
-    
     List<String> ingredientList = [];
     List<int> amountList = [];
     List<String> instructionList = [];
@@ -440,11 +438,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
           builder: (BuildContext context) => AlertDialog(
                 title: Text("Recipe Created!"),
                 actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text("Great!"))
+                  TextButton(onPressed: jumpToRecipeList, child: Text("Great!"))
                 ],
               ));
     } else {
@@ -473,5 +467,10 @@ class _CreateRecipeState extends State<CreateRecipe> {
     tempController.text = name;
 
     return [tempController, amount];
+  }
+
+  void jumpToRecipeList() {
+    Navigator.of(context).pop();
+    // Navigator.pushNamed(context, "/recipelist");
   }
 }
