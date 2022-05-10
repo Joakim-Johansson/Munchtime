@@ -438,7 +438,11 @@ class _CreateRecipeState extends State<CreateRecipe> {
           builder: (BuildContext context) => AlertDialog(
                 title: Text("Recipe Created!"),
                 actions: [
-                  TextButton(onPressed: jumpToRecipeList, child: Text("Great!"))
+                  TextButton(
+                      onPressed: () {
+                        jumpToRecipeList(context);
+                      },
+                      child: Text("Great!"))
                 ],
               ));
     } else {
@@ -469,8 +473,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
     return [tempController, amount];
   }
 
-  void jumpToRecipeList() {
-    Navigator.of(context).pop();
-    // Navigator.pushNamed(context, "/recipelist");
+  void jumpToRecipeList(BuildContext widgetContext) {
+    Navigator.of(widgetContext).pop();
+    Navigator.pushNamed(context, "/recipelist");
   }
 }
