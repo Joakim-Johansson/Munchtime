@@ -2,6 +2,8 @@ import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../provider/auth.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -45,7 +47,10 @@ class _RecipesState extends State<RecipePage> {
                     icon: const Icon(
                       Icons.edit,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed("/createRecipe", arguments: widget.recipe);
+                    },
                   ),
                 ),
               ),
@@ -102,10 +107,13 @@ class _RecipesState extends State<RecipePage> {
     );
   }
 
-  void deleteRecipe() {
-    http.get(
-        Uri.parse("https://cohesive-photon-346611.ew.r.appspot.com/search"));
+  void deleteRecipe() async {
+    http.Response response = await http.delete(Uri.parse(
+        "https://cohesive-photon-346611.ew.r.appspot.com/delete/" +
+            widget.recipe["name"] +
+            "/" +
+            AuthService().auth.currentUser!.uid));
+
     Navigator.pop(context);
-    setState(() {});
   }
 }

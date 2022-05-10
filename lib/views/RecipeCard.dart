@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crunchtime/data/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,10 +52,12 @@ class _RecipeCardState extends State<RecipeCard> {
 
               ///When tapped it will send the user to a recipepage which uses the
               ///recipe specified in the card to build the actual recipe
-              onTap: () => Navigator.of(context).pushNamed(
+              onTap: () => Navigator.of(context)
+                  .pushNamed(
                     "/recipepage",
                     arguments: widget.recipe,
-                  ),
+                  )
+                  .then(onGoBack),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Container(
@@ -110,5 +114,9 @@ class _RecipeCardState extends State<RecipeCard> {
         ],
       ),
     );
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
   }
 }

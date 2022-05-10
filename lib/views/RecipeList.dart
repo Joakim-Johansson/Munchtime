@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchtime/widgets/RecipeListFuture.dart';
@@ -56,7 +58,9 @@ class _RecipeListState extends State<RecipeList> {
                         icon: const Icon(Icons.add),
                         color: Theme.of(context).focusColor,
                         onPressed: () {
-                          Navigator.of(context).pushNamed("/createRecipe");
+                          Navigator.of(context)
+                              .pushNamed("/createRecipe")
+                              .then(onGoBack);
                         },
                       ),
                     ),
@@ -125,5 +129,9 @@ class _RecipeListState extends State<RecipeList> {
         widget.searchTerm = value;
       }
     });
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
   }
 }

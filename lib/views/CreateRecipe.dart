@@ -8,6 +8,9 @@ import 'package:numberpicker/numberpicker.dart';
 
 class CreateRecipe extends StatefulWidget {
   Storage storage = Storage();
+  var recipe;
+
+  CreateRecipe([this.recipe]);
 
   @override
   State<CreateRecipe> createState() => _CreateRecipeState();
@@ -33,6 +36,21 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.recipe != null) {
+      Map<String, dynamic> recipe = widget.recipe;
+      titleController.text = recipe["name"];
+      descriptionController.text = recipe["description"];
+      ingredientControllers[0] = extractIngredients(recipe["ingredients"][0]);
+      for (int i = 1; i < recipe["ingredients"].length; i++) {
+        ingredientControllers.add(extractIngredients(recipe["ingredients"][i]));
+      }
+      instructionControllers[0].text = recipe["instructions"][0];
+      for (int i = 1; i < recipe["instructions"].length; i++) {
+        instructionControllers
+            .add(TextEditingController(text: recipe["instructions"][i]));
+      }
+      portions = recipe["portions"];
+    }
     return Scaffold(
         body: Container(
           constraints: const BoxConstraints.expand(),
@@ -378,6 +396,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
   ///on the users or system's part there is an exception check which will
   ///display an alert window showing an error message
   void sendRecipe() async {
+
+    
     List<String> ingredientList = [];
     List<int> amountList = [];
     List<String> instructionList = [];
@@ -406,6 +426,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
         .post("https://cohesive-photon-346611.ew.r.appspot.com/recipes", data: {
       "name": titleController.text,
       "user": AuthService().auth.currentUser!.uid,
+      "description": descriptionController.text,
       "instructions": instructionList,
       "ingredients": ingredientList,
       "amount": amountList,
@@ -413,6 +434,44 @@ class _CreateRecipeState extends State<CreateRecipe> {
       "portions": portions
     });
 
-    response.statusCode;
+    if (response.statusCode == 200) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                title: Text("Recipe Created!"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("Great!"))
+                ],
+              ));
+    } else {
+      AlertDialog(title: Text("Recipe failed creation"));
+    }
+  }
+
+  List<Object> extractIngredients(String values) {
+    String amount = "";
+    String name = "";
+    bool switched = false;
+    String substring = values.substring(1, values.length - 1);
+    for (int i = 0; i < substring.length; i++) {
+      if (switched) {
+        name += substring[i];
+      } else {
+        amount += substring[i];
+      }
+      if (substring[i] == "g") {
+        i += 2;
+        switched = true;
+      }
+    }
+
+    TextEditingController tempController = TextEditingController();
+    tempController.text = name;
+
+    return [tempController, amount];
   }
 }
