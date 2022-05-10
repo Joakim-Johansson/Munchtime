@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 ///Show name member amount and how many recipes has been shared
 ///It also has a leave button
 ///Clicking the group shows all the shared recipes
-class GroupCard extends StatefulWidget {
-  GroupCard({required this.group});
-  DocumentSnapshot group;
+class UserCard extends StatefulWidget {
+  UserCard({required this.user});
+  DocumentSnapshot user;
   @override
-  State<GroupCard> createState() => _GroupCardState();
+  State<UserCard> createState() => _UserCardState();
 }
 
-class _GroupCardState extends State<GroupCard> {
+class _UserCardState extends State<UserCard> {
   var boxColor = Colors.blue;
 
   void test() {
@@ -27,8 +27,8 @@ class _GroupCardState extends State<GroupCard> {
 
   Future<bool> LeaveGroup(User user, String groupCode) async {
     QuerySnapshot snap = await FirebaseFirestore.instance
-        .collection('groups')
-        .where("code", isEqualTo: groupCode)
+        .collection('Users')
+        .where("user", isEqualTo: user)
         .get();
 
     if (snap.docs.isNotEmpty) {

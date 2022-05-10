@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/views/CreateGroup.dart';
@@ -65,69 +66,6 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.all(10.0),
                 child: _buildWidget(context),
               ),
-              Row(children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const JoinGroup()),
-                      );
-                      // Respond to button press
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: const BorderSide(
-                                color: Color.fromARGB(255, 27, 67, 50))),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
-                      child: Text(
-                        "Join Group",
-                        style: TextStyle(
-                          color: Theme.of(context).focusColor,
-                          fontSize: 30,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CreateGroup()),
-                      );
-                      // Respond to button press
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: const BorderSide(
-                                color: Color.fromARGB(255, 27, 67, 50))),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                      child: Text(
-                        "+",
-                        style: TextStyle(
-                          color: Theme.of(context).focusColor,
-                          fontSize: 30,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ]),
             ])));
   }
 
@@ -166,65 +104,131 @@ class _HomeState extends State<Home> {
         ),
       );
     } else {
-      return Row(
+      return Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(0),
-            child: TextButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Profile()),
-                );
-                // Respond to button press
-              },
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: const BorderSide(
-                          color: Color.fromARGB(255, 27, 67, 50))),
-                ),
-              ),
-              icon: const FaIcon(FontAwesomeIcons.google,
-                  color: Color.fromARGB(255, 82, 183, 136)),
-              label: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
-                child: Text(
-                  "Profile",
-                  style: TextStyle(
-                    color: Theme.of(context).focusColor,
-                    fontSize: 30,
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(0),
+                child: TextButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
+                    // Respond to button press
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: const BorderSide(
+                              color: Color.fromARGB(255, 27, 67, 50))),
+                    ),
+                  ),
+                  icon: const FaIcon(FontAwesomeIcons.google,
+                      color: Color.fromARGB(255, 82, 183, 136)),
+                  label: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 6, 22, 6),
+                    child: Text(
+                      "Profile",
+                      style: TextStyle(
+                        color: Theme.of(context).focusColor,
+                        fontSize: 30,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+                child: TextButton(
+                  onPressed: signOut,
+                  // Respond to button pres
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: const BorderSide(
+                              color: Color.fromARGB(255, 27, 67, 50))),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+                    child: Text(
+                      "Sign Out",
+                      style: TextStyle(
+                        color: Theme.of(context).focusColor,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-            child: TextButton(
-              onPressed: signOut,
-              // Respond to button pres
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: const BorderSide(
-                          color: Color.fromARGB(255, 27, 67, 50))),
+          Row(children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const JoinGroup()),
+                  );
+                  // Respond to button press
+                },
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: const BorderSide(
+                            color: Color.fromARGB(255, 27, 67, 50))),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                child: Text(
-                  "Sign Out",
-                  style: TextStyle(
-                    color: Theme.of(context).focusColor,
-                    fontSize: 30,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
+                  child: Text(
+                    "Join Group",
+                    style: TextStyle(
+                      color: Theme.of(context).focusColor,
+                      fontSize: 30,
+                    ),
                   ),
                 ),
               ),
             ),
-          )
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CreateGroup()),
+                  );
+                  // Respond to button press
+                },
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: const BorderSide(
+                            color: Color.fromARGB(255, 27, 67, 50))),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+                  child: Text(
+                    "+",
+                    style: TextStyle(
+                      color: Theme.of(context).focusColor,
+                      fontSize: 30,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ]),
         ],
       );
     }
@@ -235,6 +239,13 @@ class _HomeState extends State<Home> {
       await _googleSignIn.signIn();
       await AuthService().signInWithGoogle();
       setState(() {});
+
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(AuthService().auth.currentUser?.uid)
+          .set({
+        "name": AuthService().auth.currentUser?.displayName,
+      }, SetOptions(merge: true));
     } catch (e) {
       print('sign in error $e');
     }

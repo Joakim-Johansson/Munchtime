@@ -7,8 +7,9 @@ import 'RecipeCard.dart';
 ///Will use a recipelist version which can take sorting queries
 class Groupview extends StatelessWidget {
   String group = '';
+  String name = '';
 
-  Groupview({required this.group});
+  Groupview({required this.group, required this.name});
 
   FirebaseFirestore instance = FirebaseFirestore.instance;
 
@@ -18,7 +19,7 @@ class Groupview extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
             title: Text(
-              group + "'s recipes",
+              name + "'s recipes",
               style: TextStyle(
                 color: Theme.of(context).focusColor,
                 fontFamily: 'Pattaya',
@@ -83,7 +84,8 @@ class Groupview extends StatelessWidget {
                                     AsyncSnapshot<DocumentSnapshot>
                                         asyncRecipe) =>
                                 asyncRecipe.hasData
-                                    ? RecipeCard(asyncRecipe.data!.data() as Map<String, dynamic>)
+                                    ? RecipeCard(asyncRecipe.data!.data()
+                                        as Map<String, dynamic>)
                                     : Container()))
                         .toList());
               } else {

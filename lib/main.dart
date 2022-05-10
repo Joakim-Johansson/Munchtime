@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/provider/google_sign_in.dart';
 import 'package:crunchtime/routes.dart';
@@ -18,7 +19,7 @@ Future main() async {
     ),
   );
 
- // AuthService().signInAnon();
+  // AuthService().signInAnon();
   // UserCredential user = await AuthService().signInWithGoogle();
 //
   runApp(const MyApp());

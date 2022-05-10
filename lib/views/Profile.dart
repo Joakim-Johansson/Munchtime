@@ -58,7 +58,8 @@ class Profile extends StatelessWidget {
                         .collection('Users')
                         .doc(AuthService().auth.currentUser!.uid)
                         .get(),
-                    builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    builder:
+                        (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasData) {
                         return Padding(
                             padding: EdgeInsets.fromLTRB(20, 8, 12, 4),
@@ -70,7 +71,8 @@ class Profile extends StatelessWidget {
                                     TextSpan(
                                         text: 'About me:\n',
                                         style: TextStyle(
-                                          color: Color.fromARGB(255, 27, 67, 50),
+                                          color:
+                                              Color.fromARGB(255, 27, 67, 50),
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                         )),
@@ -88,72 +90,72 @@ class Profile extends StatelessWidget {
                       } else {
                         return Container();
                       }
-                    }),                
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(3, 6, 14, 6),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => ProfileEdit()),
-                            );
-                            // Respond to button press
-                          },
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  side: const BorderSide(
-                                      color: Color.fromARGB(255, 27, 67, 50))),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
-                            child: Text(
-                              "Edit",
-                              style: TextStyle(
-                                color: Theme.of(context).focusColor,
-                                fontSize: 14,
-                              ),
-                            ),
+                    }),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(3, 6, 14, 6),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileEdit()),
+                        );
+                        // Respond to button press
+                      },
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: const BorderSide(
+                                  color: Color.fromARGB(255, 27, 67, 50))),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                        child: Text(
+                          "Edit",
+                          style: TextStyle(
+                            color: Theme.of(context).focusColor,
+                            fontSize: 14,
                           ),
                         ),
                       ),
                     ),
-                    Padding(
-                            padding: EdgeInsets.fromLTRB(20, 8, 12, 0),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: RichText(
-                                text: TextSpan(
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: 'Recipes:\n',
-                                        style: TextStyle(
-                                          color: Color.fromARGB(255, 27, 67, 50),
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        )
-                                        ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(20, 0, 12, 4),
-                              child: SizedBox(
-                                height: 200,
-                                width: 1000,
-                                  child: RecipeListFutureHorizontal(user.uid),
-                              ),
-                            )
-                  ],           
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(20, 8, 12, 0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Recipes:\n',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 27, 67, 50),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(20, 0, 12, 4),
+                  child: SizedBox(
+                    height: 200,
+                    width: 1000,
+                    child: RecipeListFutureHorizontal(user.uid),
+                  ),
+                )
+              ],
             ),
           ),
-        )
-        );
+        ));
   }
 }
