@@ -83,9 +83,10 @@ class _RecipesState extends State<RecipePage> {
                                                 .collection("recipes")
                                                 .doc(widget.recipe["name"])
                                                 .set({});
-                                                                                            ScaffoldMessenger.of(context)
+                                            ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(
-                                                    backgroundColor: Colors.green,
+                                                    backgroundColor:
+                                                        Colors.green,
                                                     content: Text(
                                                       "Succesfully added!",
                                                       style: TextStyle(

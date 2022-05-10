@@ -42,12 +42,16 @@ class Groups extends StatelessWidget {
                 return Center(
                   child: Column(
                     children: !data.containsKey("groups")
-                        ? [Padding(
-                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height/3),
-                          child: Container(
-                              child: Text("You haven't joined any groups yet."),
-                            ),
-                        )]
+                        ? [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height / 3),
+                              child: Container(
+                                child:
+                                    Text("You haven't joined any groups yet."),
+                              ),
+                            )
+                          ]
                         : x["groups"].map<Widget>((e) {
                             return FutureBuilder(
                                 future: FirebaseFirestore.instance

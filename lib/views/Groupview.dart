@@ -9,7 +9,6 @@ class Groupview extends StatelessWidget {
   String group = '';
 
   Groupview({required this.group});
-  // final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
 
   FirebaseFirestore instance = FirebaseFirestore.instance;
 
@@ -19,7 +18,7 @@ class Groupview extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
             title: Text(
-              "Group " + group + "recipes",
+              group + "'s recipes",
               style: TextStyle(
                 color: Theme.of(context).focusColor,
                 fontFamily: 'Pattaya',
@@ -66,7 +65,8 @@ class Groupview extends StatelessWidget {
             stream: instance
                 .collection("groups")
                 .doc(group)
-                .collection("recipes").snapshots(),
+                .collection("recipes")
+                .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
@@ -80,7 +80,8 @@ class Groupview extends StatelessWidget {
                             future:
                                 instance.collection("Recipes").doc(e.id).get(),
                             builder: (BuildContext context,
-                                    AsyncSnapshot<DocumentSnapshot> asyncRecipe) =>
+                                    AsyncSnapshot<DocumentSnapshot>
+                                        asyncRecipe) =>
                                 asyncRecipe.hasData
                                     ? RecipeCard(asyncRecipe.data!.data() as Map<String, dynamic>)
                                     : Container()))
