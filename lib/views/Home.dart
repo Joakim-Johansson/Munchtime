@@ -32,67 +32,71 @@ class Home extends StatelessWidget {
           ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextButton(
-              onPressed: () {Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Profile()),
-              );
+              child: Center(
+                child: TextButton(
+                onPressed: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Profile()),
+                );
             // Respond to button press
-              },
-              style: ButtonStyle(
-                
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              
-              RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-                  side: const BorderSide(
-                    color: Color.fromARGB(255, 27, 67, 50))
-                  ),
-                  ),
-              ),
-              child: 
-                Padding(
-                padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                child: Text("Profile",
-                style: TextStyle(
-                      color: Theme.of(context).focusColor,
-                      fontSize: 30,
-                    ),),
-              ),
+                },
+                style: ButtonStyle(
+
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+
+                RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(
+                      color: Color.fromARGB(255, 27, 67, 50))
+                    ),
+                    ),
+                ),
+                child:
+                  Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
+                  child: Text("Profile",
+                  style: TextStyle(
+                        color: Theme.of(context).focusColor,
+                        fontSize: 30,
+                      ),),
+                ),
+                ),
               ),
                 ),
           
 
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
-            child: TextButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ManageGroups()),
-                );
+            child: Center(
+              child: TextButton(
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ManageGroups()),
+                  );
 
-                // Respond to button press
+                  // Respond to button press
 
-              },
+                },
 
-              style: ButtonStyle(
+                style: ButtonStyle(
 
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
 
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: const BorderSide(
-                          color: Color.fromARGB(255, 27, 67, 50))
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: const BorderSide(
+                            color: Color.fromARGB(255, 27, 67, 50))
+                    ),
                   ),
                 ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(14, 6, 14, 6),
-                child: Text("Manage Groups",
-                  style: TextStyle(
-                    color: Theme.of(context).focusColor,
-                    fontSize: 30,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(14, 6, 14, 6),
+                  child: Text("Manage Groups",
+                    style: TextStyle(
+                      color: Theme.of(context).focusColor,
+                      fontSize: 30,
+                    ),
                   ),
                 ),
               ),
