@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 import 'Tag.dart';
 
 ///Is the scrollable part of RecipePage
 ///
 ///Creates a column which contains all the parts of a recipe
-class RecipeInformation extends StatelessWidget {
+class RecipeInformation extends StatefulWidget {
   Map<String, dynamic> recipe;
   late String name;
   late String description;
@@ -15,31 +16,37 @@ class RecipeInformation extends StatelessWidget {
   late List<String> ingredientList;
   late List<String> instructionList;
   late List<String> nutrition;
+  late int originalPortions;
 
-  RecipeInformation(this.recipe) {
-    try {
-      name = recipe["name"];
-      // description = recipe["description"];
-      description =
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ullamcorper arcu accumsan nulla gravida hendrerit. Aliquam fringilla massa quis congue tincidunt. Ut dolor mi, consequat eget tortor nec, porttitor tristique libero. Vivamus sit amet nisi fe";
-      climateGrade = recipe["Climate Grade"];
-      ingredientList = translateIngredients(recipe["ingredients"]);
-      instructionList = translateDynamicList(recipe["instructions"]);
-      nutrition = translateDynamicList(recipe["nutrition"]);
-    } catch (e) {
-      name = "Load Failed";
-      description = "";
-      climateGrade = "";
-      ingredientList = [];
-      instructionList = [];
-      nutrition = ["", "", "", ""];
-    }
-  }
+  RecipeInformation(this.recipe);
+  @override
+  State<RecipeInformation> createState() => _RecipeInformationState();
+}
 
-  List<Widget> dummylist =
-      List.filled(5, Container(color: Colors.red, height: 200, width: 50));
+class _RecipeInformationState extends State<RecipeInformation> {
   @override
   Widget build(BuildContext context) {
+    try {
+      widget.name = widget.recipe["name"];
+      // description = recipe["description"];
+      widget.description =
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ullamcorper arcu accumsan nulla gravida hendrerit. Aliquam fringilla massa quis congue tincidunt. Ut dolor mi, consequat eget tortor nec, porttitor tristique libero. Vivamus sit amet nisi fe";
+      widget.climateGrade = widget.recipe["Climate Grade"];
+      widget.ingredientList =
+          translateIngredients(widget.recipe["ingredients"]);
+      widget.instructionList =
+          translateDynamicList(widget.recipe["instructions"]);
+      widget.nutrition = translateDynamicList(widget.recipe["nutrition"]);
+      widget.originalPortions = widget.recipe["portions"];
+    } catch (e) {
+      widget.name = "Load Failed";
+      widget.description = "";
+      widget.climateGrade = "";
+      widget.ingredientList = [];
+      widget.instructionList = [];
+      widget.nutrition = ["", "", "", ""];
+      widget.originalPortions = 2;
+    }
     return Column(children: [
       SizedBox(height: MediaQuery.of(context).size.height / 2),
       Padding(
@@ -53,7 +60,7 @@ class RecipeInformation extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                name,
+                widget.name,
                 style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.bold, height: 3),
                 textAlign: TextAlign.left,
@@ -66,15 +73,16 @@ class RecipeInformation extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Tag("Climate Grade: " + climateGrade, Colors.green),
+                    child: Tag(
+                        "Climate Grade: " + widget.climateGrade, Colors.green),
                   )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Tag(nutrition[0], Colors.greenAccent),
-                  Tag(nutrition[1], Colors.greenAccent),
-                  Tag(nutrition[2], Colors.greenAccent),
-                  Tag(nutrition[3], Colors.greenAccent),
+                  Tag(widget.nutrition[0], Colors.greenAccent),
+                  Tag(widget.nutrition[1], Colors.greenAccent),
+                  Tag(widget.nutrition[2], Colors.greenAccent),
+                  Tag(widget.nutrition[3], Colors.greenAccent),
                 ],
               ),
               Divider(
@@ -83,7 +91,7 @@ class RecipeInformation extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
                 child: Text(
-                  description,
+                  widget.description,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -94,6 +102,16 @@ class RecipeInformation extends StatelessWidget {
               ),
               Divider(
                 thickness: 3,
+              ),
+              Center(child: Text("Portions:")),
+              NumberPicker(
+                axis: Axis.horizontal,
+                value: widget.originalPortions,
+                maxValue: 20,
+                minValue: 1,
+                step: 1,
+                onChanged: (value) =>
+                    setState(() => widget.originalPortions = value),
               ),
               const Align(
                 alignment: Alignment(-0.95, 0),
@@ -108,7 +126,7 @@ class RecipeInformation extends StatelessWidget {
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: ingredientList.length * 2,
+                    itemCount: widget.ingredientList.length * 2,
                     itemBuilder: ((context, index) =>
                         getIngredients(context, index))),
               ),
@@ -125,7 +143,7 @@ class RecipeInformation extends StatelessWidget {
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: instructionList.length * 2,
+                    itemCount: widget.instructionList.length * 2,
                     itemBuilder: ((context, index) =>
                         getInstructions(context, index))),
               ),
@@ -140,7 +158,7 @@ class RecipeInformation extends StatelessWidget {
   Widget getIngredients(BuildContext context, int i) {
     if (i.isOdd) return const Divider();
     final index = i ~/ 2;
-    return Text(ingredientList[index],
+    return Text(widget.ingredientList[index],
         style: const TextStyle(decorationStyle: TextDecorationStyle.dotted));
   }
 
@@ -148,7 +166,8 @@ class RecipeInformation extends StatelessWidget {
   Widget getInstructions(BuildContext context, int i) {
     if (i.isOdd) return const Divider();
     final index = i ~/ 2;
-    return Text((i / 2 + 1).toInt().toString() + ". " + instructionList[index]);
+    return Text(
+        (i / 2 + 1).toInt().toString() + ". " + widget.instructionList[index]);
   }
 
   ///Builds a list containing all the ingredients to display
