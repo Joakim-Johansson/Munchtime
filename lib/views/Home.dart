@@ -21,14 +21,16 @@ class Home extends StatelessWidget {
       child: Column(
         crossAxisAlignment : CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('Welcome to Munch!',style: TextStyle(
-                  color: Theme.of(context).focusColor,
-                  fontFamily: 'Pattaya',
-                  fontSize: 80,
-                 ),
-                 ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Welcome to Munch!',style: TextStyle(
+                    color: Theme.of(context).focusColor,
+                    fontFamily: 'Pattaya',
+                    fontSize: 60,
+                   ),
+                   ),
+            ),
           ),
             Padding(
               padding: const EdgeInsets.all(8.0),
