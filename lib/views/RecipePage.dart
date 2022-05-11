@@ -36,35 +36,7 @@ class _RecipesState extends State<RecipePage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).bottomAppBarColor,
         elevation: 0,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                child: CircleAvatar(
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.edit,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed("/createRecipe", arguments: widget.recipe);
-                    },
-                  ),
-                ),
-              ),
-              CircleAvatar(
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                  ),
-                  onPressed: deleteRecipe,
-                ),
-              )
-            ]),
-          )
-        ],
+        actions: showbuttons(),
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -115,5 +87,40 @@ class _RecipesState extends State<RecipePage> {
             AuthService().auth.currentUser!.uid));
 
     Navigator.of(context).pushNamed("/recipelist");
+  }
+
+  List<Widget> showbuttons() {
+    if (AuthService().auth.currentUser!.uid == widget.recipe["user"]) {
+      return <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+              child: CircleAvatar(
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed("/createRecipe", arguments: widget.recipe);
+                  },
+                ),
+              ),
+            ),
+            CircleAvatar(
+              child: IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                ),
+                onPressed: deleteRecipe,
+              ),
+            )
+          ]),
+        )
+      ];
+    }
+    return [Container()];
   }
 }

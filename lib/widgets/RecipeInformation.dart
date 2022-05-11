@@ -65,10 +65,6 @@ class _RecipeInformationState extends State<RecipeInformation> {
                     fontSize: 20, fontWeight: FontWeight.bold, height: 3),
                 textAlign: TextAlign.left,
               ),
-              const RatingStars(
-                value: 3,
-                valueLabelVisibility: false,
-              ),
               Container(
                   alignment: Alignment.center,
                   child: Padding(
@@ -76,14 +72,17 @@ class _RecipeInformationState extends State<RecipeInformation> {
                     child: Tag(
                         "Climate Grade: " + widget.climateGrade, Colors.green),
                   )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Tag(widget.nutrition[0], Colors.greenAccent),
-                  Tag(widget.nutrition[1], Colors.greenAccent),
-                  Tag(widget.nutrition[2], Colors.greenAccent),
-                  Tag(widget.nutrition[3], Colors.greenAccent),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Tag(widget.nutrition[0] + "g", Colors.greenAccent),
+                    Tag(widget.nutrition[1] + "g", Colors.greenAccent),
+                    Tag(widget.nutrition[2] + "g", Colors.greenAccent),
+                    Tag(widget.nutrition[3], Colors.greenAccent),
+                  ],
+                ),
               ),
               Divider(
                 thickness: 3,
@@ -103,16 +102,9 @@ class _RecipeInformationState extends State<RecipeInformation> {
               Divider(
                 thickness: 3,
               ),
-              Center(child: Text("Portions:")),
-              NumberPicker(
-                axis: Axis.horizontal,
-                value: widget.originalPortions,
-                maxValue: 20,
-                minValue: 1,
-                step: 1,
-                onChanged: (value) =>
-                    setState(() => widget.originalPortions = value),
-              ),
+              Center(
+                  child:
+                      Text("Portions: " + widget.originalPortions.toString())),
               const Align(
                 alignment: Alignment(-0.95, 0),
                 child: Text(

@@ -28,6 +28,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
   String fileName = '';
   var image;
 
+  Widget displayedImage = Container();
+  bool edit = false;
+
   int portions = 2;
 
   ///Builds the form widget for creating recipes
@@ -50,6 +53,25 @@ class _CreateRecipeState extends State<CreateRecipe> {
             .add(TextEditingController(text: recipe["instructions"][i]));
       }
       portions = recipe["portions"];
+      edit = true;
+
+      displayedImage = FutureBuilder(
+        future: widget.storage.downloadURL(widget.recipe["img"]),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              height: 400,
+              width: 400,
+              child: Image.network(
+                snapshot.data!,
+                fit: BoxFit.cover,
+              ),
+            );
+          } else {
+            return Container();
+          }
+        },
+      );
     }
     return Scaffold(
         body: Container(
@@ -95,22 +117,24 @@ class _CreateRecipeState extends State<CreateRecipe> {
                             .then((value) => print("done"));
                         setState(() {
                           image = File(tempImage.path);
+                          displayedImage = Container(
+                              child: image == null
+                                  ? Container()
+                                  : Image.file(File(image.path)));
                         });
                       },
                       icon: Icon(Icons.add, size: 30),
                     )
                   ],
                 ),
-                Container(
-                    child: image == null
-                        ? Container()
-                        : Image.file(File(image.path))),
+                displayedImage,
                 const SizedBox(
                   height: 15,
                 ),
 
                 ///Title entry
                 TextField(
+                    readOnly: edit,
                     controller: titleController,
                     decoration: InputDecoration(
                       fillColor: const Color(0xffc8e6c9),
@@ -396,6 +420,21 @@ class _CreateRecipeState extends State<CreateRecipe> {
   ///on the users or system's part there is an exception check which will
   ///display an alert window showing an error message
   void sendRecipe() async {
+    if (checkIfEmpty()) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                title: Text("Something is missing"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("Continue"))
+                ],
+              ));
+      return;
+    }
     List<String> ingredientList = [];
     List<int> amountList = [];
     List<String> instructionList = [];
@@ -419,18 +458,35 @@ class _CreateRecipeState extends State<CreateRecipe> {
     }
 
     Dio dio = Dio();
+    Response response;
 
-    Response response = await dio
-        .post("https://cohesive-photon-346611.ew.r.appspot.com/recipes", data: {
-      "name": titleController.text,
-      "user": AuthService().auth.currentUser!.uid,
-      "description": descriptionController.text,
-      "instructions": instructionList,
-      "ingredients": ingredientList,
-      "amount": amountList,
-      "img": fileName,
-      "portions": portions
-    });
+    if (!edit) {
+      response = await dio.post(
+          "https://cohesive-photon-346611.ew.r.appspot.com/recipes",
+          data: {
+            "name": titleController.text,
+            "user": AuthService().auth.currentUser!.uid,
+            "description": descriptionController.text,
+            "instructions": instructionList,
+            "ingredients": ingredientList,
+            "amount": amountList,
+            "img": fileName,
+            "portions": portions
+          });
+    } else {
+      response = await dio.post(
+          "https://cohesive-photon-346611.ew.r.appspot.com/recipes",
+          data: {
+            "name": titleController.text,
+            "user": AuthService().auth.currentUser!.uid,
+            "description": descriptionController.text,
+            "instructions": instructionList,
+            "ingredients": ingredientList,
+            "amount": amountList,
+            "img": fileName,
+            "portions": portions
+          });
+    }
 
     if (response.statusCode == 200) {
       showDialog(
@@ -476,5 +532,26 @@ class _CreateRecipeState extends State<CreateRecipe> {
   void jumpToRecipeList(BuildContext widgetContext) {
     Navigator.of(widgetContext).pop();
     Navigator.pushNamed(context, "/recipelist");
+  }
+
+  bool checkIfEmpty() {
+    List<bool> returnVal = List.filled(5, false);
+    returnVal[0] = titleController.text == "";
+    returnVal[1] = descriptionController.text == "";
+    for (int i = 0; i < ingredientControllers.length && !returnVal[2]; i++) {
+      TextEditingController temp =
+          ingredientControllers[i][0] as TextEditingController;
+      returnVal[2] = temp.text == "";
+    }
+    for (int i = 0; i < instructionControllers.length && !returnVal[3]; i++) {
+      returnVal[3] = instructionControllers[i].text == "";
+    }
+    returnVal[4] = fileName == "";
+
+    return returnVal[0] ||
+        returnVal[1] ||
+        returnVal[2] ||
+        returnVal[3] ||
+        returnVal[4];
   }
 }
