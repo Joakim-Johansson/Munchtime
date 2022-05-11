@@ -1,15 +1,9 @@
 import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/provider/auth.dart';
-import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/views/JoinGroup.dart';
-import 'package:crunchtime/views/Login.dart';
 import 'package:crunchtime/views/Profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

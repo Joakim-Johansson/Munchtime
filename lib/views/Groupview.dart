@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'RecipeCard.dart';
 
 ///Shows a specific groups recipes
 ///
@@ -30,9 +29,9 @@ class Groupview extends StatelessWidget {
                 padding: const EdgeInsets.all(6.0),
                 child: CircleAvatar(
                   radius: 20,
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                   child: IconButton(
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.search),
                     color: Theme.of(context).focusColor,
                     onPressed: () {},
                   ),
@@ -43,7 +42,7 @@ class Groupview extends StatelessWidget {
           crossAxisSpacing: 5.0,
           mainAxisSpacing: 5.0,
           crossAxisCount: 1,
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           // children: dummyList,
         ));
   }

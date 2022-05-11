@@ -59,7 +59,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
         future: widget.storage.downloadURL(widget.recipe["img"]),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.hasData) {
-            return Container(
+            return SizedBox(
               height: 400,
               width: 400,
               child: Image.network(
@@ -123,7 +123,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                                   : Image.file(File(image.path)));
                         });
                       },
-                      icon: Icon(Icons.add, size: 30),
+                      icon: const Icon(Icons.add, size: 30),
                     )
                   ],
                 ),
@@ -313,8 +313,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
                         Icon(Icons.add),
                       ]),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                   child: Text("Portions:"),
                 ),
                 NumberPicker(
@@ -424,13 +424,13 @@ class _CreateRecipeState extends State<CreateRecipe> {
       showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-                title: Text("Something is missing"),
+                title: const Text("Something is missing"),
                 actions: [
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text("Continue"))
+                      child: const Text("Continue"))
                 ],
               ));
       return;
@@ -492,17 +492,17 @@ class _CreateRecipeState extends State<CreateRecipe> {
       showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-                title: Text("Recipe Created!"),
+                title: const Text("Recipe Created!"),
                 actions: [
                   TextButton(
                       onPressed: () {
                         jumpToRecipeList(context);
                       },
-                      child: Text("Great!"))
+                      child: const Text("Great!"))
                 ],
               ));
     } else {
-      AlertDialog(title: Text("Recipe failed creation"));
+      const AlertDialog(title: Text("Recipe failed creation"));
     }
   }
 

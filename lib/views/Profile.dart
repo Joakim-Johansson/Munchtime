@@ -25,7 +25,7 @@ class Profile extends StatelessWidget {
           elevation: 0,
         ),
         body: Container(
-          constraints: BoxConstraints.expand(),
+          constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/images/hills2.png"),
@@ -35,17 +35,17 @@ class Profile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(22, 22, 22, 2),
+                padding: const EdgeInsets.fromLTRB(22, 22, 22, 2),
                 child: CircleAvatar(
                   backgroundImage: NetworkImage(user.photoURL!),
                   radius: 125,
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Text(
                   user.displayName!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color.fromARGB(255, 27, 67, 50),
                     fontSize: 30,
                   ),
@@ -59,13 +59,13 @@ class Profile extends StatelessWidget {
                   builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                     if (snapshot.hasData) {
                       return Padding(
-                          padding: EdgeInsets.fromLTRB(20, 8, 12, 4),
+                          padding: const EdgeInsets.fromLTRB(20, 8, 12, 4),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: RichText(
                               text: TextSpan(
                                 children: <TextSpan>[
-                                  TextSpan(
+                                  const TextSpan(
                                       text: 'About me:\n',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 27, 67, 50),
@@ -74,7 +74,7 @@ class Profile extends StatelessWidget {
                                       )),
                                   TextSpan(
                                     text: snapshot.data!["bio"],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Color.fromARGB(255, 27, 67, 50),
                                       fontSize: 18,
                                     ),
@@ -95,7 +95,8 @@ class Profile extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfileEdit()),
+                        MaterialPageRoute(
+                            builder: (context) => const ProfileEdit()),
                       );
                       // Respond to button press
                     },

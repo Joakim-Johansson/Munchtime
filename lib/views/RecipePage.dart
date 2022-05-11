@@ -56,7 +56,7 @@ class _RecipesState extends State<RecipePage> {
                   builder:
                       (BuildContext context, AsyncSnapshot<String> snapshot) {
                     if (snapshot.hasData) {
-                      return Container(
+                      return SizedBox(
                         height: 400,
                         width: 400,
                         child: Image.network(
@@ -80,7 +80,7 @@ class _RecipesState extends State<RecipePage> {
   }
 
   void deleteRecipe() async {
-    http.Response response = await http.delete(Uri.parse(
+    await http.delete(Uri.parse(
         "https://cohesive-photon-346611.ew.r.appspot.com/delete/" +
             widget.recipe["name"] +
             "/" +

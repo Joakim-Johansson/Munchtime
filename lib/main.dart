@@ -1,7 +1,6 @@
 import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/provider/google_sign_in.dart';
 import 'package:crunchtime/routes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -38,12 +37,12 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              primaryColor: Color.fromARGB(255, 82, 183, 136),
-              backgroundColor: Color.fromARGB(255, 250, 255, 251),
-              bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
-              focusColor: Color.fromARGB(255, 27, 67, 50),
+              primaryColor: const Color.fromARGB(255, 82, 183, 136),
+              backgroundColor: const Color.fromARGB(255, 250, 255, 251),
+              bottomAppBarColor: const Color.fromARGB(255, 82, 183, 136),
+              focusColor: const Color.fromARGB(255, 27, 67, 50),
               fontFamily: 'OpenSans'),
-          home: NavBar(),
+          home: const NavBar(),
         ),
       );
 }

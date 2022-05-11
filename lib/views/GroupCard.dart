@@ -43,13 +43,13 @@ class _GroupCardState extends State<GroupCard> {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 350,
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                     side: BorderSide(
-                      color: Color.fromARGB(255, 27, 67, 50).withOpacity(0.05),
+                      color: const Color.fromARGB(255, 27, 67, 50).withOpacity(0.05),
                       width: 3,
                     ),
                   ),
@@ -111,13 +111,13 @@ class _GroupCardState extends State<GroupCard> {
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Padding(
-                                padding: EdgeInsets.fromLTRB(12, 2, 15, 5),
+                                padding: const EdgeInsets.fromLTRB(12, 2, 15, 5),
                                 child: Container(
                                   height: 35,
                                   width: 100,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 45, 106, 79),
-                                    borderRadius: new BorderRadius.all(
+                                    borderRadius: BorderRadius.all(
                                         Radius.elliptical(40, 40)),
                                   ),
                                   child: const Center(
@@ -133,13 +133,13 @@ class _GroupCardState extends State<GroupCard> {
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Padding(
-                                padding: EdgeInsets.fromLTRB(0, 2, 15, 5),
+                                padding: const EdgeInsets.fromLTRB(0, 2, 15, 5),
                                 child: Container(
                                   height: 36,
                                   width: 36,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 199, 183, 228),
-                                    borderRadius: new BorderRadius.all(
+                                    borderRadius: BorderRadius.all(
                                         Radius.circular(30)),
                                   ),
                                   child: Center(
@@ -166,7 +166,7 @@ class _GroupCardState extends State<GroupCard> {
                       ),
                     ],
                   ),
-                  color: Color.fromARGB(255, 183, 228, 199),
+                  color: const Color.fromARGB(255, 183, 228, 199),
                 ),
               ),
             ],

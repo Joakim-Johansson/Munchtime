@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:numberpicker/numberpicker.dart';
 
 import 'Tag.dart';
 
@@ -61,7 +58,7 @@ class _RecipeInformationState extends State<RecipeInformation> {
             children: [
               Text(
                 widget.name,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 20, fontWeight: FontWeight.bold, height: 3),
                 textAlign: TextAlign.left,
               ),
@@ -84,7 +81,7 @@ class _RecipeInformationState extends State<RecipeInformation> {
                   ],
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
               ),
               Padding(
@@ -92,14 +89,14 @@ class _RecipeInformationState extends State<RecipeInformation> {
                 child: Text(
                   widget.description,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
                     fontFamily: "Cambria",
                   ),
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
               ),
               Center(

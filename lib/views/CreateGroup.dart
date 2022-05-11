@@ -42,7 +42,7 @@ class CreateGroupWidget extends State<CreateGroup> {
           elevation: 0,
         ),
         body: Container(
-          constraints: BoxConstraints.expand(),
+          constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/images/blob4.png"),
@@ -52,7 +52,7 @@ class CreateGroupWidget extends State<CreateGroup> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 30),
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: RichText(
@@ -119,7 +119,7 @@ class CreateGroupWidget extends State<CreateGroup> {
                   ),
                 ),
               ),
-              SizedBox(height: 188.0),
+              const SizedBox(height: 188.0),
             ],
           ),
         ));

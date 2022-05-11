@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:crunchtime/views/ProfileEdit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../provider/google_sign_in.dart';
 import '../widgets/Sign_In_Widget.dart';
 
 class Login extends StatelessWidget {
@@ -23,7 +19,7 @@ class Login extends StatelessWidget {
           elevation: 0,
         ),
         body: Container(
-            constraints: BoxConstraints.expand(),
+            constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/hills2.png"),
