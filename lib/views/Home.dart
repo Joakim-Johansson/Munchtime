@@ -53,7 +53,7 @@ class Home extends StatelessWidget {
               child: 
                 Padding(
                 padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                child: Text("User Profile",
+                child: Text("Profile",
                 style: TextStyle(
                       color: Theme.of(context).focusColor,
                       fontSize: 30,
@@ -88,7 +88,7 @@ class Home extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(22, 6, 22, 6),
+                padding: EdgeInsets.fromLTRB(14, 6, 22, 4),
                 child: Text("Manage Groups",
                   style: TextStyle(
                     color: Theme.of(context).focusColor,
