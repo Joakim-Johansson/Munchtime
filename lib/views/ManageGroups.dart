@@ -62,7 +62,7 @@ class ManageGroupsWidget extends State<ManageGroups>{
 
           //Button for creating groups.
           Padding(
-            padding: const EdgeInsets.fromLTRB(80, 10, 80, 6),
+            padding: const EdgeInsets.fromLTRB(110, 10, 110, 6),
             child: Align(
               alignment: Alignment.bottomRight,
               child: Align(
@@ -104,7 +104,7 @@ class ManageGroupsWidget extends State<ManageGroups>{
 
           //Button for joining groups.
           Padding(
-            padding: const EdgeInsets.fromLTRB(80, 0, 80, 6),
+            padding: const EdgeInsets.fromLTRB(110, 0, 110, 6),
             child: Align(
               alignment: Alignment.bottomRight,
               child: TextButton(
