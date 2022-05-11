@@ -88,7 +88,7 @@ class Home extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(14, 6, 22, 4),
+                padding: EdgeInsets.fromLTRB(14, 6, 14, 6),
                 child: Text("Manage Groups",
                   style: TextStyle(
                     color: Theme.of(context).focusColor,
