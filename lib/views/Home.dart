@@ -53,8 +53,8 @@ class Home extends StatelessWidget {
                 ),
                 child:
                   Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 6, 14, 6),
-                  child: Text("Profile",
+                  padding: const EdgeInsets.fromLTRB(40, 6, 40, 6),
+                  child: Text("View Profile",
                   style: TextStyle(
                         color: Theme.of(context).focusColor,
                         fontSize: 30,
