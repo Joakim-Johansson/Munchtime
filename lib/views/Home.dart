@@ -1,5 +1,3 @@
-import 'package:crunchtime/views/CreateGroup.dart';
-import 'package:crunchtime/views/JoinGroup.dart';
 import 'package:crunchtime/views/Profile.dart';
 import 'package:crunchtime/views/ManageGroups.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +21,7 @@ class Home extends StatelessWidget {
         children: [
           Center(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 2.0),
               child: Text('Welcome to Munch!',style: TextStyle(
                     color: Theme.of(context).focusColor,
                     fontFamily: 'Pattaya',
@@ -32,6 +30,17 @@ class Home extends StatelessWidget {
                    ),
             ),
           ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: Image(
+                  //Home page picture - can be changed if there is another preferred one.
+                  image: AssetImage('assets/images/homePagePicture.png'),
+                  width: 210.0,
+                  height: 155.0,
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
