@@ -245,6 +245,7 @@ class _HomeState extends State<Home> {
           .doc(AuthService().auth.currentUser?.uid)
           .set({
         "name": AuthService().auth.currentUser?.displayName,
+        "recipeCount": AuthService().auth.currentUser?.displayName,
       }, SetOptions(merge: true));
     } catch (e) {
       print('sign in error $e');
