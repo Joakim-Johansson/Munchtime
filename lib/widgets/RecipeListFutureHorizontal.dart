@@ -18,16 +18,24 @@ class RecipeListFutureHorizontal extends StatelessWidget {
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!.statusCode == 200) {
-              var recipes = json.decode(snapshot.data!.body);
-              return GridView.count(
-                  scrollDirection: Axis.horizontal,
-                  crossAxisSpacing: 5.0,
-                  mainAxisSpacing: 5.0,
-                  crossAxisCount: 1,
-                  padding: EdgeInsets.all(10),
-                  children: recipes.map<Widget>((e) => RecipeCard(e)).toList());
+              List<dynamic> recipes = json.decode(snapshot.data!.body);
+              if (recipes.isNotEmpty) {
+                return GridView.count(
+                    scrollDirection: Axis.horizontal,
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 5.0,
+                    crossAxisCount: 1,
+                    padding: EdgeInsets.all(10),
+                    children:
+                        recipes.map<Widget>((e) => RecipeCard(e)).toList());
+              }
+              return const Center(
+                  child: Text(
+                "No Recipes Yet",
+                style: TextStyle(fontSize: 40),
+              ));
             }
-            return Text("No Results");
+            return const Text("No Results");
           }
           return Text("Waiting");
         });
