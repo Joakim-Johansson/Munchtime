@@ -30,8 +30,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
   Widget displayedImage = Container();
   bool edit = false;
-
+  bool firstTimeSet = false;
   int portions = 2;
+  String pageType = "";
 
   ///Builds the form widget for creating recipes
   ///
@@ -39,7 +40,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.recipe != null) {
+    if (widget.recipe != null && !firstTimeSet) {
       Map<String, dynamic> recipe = widget.recipe;
       titleController.text = recipe["name"];
       descriptionController.text = recipe["description"];
@@ -72,7 +73,12 @@ class _CreateRecipeState extends State<CreateRecipe> {
           }
         },
       );
+      fileName = recipe["img"];
+      pageType = "Edit Recipe";
+    } else if (!firstTimeSet) {
+      pageType = "Create Recipe";
     }
+    firstTimeSet = true;
     return Scaffold(
         body: Container(
           constraints: const BoxConstraints.expand(),
@@ -336,7 +342,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
             backgroundColor: Theme.of(context).bottomAppBarColor,
-            title: Text("Create recipe",
+            title: Text(pageType,
                 style: TextStyle(
                   color: Theme.of(context).focusColor,
                   fontFamily: 'Pattaya',
@@ -474,7 +480,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
             "portions": portions
           });
     } else {
-      response = await dio.post(
+      response = await dio.put(
           "https://cohesive-photon-346611.ew.r.appspot.com/recipes",
           data: {
             "name": titleController.text,
@@ -488,7 +494,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
           });
     }
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && !response.data.containsKey("Error")) {
       showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -501,8 +507,16 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       child: const Text("Great!"))
                 ],
               ));
+    } else if (response.data.containsKey("Error")) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              AlertDialog(title: Text(response.data["Error"])));
     } else {
-      const AlertDialog(title: Text("Recipe failed creation"));
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              AlertDialog(title: Text("Recipe Failed Creation")));
     }
   }
 
