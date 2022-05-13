@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/provider/auth.dart';
+import 'package:crunchtime/views/UserCard.dart';
 import 'package:flutter/material.dart';
 
 ///Shows a specific groups recipes
@@ -44,19 +45,17 @@ class UserList extends StatelessWidget {
                     child: FutureBuilder(
                         future: FirebaseFirestore.instance
                             .collection("Users")
-                            .doc(AuthService().auth.currentUser?.uid)
+                            .doc(e)
                             .get(),
                         builder: (context,
                             AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                if(snapshot.hasData){
-                                return Row(
-                                children: [Text(snapshot.data!["name"])]);
-                                }
-                                else{
-                                    return Container();
-                                }
-
-                            })))
+                          if (snapshot.hasData) {
+                            print(users);
+                            return UserCard(userDoc: snapshot.data!);
+                          } else {
+                            return Container();
+                          }
+                        })))
                 .toList()));
   }
 }

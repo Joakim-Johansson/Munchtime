@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/views/Groupview.dart';
-import 'package:crunchtime/widgets/UserList.dart';
+import 'package:crunchtime/views/UserList.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

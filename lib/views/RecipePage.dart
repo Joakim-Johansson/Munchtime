@@ -13,7 +13,6 @@ class RecipePage extends StatefulWidget {
   Storage storage = Storage();
   Map<String, dynamic> recipe;
 
-
   RecipePage(this.recipe);
 
   @override

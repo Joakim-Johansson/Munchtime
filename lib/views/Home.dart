@@ -169,7 +169,7 @@ class _HomeState extends State<Home> {
           ),
           Row(children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
+              padding: const EdgeInsets.fromLTRB(0, 10, 8, 8),
               child: TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -227,7 +227,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-            )
+            ),
           ]),
         ],
       );
