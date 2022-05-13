@@ -31,6 +31,7 @@ class UserCard extends StatelessWidget {
 
   }
 
+  int recipeCount = 10;
   int climateGrade = 1; //temporary, vill importera från använadren
 
   @override
@@ -44,6 +45,10 @@ class UserCard extends StatelessWidget {
           padding: const EdgeInsets.all(4.0),
           child: Container(
             decoration: BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/images/slimhill.png"),
+            fit: BoxFit.cover,
+          ),
               borderRadius: BorderRadius.circular(7),
               color: Color.fromARGB(255, 183, 228, 199),
               boxShadow: [
@@ -95,6 +100,8 @@ class UserCard extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.only(top: 20),
                                 child: Container(
+                                  height: 30,
+                                  width: 70,
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8)),
@@ -108,29 +115,31 @@ class UserCard extends StatelessWidget {
                                         ),
                                       ],
                                       color: Color.fromARGB(255, 183, 212, 228)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text: "10",
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Color.fromARGB(255, 48, 48, 48))),
-                                          WidgetSpan(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.only(left: 5),
-                                              child: FaIcon(
-                                                FontAwesomeIcons.book,
-                                                color:
-                                                    Color.fromARGB(255, 48, 48, 48),
-                                                size: 17.0,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: recipeCount.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color.fromARGB(255, 48, 48, 48))),
+                                            WidgetSpan(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.only(left: 5),
+                                                child: FaIcon(
+                                                  FontAwesomeIcons.book,
+                                                  color:
+                                                      Color.fromARGB(255, 48, 48, 48),
+                                                  size: 17.0,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -139,6 +148,8 @@ class UserCard extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.only(left: 15, top: 20),
                                 child: Container(
+                                  height: 30,
+                                  width: 70,
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8)),
@@ -152,29 +163,31 @@ class UserCard extends StatelessWidget {
                                         ),
                                       ],
                                       color:  climateColor(climateGrade)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text: climateGrade.toString() + "/5",
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Color.fromARGB(255, 48, 48, 48))),
-                                          WidgetSpan(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.only(left: 5),
-                                              child: FaIcon(
-                                                FontAwesomeIcons.envira,
-                                                color:
-                                                    Color.fromARGB(255, 48, 48, 48),
-                                                size: 17.0,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: climateGrade.toString() + "/5",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color.fromARGB(255, 48, 48, 48))),
+                                            WidgetSpan(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.only(left: 5),
+                                                child: FaIcon(
+                                                  FontAwesomeIcons.envira,
+                                                  color:
+                                                      Color.fromARGB(255, 48, 48, 48),
+                                                  size: 17.0,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
