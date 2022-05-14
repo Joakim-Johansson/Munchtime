@@ -34,6 +34,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
   bool firstTimeSet = false;
   int portions = 2;
   String pageType = "";
+  bool image_exist = false;
 
   ///Builds the form widget for creating recipes
   ///
@@ -133,6 +134,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                             widget.storage
                                 .uploadFile(path, fileName)
                                 .then((value) => print("done"));
+                            image_exist = true;
                             setState(() {
                               image = File(tempImage.path);
                               displayedImage = Container(
@@ -147,24 +149,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(6, 6, 6, 10),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                            offset: Offset(0, 4), // changes position of shadow
-                          ),
-                        ],
-                        border: Border.all(
-                            color: Color.fromARGB(255, 149, 213, 178),
-                            width: 2),
-                      ),
-                      child: displayedImage),
-                ),
+
+                ShowImage(
+                    displayedImage: displayedImage, imageExists: image_exist),
                 const SizedBox(
                   height: 15,
                 ),
@@ -190,7 +177,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextField(
-                            readOnly: edit,
+                              readOnly: edit,
                               controller: titleController,
                               decoration: const InputDecoration.collapsed(
                                 hintText: "Name your recipe",
@@ -211,7 +198,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only (bottom: 4),
+                  padding: const EdgeInsets.only(bottom: 4),
                   child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -655,5 +642,40 @@ class _CreateRecipeState extends State<CreateRecipe> {
         returnVal[2] ||
         returnVal[3] ||
         returnVal[4];
+  }
+}
+
+class ShowImage extends StatelessWidget {
+  const ShowImage({
+    Key? key,
+    required this.displayedImage,
+    required this.imageExists,
+  }) : super(key: key);
+
+  final Widget displayedImage;
+  final bool imageExists;
+  @override
+  Widget build(BuildContext context) {
+    if (imageExists) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(6, 6, 6, 10),
+        child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: Offset(0, 4), // changes position of shadow
+                ),
+              ],
+              border: Border.all(
+                  color: Color.fromARGB(255, 149, 213, 178), width: 2),
+            ),
+            child: displayedImage),
+      );
+    } else {
+      return Container();
+    }
   }
 }
