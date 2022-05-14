@@ -11,20 +11,26 @@ import '../provider/auth.dart';
 
 class Profile extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
-  Color climateColor(int climateGrade) {
-    if (climateGrade == 1) {
+  Color climateColor(int climateGrade){
+    if (climateGrade == 1){
       return Color.fromARGB(255, 232, 129, 129);
-    } else if (climateGrade == 2) {
+    }
+    else if (climateGrade == 2){
       return Color.fromARGB(255, 232, 177, 129);
-    } else if (climateGrade == 3) {
+    }
+    else if (climateGrade == 3){
       return Color.fromARGB(255, 232, 223, 129);
-    } else if (climateGrade == 4) {
+    }
+    else if (climateGrade == 4){
       return Color.fromARGB(255, 196, 232, 129);
-    } else if (climateGrade == 5) {
+    }
+
+    else if (climateGrade == 5){
       return Color.fromARGB(255, 146, 232, 129);
     }
 
     return Color.fromARGB(255, 0, 0, 0);
+
   }
 
   int climateGrade = 1;
@@ -60,11 +66,13 @@ class Profile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(22, 22, 22, 2),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(user.photoURL!),
-                      radius: 80,
-                    ),
+                  padding: EdgeInsets.fromLTRB(22, 22, 22, 2),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(user.photoURL!),
+                    radius: 80,
+                    
+                  ),
+                  
                   ),
                 ),
                 Padding(
@@ -81,94 +89,96 @@ class Profile extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 10, top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0.5,
-                                  blurRadius: 5,
-                                  offset: Offset(
-                                      0, 1), // changes position of shadow
-                                ),
-                              ],
-                              color: Color.fromARGB(255, 183, 212, 228)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: recipeCount.toString(),
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color:
-                                              Color.fromARGB(255, 48, 48, 48))),
-                                  WidgetSpan(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.book,
-                                        color: Color.fromARGB(255, 48, 48, 48),
-                                        size: 17.0,
+                        children: [
+                          Center(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 0.5,
+                                      blurRadius: 5,
+                                      offset: Offset(
+                                          0, 1), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Color.fromARGB(255, 183, 212, 228)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                          text: recipeCount.toString(),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Color.fromARGB(255, 48, 48, 48))),
+                                      WidgetSpan(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.book,
+                                            color:
+                                                Color.fromARGB(255, 48, 48, 48),
+                                            size: 17.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0.5,
-                                  blurRadius: 5,
-                                  offset: Offset(
-                                      0, 1), // changes position of shadow
-                                ),
-                              ],
-                              color: climateColor(climateGrade)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: climateGrade.toString() + "/5",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color:
-                                              Color.fromARGB(255, 48, 48, 48))),
-                                  WidgetSpan(
+                                Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            spreadRadius: 0.5,
+                                            blurRadius: 5,
+                                            offset: Offset(
+                                                0, 1), // changes position of shadow
+                                          ),
+                                        ],
+                                        color:  climateColor(climateGrade)),
                                     child: Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.envira,
-                                        color: Color.fromARGB(255, 48, 48, 48),
-                                        size: 17.0,
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: climateGrade.toString() + "/5",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color.fromARGB(255, 48, 48, 48))),
+                                            WidgetSpan(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.only(left: 5),
+                                                child: FaIcon(
+                                                  FontAwesomeIcons.envira,
+                                                  color:
+                                                      Color.fromARGB(255, 48, 48, 48),
+                                                  size: 17.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
                 FutureBuilder(
                     future: FirebaseFirestore.instance
