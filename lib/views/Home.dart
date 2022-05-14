@@ -246,7 +246,6 @@ class _HomeState extends State<Home> {
         "photo": AuthService().auth.currentUser!.photoURL!,
         "bio": ""
       }, SetOptions(merge: true));
-
     } catch (e) {
       print('sign in error $e');
     }

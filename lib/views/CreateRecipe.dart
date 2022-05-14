@@ -200,7 +200,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4),
                   child: Container(
-                      height: 50,
+                      height: 66,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4.0),
                           border: Border.all(
@@ -211,11 +211,15 @@ class _CreateRecipeState extends State<CreateRecipe> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            TextField(
-                                controller: descriptionController,
-                                decoration: const InputDecoration.collapsed(
-                                  hintText: "Describe your recipe",
-                                )),
+                            Flexible(
+                              child: TextField(
+                                  controller: descriptionController,
+                                  maxLength: 255,
+                                  maxLines: 20,
+                                  decoration: const InputDecoration.collapsed(
+                                    hintText: "Describe your recipe",
+                                  )),
+                            ),
                           ],
                         ),
                       )),
