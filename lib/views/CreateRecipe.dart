@@ -402,7 +402,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       onPressed: sendRecipe,
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                            Color.fromARGB(100, 149, 213, 178)),
+                            Color.fromARGB(100, 116, 198, 157)),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
