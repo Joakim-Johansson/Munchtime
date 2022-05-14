@@ -32,7 +32,6 @@ class UserCard extends StatelessWidget {
 
   }
 
-  int recipeCount = 10;
   int climateGrade = 1; //temporary, vill importera från använadren
 
   @override
@@ -129,7 +128,7 @@ class UserCard extends StatelessWidget {
                                         text: TextSpan(
                                           children: [
                                             TextSpan(
-                                                text: recipeCount.toString(),
+                                                text: userDoc["recipeCount"].toString(),
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     color: Color.fromARGB(255, 48, 48, 48))),
