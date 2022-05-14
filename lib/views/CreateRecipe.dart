@@ -32,7 +32,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
   Widget displayedImage = Container();
   bool edit = false;
   bool firstTimeSet = false;
-  int portions = 2;
+  int portions = 4;
   String pageType = "";
   bool image_exist = false;
 
@@ -371,9 +371,13 @@ class _CreateRecipeState extends State<CreateRecipe> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                  child: Text("Portions:"),
+                  child: Text(
+                    "Portions:",
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 NumberPicker(
                   axis: Axis.horizontal,
