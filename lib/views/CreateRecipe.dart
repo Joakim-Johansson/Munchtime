@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:dio/dio.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -95,125 +96,143 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Add a photo",
-                      style: TextStyle(
-                        color: Theme.of(context).focusColor,
-                        fontSize: 23,
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset:
+                                    Offset(0, 4), // changes position of shadow
+                              ),
+                            ],
+                            color: Color.fromARGB(255, 149, 213, 178),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50))),
+                        child: IconButton(
+                          onPressed: () async {
+                            final tempImage = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+
+                            if (tempImage == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("No file selected")));
+
+                              return;
+                            }
+
+                            final path = tempImage.path;
+                            fileName = tempImage.name;
+
+                            widget.storage
+                                .uploadFile(path, fileName)
+                                .then((value) => print("done"));
+                            setState(() {
+                              image = File(tempImage.path);
+                              displayedImage = Container(
+                                  child: image == null
+                                      ? Container()
+                                      : Image.file(File(image.path)));
+                            });
+                          },
+                          icon: const Icon(Icons.add_a_photo, size: 30),
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () async {
-                        final tempImage = await ImagePicker()
-                            .pickImage(source: ImageSource.gallery);
-
-                        if (tempImage == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text("No file selected")));
-
-                          return;
-                        }
-
-                        final path = tempImage.path;
-                        fileName = tempImage.name;
-
-                        widget.storage
-                            .uploadFile(path, fileName)
-                            .then((value) => print("done"));
-                        setState(() {
-                          image = File(tempImage.path);
-                          displayedImage = Container(
-                              child: image == null
-                                  ? Container()
-                                  : Image.file(File(image.path)));
-                        });
-                      },
-                      icon: const Icon(Icons.add, size: 30),
                     )
                   ],
                 ),
-                displayedImage,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(6, 6, 6, 10),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 3,
+                            blurRadius: 5,
+                            offset: Offset(0, 4), // changes position of shadow
+                          ),
+                        ],
+                        border: Border.all(
+                            color: Color.fromARGB(255, 149, 213, 178),
+                            width: 2),
+                      ),
+                      child: displayedImage),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
 
                 ///Title entry
-                TextField(
-                    readOnly: edit,
-                    controller: titleController,
-                    decoration: InputDecoration(
-                      fillColor: const Color(0xffc8e6c9),
-                      filled: true, // dont forget this line
-
-                      focusedBorder: OutlineInputBorder(
+                const Align(
+                  alignment: Alignment(-0.81, 0),
+                  child: Text(
+                    "Name",
+                    style: TextStyle(fontSize: 24, color: Colors.black),
+                  ),
+                ),
+                Container(
+                    height: 50,
+                    decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.green),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 116, 198, 157),
+                            width: 2)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextField(
+                            readOnly: edit,
+                              controller: titleController,
+                              decoration: const InputDecoration.collapsed(
+                                hintText: "Name your recipe",
+                              )),
+                        ],
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.green),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.green),
-                      ),
-
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.black),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: const EdgeInsets.all(20.0),
-                      labelText: "Recipe name",
-                      labelStyle:
-                          const TextStyle(fontSize: 34, color: Colors.black),
                     )),
                 const SizedBox(
                   height: 15,
                 ),
 
                 ///Description
-                TextField(
-                    maxLength: null,
-                    maxLines: null,
-                    controller: descriptionController,
-                    decoration: InputDecoration(
-                      fillColor: const Color(0xffc8e6c9),
-
-                      filled: true, // dont forget this line
-
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.green),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.green),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.green),
-                      ),
-
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.black),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      contentPadding: const EdgeInsets.all(20.0),
-                      labelText: "Description",
-                      labelStyle:
-                          const TextStyle(fontSize: 34, color: Colors.black),
-                    )),
+                const Align(
+                  alignment: Alignment(-0.81, 0),
+                  child: Text(
+                    "Description",
+                    style: TextStyle(fontSize: 24, color: Colors.black),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only (bottom: 4),
+                  child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          border: Border.all(
+                              color: Color.fromARGB(255, 116, 198, 157),
+                              width: 2)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextField(
+                                controller: descriptionController,
+                                decoration: const InputDecoration.collapsed(
+                                  hintText: "Describe your recipe",
+                                )),
+                          ],
+                        ),
+                      )),
+                ),
 
                 ///Ingredients
                 const Align(
@@ -226,7 +245,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4.0),
-                      border: Border.all(color: Colors.green, width: 4)),
+                      border: Border.all(
+                          color: Color.fromARGB(255, 116, 198, 157), width: 2)),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: ingredientControllers.map((e) {
@@ -250,12 +270,33 @@ class _CreateRecipeState extends State<CreateRecipe> {
                           .add([TextEditingController(), "100g"]);
                     });
                   },
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text("Add ingredient"),
-                        Icon(Icons.add),
-                      ]),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 160,
+                      height: 35,
+                      // ignore: prefer_const_constructors
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 183, 228, 199),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.25),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(1, 4), // changes position of shadow
+                          ),
+                        ], // ignore: prefer_const_constructors
+                      ),
+
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text("Add ingredient"),
+                            Icon(Icons.add),
+                          ]),
+                    ),
+                  ),
                 ),
 
                 ///Instructions
@@ -269,18 +310,22 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4.0),
-                      border: Border.all(color: Colors.green, width: 4)),
+                      border: Border.all(
+                          color: Color.fromARGB(255, 116, 198, 157), width: 2)),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: instructionControllers.map((e) {
                       return Column(children: [
                         Row(children: [
                           Flexible(
-                            child: TextField(
-                                controller: e,
-                                decoration: const InputDecoration.collapsed(
-                                  hintText: "Next Step",
-                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextField(
+                                  controller: e,
+                                  decoration: const InputDecoration.collapsed(
+                                    hintText: "Next Step",
+                                  )),
+                            ),
                           ),
 
                           ///Write a minus icon if the user has added extra steps
@@ -312,12 +357,32 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       instructionControllers.add(TextEditingController());
                     });
                   },
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text("Add instruction"),
-                        Icon(Icons.add),
-                      ]),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 160,
+                      height: 35,
+                      // ignore: prefer_const_constructors
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 183, 228, 199),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.25),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(1, 4), // changes position of shadow
+                          ),
+                        ], // ignore: prefer_const_constructors
+                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text("Add instruction"),
+                            Icon(Icons.add),
+                          ]),
+                    ),
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
@@ -331,10 +396,30 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   step: 1,
                   onChanged: (value) => setState(() => portions = value),
                 ),
-                TextButton(
-                  onPressed: sendRecipe,
-                  child: const Text('Done'),
-                )
+
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: TextButton(
+                      onPressed: sendRecipe,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            Color.fromARGB(100, 149, 213, 178)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
+                        child: Text(
+                          "Create recipe",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 8, 28, 21),
+                            fontSize: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ]),
             ),
           ),
@@ -359,13 +444,16 @@ class _CreateRecipeState extends State<CreateRecipe> {
   Row createRow(List<Object> e) {
     return Row(children: [
       Flexible(
-        child: TextField(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
 
-            ///First is the TextEditingController
-            controller: e.first as TextEditingController,
-            decoration: const InputDecoration.collapsed(
-              hintText: "Next Ingredient",
-            )),
+              ///First is the TextEditingController
+              controller: e.first as TextEditingController,
+              decoration: const InputDecoration.collapsed(
+                hintText: "Next Ingredient",
+              )),
+        ),
       ),
 
       ///Last is the String
