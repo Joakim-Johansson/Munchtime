@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crunchtime/views/UserProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -41,6 +42,12 @@ class UserCard extends StatelessWidget {
     print(userDoc.id);
     return Center(
         child: GestureDetector(
+
+          onTap: () =>  Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserProfile(user: userDoc)),
+                                ),
       child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Container(
@@ -82,8 +89,8 @@ class UserCard extends StatelessWidget {
                         ],
                       ),
                       child: CircleAvatar(
-                        backgroundImage: AssetImage(
-                            "assets/images/Will_Smith.jpg"), //LÄGG TILL BASERAT PÅ ANVÄNDARE SEN
+                        backgroundImage:
+                            Image.network(userDoc["photo"]).image, //LÄGG TILL BASERAT PÅ ANVÄNDARE SEN
                       ),
                     ),
                     Padding(

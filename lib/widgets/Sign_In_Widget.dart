@@ -26,7 +26,6 @@ class Sign_In_Widget extends StatelessWidget {
         label: const Text('Sign-in with google'),
         onPressed: () async {
           UserCredential user = await AuthService().signInWithGoogle();
-          print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
           await FirebaseFirestore.instance
               .collection('Users')
               .doc(AuthService().auth.currentUser?.uid)
