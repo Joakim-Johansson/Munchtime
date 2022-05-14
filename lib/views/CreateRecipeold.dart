@@ -1,12 +1,8 @@
-import 'dart:io';
-import 'dart:convert';
 import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:crunchtime/jsonRecipe.dart';
 
 class CreateRecipe extends StatefulWidget {
   Storage storage = Storage();
@@ -68,7 +64,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                             .uploadFile(path, fileName)
                             .then((value) => print("done"));
                       },
-                      icon: Icon(Icons.add, size: 30),
+                      icon: const Icon(Icons.add, size: 30),
                     )
                   ],
                 ),

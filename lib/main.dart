@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/provider/google_sign_in.dart';
 import 'package:crunchtime/routes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,7 @@ Future main() async {
     ),
   );
 
- // AuthService().signInAnon();
+  // AuthService().signInAnon();
   // UserCredential user = await AuthService().signInWithGoogle();
 //
   runApp(const MyApp());
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: Color.fromARGB(255, 250, 255, 251),
               bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
               focusColor: Color.fromARGB(255, 27, 67, 50),
-              fontFamily: 'OpenSans'),
+              fontFamily: 'Comfortaa'),
           home: NavBar(),
         ),
       );

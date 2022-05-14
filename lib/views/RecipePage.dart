@@ -1,13 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:http/http.dart' as http;
 
+import '../provider/auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+///Recipepage displays all the information about a recipe
+///
+///Uses recipeinformation.dart to display the Recipes
+///Needs a QueryDocumentSnapshot from firebase in order to work properly
 class RecipePage extends StatefulWidget {
-  DocumentSnapshot recipe;
   Storage storage = Storage();
+  Map<String, dynamic> recipe;
 
   RecipePage(this.recipe);
 
@@ -30,83 +38,99 @@ class _RecipesState extends State<RecipePage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).bottomAppBarColor,
         elevation: 0,
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => FutureBuilder(
-                          future: FirebaseFirestore.instance
-                              .collection("Users")
-                              .doc(AuthService().auth.currentUser?.uid)
-                              .get(),
-                          builder: (context,
-                              AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            if (snapshot.hasData) {
-                              Map<String, dynamic> map =
-                                  snapshot.data!.data() as Map<String, dynamic>;
-                              return SimpleDialog(
-                                title: Text('Share to group'),
-                                children: map["groups"]!
-                                    .map<Widget>((key) => SimpleDialogOption(
-                                        onPressed: () async {
-                                          CollectionReference recipeColl =
-                                              await FirebaseFirestore.instance
-                                                  .collection("groups")
-                                                  .doc(key)
-                                                  .collection("recipes");
+        actions: showbuttons() +
+            <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => FutureBuilder(
+                              future: FirebaseFirestore.instance
+                                  .collection("Users")
+                                  .doc(AuthService().auth.currentUser?.uid)
+                                  .get(),
+                              builder: (context,
+                                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                if (snapshot.hasData) {
+                                  Map<String, dynamic> map = snapshot.data!
+                                      .data() as Map<String, dynamic>;
+                                  return SimpleDialog(
+                                    title: Text('Share to group'),
+                                    children: map["groups"]!
+                                        .map<Widget>(
+                                            (key) => SimpleDialogOption(
+                                                onPressed: () async {
+                                                  CollectionReference
+                                                      recipeColl =
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection("groups")
+                                                          .doc(key)
+                                                          .collection(
+                                                              "recipes");
 
-                                          DocumentSnapshot foundDoc =
-                                              await recipeColl
-                                                  .doc(widget.recipe.id)
-                                                  .get();
-                                          if (foundDoc.exists) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    backgroundColor: Colors.red,
-                                                    content: Text(
-                                                      "Already exists in that group",
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    )));
-                                          } else {
-                                            await FirebaseFirestore.instance
-                                                .collection("groups")
-                                                .doc(key)
-                                                .collection("recipes")
-                                                .doc(widget.recipe.id)
-                                                .set({});
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    backgroundColor:
-                                                        Colors.green,
-                                                    content: Text(
-                                                      "Succesfully added!",
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    )));
-                                          }
+                                                  DocumentSnapshot foundDoc =
+                                                      await recipeColl
+                                                          .doc(widget
+                                                              .recipe["name"])
+                                                          .get();
+                                                  if (foundDoc.exists) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                                backgroundColor:
+                                                                    Colors.red,
+                                                                content: Text(
+                                                                  "Already exists in that group",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black),
+                                                                )));
+                                                  } else {
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection("groups")
+                                                        .doc(key)
+                                                        .collection("recipes")
+                                                        .doc(widget
+                                                            .recipe["name"])
+                                                        .set({});
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .green,
+                                                                content: Text(
+                                                                  "Succesfully added!",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black),
+                                                                )));
+                                                  }
 
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(key.toString())))
-                                    .toList(),
-                                elevation: 10,
-                                //backgroundColor: Colors.green,
-                              );
-                            } else {
-                              return Container();
-                            }
-                          }));
-                },
-                child: Icon(
-                  Icons.share,
-                  size: 26.0,
-                ),
-              )),
-        ],
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(key.toString())))
+                                        .toList(),
+                                    elevation: 10,
+                                    //backgroundColor: Colors.green,
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              }));
+                    },
+                    child: Icon(
+                      Icons.share,
+                      size: 26.0,
+                    ),
+                  )),
+            ],
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -126,7 +150,7 @@ class _RecipesState extends State<RecipePage> {
                   builder:
                       (BuildContext context, AsyncSnapshot<String> snapshot) {
                     if (snapshot.hasData) {
-                      return Container(
+                      return SizedBox(
                         height: 400,
                         width: 400,
                         child: Image.network(
@@ -147,5 +171,50 @@ class _RecipesState extends State<RecipePage> {
         ],
       ),
     );
+  }
+
+  void deleteRecipe() async {
+    await http.delete(Uri.parse(
+        "https://cohesive-photon-346611.ew.r.appspot.com/delete/" +
+            widget.recipe["name"] +
+            "/" +
+            AuthService().auth.currentUser!.uid));
+
+    Navigator.of(context).pushNamed("/recipelist");
+  }
+
+  List<Widget> showbuttons() {
+    if (AuthService().auth.currentUser!.uid == widget.recipe["user"]) {
+      return <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+              child: CircleAvatar(
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed("/createRecipe", arguments: widget.recipe);
+                  },
+                ),
+              ),
+            ),
+            CircleAvatar(
+              child: IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                ),
+                onPressed: deleteRecipe,
+              ),
+            )
+          ]),
+        )
+      ];
+    }
+    return [Container()];
   }
 }

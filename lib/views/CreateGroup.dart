@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:flutter/material.dart';
 
+///Page for creating a new group
+///
+///Gives the user the option to name a group with up to ten characters
 class CreateGroup extends StatefulWidget {
   @override
   CreateGroupWidget createState() => CreateGroupWidget();
@@ -52,7 +55,7 @@ class CreateGroupWidget extends State<CreateGroup> {
           elevation: 0,
         ),
         body: Container(
-          constraints: BoxConstraints.expand(),
+          constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/images/blob4.png"),

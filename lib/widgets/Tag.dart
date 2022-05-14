@@ -5,6 +5,10 @@ class Tag extends StatelessWidget {
   Color color;
   Tag(this.tagName, this.color);
 
+  ///Builds a tag
+  ///
+  ///Generic information blob
+  ///Can display any string with a choice of colored background
   @override
   Widget build(BuildContext context) {
     return UnconstrainedBox(
