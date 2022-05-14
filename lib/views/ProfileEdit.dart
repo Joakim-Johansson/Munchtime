@@ -86,10 +86,11 @@ class ProfileEditWidget extends State<ProfileEdit> {
                           (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.hasData) {
                           controller.text = snapshot.data!["bio"];
-          
+
                           return TextField(
                             controller: controller,
                             maxLines: 15,
+                            maxLength: 255,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -116,11 +117,12 @@ class ProfileEditWidget extends State<ProfileEdit> {
                             .doc(AuthService().auth.currentUser!.uid)
                             .set({"bio": bio}, SetOptions(merge: true));
                         setState(() {});
-          
+
                         // Respond to button press
                       },
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: const BorderSide(

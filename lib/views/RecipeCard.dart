@@ -91,13 +91,14 @@ class _RecipeCardState extends State<RecipeCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FittedBox(
-                  fit: BoxFit.contain,
+                Expanded(
                   child: Text(
                     widget.recipe["name"] as String,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                      fontSize: 20,
                       color: Colors.white,
                     ),
                   ),

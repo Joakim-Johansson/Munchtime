@@ -1,4 +1,5 @@
 import 'package:crunchtime/data/storage.dart';
+import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -36,7 +37,83 @@ class _RecipesState extends State<RecipePage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).bottomAppBarColor,
         elevation: 0,
-        actions: showbuttons(),
+        actions: showbuttons() + <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection("Users")
+                              .doc(AuthService().auth.currentUser?.uid)
+                              .get(),
+                          builder: (context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              Map<String, dynamic> map =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              return SimpleDialog(
+                                title: Text('Share to group'),
+                                children: map["groups"]!
+                                    .map<Widget>((key) => SimpleDialogOption(
+                                        onPressed: () async {
+                                          CollectionReference recipeColl =
+                                              await FirebaseFirestore.instance
+                                                  .collection("groups")
+                                                  .doc(key)
+                                                  .collection("recipes");
+
+                                          DocumentSnapshot foundDoc =
+                                              await recipeColl
+                                                  .doc(widget.recipe["name"])
+                                                  .get();
+                                          if (foundDoc.exists) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    backgroundColor: Colors.red,
+                                                    content: Text(
+                                                      "Already exists in that group",
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    )));
+                                          } else {
+                                            await FirebaseFirestore.instance
+                                                .collection("groups")
+                                                .doc(key)
+                                                .collection("recipes")
+                                                .doc(widget.recipe["name"])
+                                                .set({});
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    content: Text(
+                                                      "Succesfully added!",
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    )));
+                                          }
+
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(key.toString())))
+                                    .toList(),
+                                elevation: 10,
+                                //backgroundColor: Colors.green,
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }));
+                },
+                child: Icon(
+                  Icons.share,
+                  size: 26.0,
+                ),
+              )),
+        ],
       ),
       body: Stack(
         fit: StackFit.expand,

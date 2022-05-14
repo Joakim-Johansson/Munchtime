@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crunchtime/provider/auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'GroupCard.dart';
 
@@ -6,8 +9,6 @@ import 'GroupCard.dart';
 ///Is accessed through bottom bar
 ///Shows a similar page to recipelist when a group is chosen
 class Groups extends StatelessWidget {
-  final List<GroupCard> dummyList = List.filled(3, const GroupCard());
-
   Groups({Key? key}) : super(key: key);
 
   @override
@@ -28,10 +29,49 @@ class Groups extends StatelessWidget {
           backgroundColor: Theme.of(context).bottomAppBarColor,
           elevation: 0,
         ),
-        body: GridView.count(
-          crossAxisCount: 1,
-          childAspectRatio: 3 / 1,
-          children: dummyList,
-        ));
+        body: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection("Users")
+                .doc(AuthService().auth.currentUser?.uid)
+                .get(),
+            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasData) {
+                DocumentSnapshot x = snapshot.data!;
+                Map<String, dynamic> data = x.data() as Map<String, dynamic>;
+
+                return Center(
+                  child: Column(
+                    children: !data.containsKey("groups")
+                        ? [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height / 3),
+                              child: Container(
+                                child:
+                                    Text("You haven't joined any groups yet."),
+                              ),
+                            )
+                          ]
+                        : x["groups"].map<Widget>((e) {
+                            return FutureBuilder(
+                                future: FirebaseFirestore.instance
+                                    .collection("groups")
+                                    .doc(e)
+                                    .get(),
+                                builder: (context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.hasData) {
+                                    return GroupCard(group: snapshot.data!);
+                                  } else {
+                                    return Container();
+                                  }
+                                });
+                          }).toList(),
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            }));
   }
 }

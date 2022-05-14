@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/provider/google_sign_in.dart';
 import 'package:crunchtime/routes.dart';
@@ -17,7 +18,7 @@ Future main() async {
     ),
   );
 
-  AuthService().signInAnon();
+  // AuthService().signInAnon();
   // UserCredential user = await AuthService().signInWithGoogle();
 //
   runApp(const MyApp());
@@ -37,12 +38,12 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              primaryColor: const Color.fromARGB(255, 82, 183, 136),
-              backgroundColor: const Color.fromARGB(255, 250, 255, 251),
-              bottomAppBarColor: const Color.fromARGB(255, 82, 183, 136),
-              focusColor: const Color.fromARGB(255, 27, 67, 50),
-              fontFamily: 'OpenSans'),
-          home: const NavBar(),
+              primaryColor: Color.fromARGB(255, 82, 183, 136),
+              backgroundColor: Color.fromARGB(255, 250, 255, 251),
+              bottomAppBarColor: Color.fromARGB(255, 82, 183, 136),
+              focusColor: Color.fromARGB(255, 27, 67, 50),
+              fontFamily: 'Comfortaa'),
+          home: NavBar(),
         ),
       );
 }

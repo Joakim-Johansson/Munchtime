@@ -25,9 +25,9 @@ class _RecipeInformationState extends State<RecipeInformation> {
   Widget build(BuildContext context) {
     try {
       widget.name = widget.recipe["name"];
-      // description = recipe["description"];
-      widget.description =
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ullamcorper arcu accumsan nulla gravida hendrerit. Aliquam fringilla massa quis congue tincidunt. Ut dolor mi, consequat eget tortor nec, porttitor tristique libero. Vivamus sit amet nisi fe";
+      widget.description = widget.recipe["description"];
+      // widget.description =
+      // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ullamcorper arcu accumsan nulla gravida hendrerit. Aliquam fringilla massa quis congue tincidunt. Ut dolor mi, consequat eget tortor nec, porttitor tristique libero. Vivamus sit amet nisi fe";
       widget.climateGrade = widget.recipe["Climate Grade"];
       widget.ingredientList =
           translateIngredients(widget.recipe["ingredients"]);

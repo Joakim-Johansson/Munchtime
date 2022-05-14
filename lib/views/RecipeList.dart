@@ -10,7 +10,6 @@ import 'package:crunchtime/widgets/RecipeListFuture.dart';
 ///This is the main way to explore new recipes
 ///Links to Recipepage and createrecipe
 ///Is accessed by the bottom bar
-
 class RecipeList extends StatefulWidget {
   // final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
 

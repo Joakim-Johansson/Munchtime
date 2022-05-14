@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 ///Shows a specific groups recipes
 ///
 ///Will use a recipelist version which can take sorting queries
 class Groupview extends StatelessWidget {
-  // final List<RecipeCard> dummyList = List.filled(5, RecipeCard());
-  // Recipecard behöver querydocumentsnapshot. Fixar det senare
+  String group = '';
+  String name = '';
+
+  Groupview({required this.group, required this.name});
+
+  FirebaseFirestore instance = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class Groupview extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
             title: Text(
-              "Group Recipes",
+              name + "'s recipes",
               style: TextStyle(
                 color: Theme.of(context).focusColor,
                 fontFamily: 'Pattaya',
@@ -27,23 +32,64 @@ class Groupview extends StatelessWidget {
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(6.0),
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                  child: IconButton(
-                    icon: const Icon(Icons.search),
-                    color: Theme.of(context).focusColor,
-                    onPressed: () {},
-                  ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                      child: IconButton(
+                        icon: const Icon(Icons.add),
+                        color: Theme.of(context).focusColor,
+                        onPressed: () {
+                          Navigator.of(context).pushNamed("/createRecipe");
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                      child: IconButton(
+                        icon: const Icon(Icons.search),
+                        color: Theme.of(context).focusColor,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ]),
-        body: GridView.count(
-          crossAxisSpacing: 5.0,
-          mainAxisSpacing: 5.0,
-          crossAxisCount: 1,
-          padding: const EdgeInsets.all(10),
-          // children: dummyList,
-        ));
+        body: StreamBuilder(
+            stream: instance
+                .collection("groups")
+                .doc(group)
+                .collection("recipes")
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasData) {
+                return GridView.count(
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 5.0,
+                    crossAxisCount: 1,
+                    padding: EdgeInsets.all(10),
+                    children: snapshot.data!.docs
+                        .map((e) => FutureBuilder(
+                            future:
+                                instance.collection("Recipes").doc(e.id).get(),
+                            builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot>
+                                        asyncRecipe) =>
+                                asyncRecipe.hasData
+                                    ? RecipeCard(asyncRecipe.data!.data()
+                                        as Map<String, dynamic>)
+                                    : Container()))
+                        .toList());
+              } else {
+                return Container();
+              }
+            }));
   }
 }
