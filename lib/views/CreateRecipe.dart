@@ -386,8 +386,18 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
                 Container(
                   width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 10,
+                        offset: Offset(0, 6), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 8),
                     child: TextButton(
                       onPressed: sendRecipe,
                       style: ButtonStyle(
