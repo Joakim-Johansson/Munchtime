@@ -32,8 +32,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
   Widget displayedImage = Container();
   bool edit = false;
   bool firstTimeSet = false;
-  int portions = 2;
+  int portions = 4;
   String pageType = "";
+  bool image_exist = false;
 
   ///Builds the form widget for creating recipes
   ///
@@ -133,6 +134,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                             widget.storage
                                 .uploadFile(path, fileName)
                                 .then((value) => print("done"));
+                            image_exist = true;
                             setState(() {
                               image = File(tempImage.path);
                               displayedImage = Container(
@@ -147,24 +149,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(6, 6, 6, 10),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                            offset: Offset(0, 4), // changes position of shadow
-                          ),
-                        ],
-                        border: Border.all(
-                            color: Color.fromARGB(255, 149, 213, 178),
-                            width: 2),
-                      ),
-                      child: displayedImage),
-                ),
+
+                ShowImage(
+                    displayedImage: displayedImage, imageExists: image_exist),
                 const SizedBox(
                   height: 15,
                 ),
@@ -190,7 +177,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextField(
-                            readOnly: edit,
+                              readOnly: edit,
                               controller: titleController,
                               decoration: const InputDecoration.collapsed(
                                 hintText: "Name your recipe",
@@ -211,7 +198,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only (bottom: 4),
+                  padding: const EdgeInsets.only(bottom: 4),
                   child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -384,9 +371,13 @@ class _CreateRecipeState extends State<CreateRecipe> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                  child: Text("Portions:"),
+                  child: Text(
+                    "Portions:",
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 NumberPicker(
                   axis: Axis.horizontal,
@@ -399,13 +390,23 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
                 Container(
                   width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 10,
+                        offset: Offset(0, 6), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 8),
                     child: TextButton(
                       onPressed: sendRecipe,
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                            Color.fromARGB(100, 149, 213, 178)),
+                            Color.fromARGB(100, 116, 198, 157)),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(22, 6, 22, 6),
@@ -655,5 +656,40 @@ class _CreateRecipeState extends State<CreateRecipe> {
         returnVal[2] ||
         returnVal[3] ||
         returnVal[4];
+  }
+}
+
+class ShowImage extends StatelessWidget {
+  const ShowImage({
+    Key? key,
+    required this.displayedImage,
+    required this.imageExists,
+  }) : super(key: key);
+
+  final Widget displayedImage;
+  final bool imageExists;
+  @override
+  Widget build(BuildContext context) {
+    if (imageExists) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(6, 6, 6, 10),
+        child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: Offset(0, 4), // changes position of shadow
+                ),
+              ],
+              border: Border.all(
+                  color: Color.fromARGB(255, 149, 213, 178), width: 2),
+            ),
+            child: displayedImage),
+      );
+    } else {
+      return Container();
+    }
   }
 }
