@@ -113,7 +113,10 @@ class _RecipeInformationState extends State<RecipeInformation> {
               ),
               Center(
                   child:
-                      Text("Portions: " + widget.originalPortions.toString())),
+                      Text("This recipe serves " + widget.originalPortions.toString() + " people",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic),
+                  ),),
               const Align(
                 alignment: Alignment(-0.95, 0),
                 child: Text(

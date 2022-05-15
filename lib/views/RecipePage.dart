@@ -3,6 +3,7 @@ import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/provider/auth.dart';
 import 'package:crunchtime/widgets/RecipeInformation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import '../provider/auth.dart';
@@ -29,13 +30,13 @@ class _RecipesState extends State<RecipePage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 248, 247, 247),
       appBar: AppBar(
+        centerTitle: false,
         title: const Text('Recipes',
             style: TextStyle(
               color: Color.fromARGB(255, 27, 67, 50),
               fontFamily: 'Pattaya',
               fontSize: 30,
             )),
-        centerTitle: true,
         backgroundColor: Theme.of(context).bottomAppBarColor,
         elevation: 0,
         actions: showbuttons() +
@@ -188,25 +189,28 @@ class _RecipesState extends State<RecipePage> {
       return <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(children: [
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-              child: CircleAvatar(
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.edit,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed("/createRecipe", arguments: widget.recipe);
-                  },
-                ),
-              ),
-            ),
-            CircleAvatar(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: IconButton(
                 icon: const Icon(
-                  Icons.delete,
+                  Icons.edit,
+                ),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed("/createRecipe", arguments: widget.recipe);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: IconButton(
+                icon: const Icon(
+                  FontAwesomeIcons.trash,
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  size: 23,
                 ),
                 onPressed: deleteRecipe,
               ),
