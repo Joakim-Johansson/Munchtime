@@ -14,10 +14,21 @@ class Tag extends StatelessWidget {
     return UnconstrainedBox(
       child: Container(
           child: Padding(
-            padding: const EdgeInsets.only(left: 7, right: 7),
-            child: Text(tagName),
-          ),
+            padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
+            child: Text(tagName,
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic),
+                  ),),
+          
           decoration: BoxDecoration(
+            boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 3,
+                          blurRadius: 2,
+                          offset: Offset(0, 1), // changes position of shadow
+                        ),
+                      ],
             color: color,
             borderRadius: BorderRadius.circular(15),
           )),

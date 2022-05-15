@@ -74,10 +74,22 @@ class _RecipeInformationState extends State<RecipeInformation> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Tag(widget.nutrition[0] + "g", Colors.greenAccent),
-                    Tag(widget.nutrition[1] + "g", Colors.greenAccent),
-                    Tag(widget.nutrition[2] + "g", Colors.greenAccent),
-                    Tag(widget.nutrition[3], Colors.greenAccent),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Tag(widget.nutrition[0] + "g", Color.fromARGB(255, 149, 213, 178)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Tag(widget.nutrition[1] + "g", Color.fromARGB(255, 149, 213, 178)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Tag(widget.nutrition[2] + "g", Color.fromARGB(255, 149, 213, 178)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Tag(widget.nutrition[3], Color.fromARGB(255, 149, 213, 178)),
+                    ),
                   ],
                 ),
               ),
