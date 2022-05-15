@@ -4,6 +4,7 @@ import 'package:crunchtime/views/Groupview.dart';
 import 'package:crunchtime/views/UserList.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ///Displays short information about a group in a box
 ///
@@ -231,26 +232,46 @@ class _GroupCardState extends State<GroupCard> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return SimpleDialog(
-                                      title:
-                                          Center(child: Text("Enter to Join")),
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                8, 0, 8, 8),
-                                            child: Text(
-                                              widget.group["code"],
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .focusColor,
-                                                fontSize: 30,
+                                  return Container(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Clipboard.setData(ClipboardData(
+                                                text: widget.group["code"]))
+                                            .then(
+                                          (value) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Code copied successfully"),
+                                              duration:
+                                                  Duration(milliseconds: 600),
+                                            ));
+                                          },
+                                        );
+                                      },
+                                      child: SimpleDialog(
+                                          title: Center(
+                                              child: Text("Enter to Join")),
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        8, 0, 8, 8),
+                                                child: Text(
+                                                  widget.group["code"],
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .focusColor,
+                                                    fontSize: 30,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ),
-                                        )
-                                      ]);
+                                            )
+                                          ]),
+                                    ),
+                                  );
                                 });
                           },
                           style: ButtonStyle(

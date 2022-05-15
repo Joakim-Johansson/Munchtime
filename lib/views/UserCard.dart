@@ -23,7 +23,7 @@ class UserCard extends StatelessWidget {
       return Color.fromARGB(255, 146, 232, 129);
     }
 
-    return Color.fromARGB(255, 0, 0, 0);
+    return Color.fromARGB(255, 224, 76, 76);
   }
 
   int climateGrade = 0; //temporary, vill importera från använadren

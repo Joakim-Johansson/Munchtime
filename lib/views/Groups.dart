@@ -29,49 +29,53 @@ class Groups extends StatelessWidget {
           backgroundColor: Theme.of(context).bottomAppBarColor,
           elevation: 0,
         ),
-        body: FutureBuilder(
-            future: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(AuthService().auth.currentUser?.uid)
-                .get(),
-            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-              if (snapshot.hasData) {
-                DocumentSnapshot x = snapshot.data!;
-                Map<String, dynamic> data = x.data() as Map<String, dynamic>;
+        body: SingleChildScrollView(
+          child: FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(AuthService().auth.currentUser?.uid)
+                  .get(),
+              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  DocumentSnapshot x = snapshot.data!;
+                  Map<String, dynamic> data = x.data() as Map<String, dynamic>;
 
-                return Center(
-                  child: Column(
-                    children: !data.containsKey("groups")
-                        ? [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height / 3),
-                              child: Container(
-                                child:
-                                    Text("You haven't joined any groups yet."),
-                              ),
-                            )
-                          ]
-                        : x["groups"].map<Widget>((e) {
-                            return FutureBuilder(
-                                future: FirebaseFirestore.instance
-                                    .collection("groups")
-                                    .doc(e)
-                                    .get(),
-                                builder: (context,
-                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                  if (snapshot.hasData) {
-                                    return GroupCard(group: snapshot.data!);
-                                  } else {
-                                    return Container();
-                                  }
-                                });
-                          }).toList(),
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            }));
+                  return Center(
+                    child: Column(
+                      children: !data.containsKey("groups")
+                          ? [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top:
+                                        MediaQuery.of(context).size.height / 3),
+                                child: Container(
+                                  child: Text(
+                                      "You haven't joined any groups yet."),
+                                ),
+                              )
+                            ]
+                          : x["groups"].map<Widget>((e) {
+                              return FutureBuilder(
+                                  future: FirebaseFirestore.instance
+                                      .collection("groups")
+                                      .doc(e)
+                                      .get(),
+                                  builder: (context,
+                                      AsyncSnapshot<DocumentSnapshot>
+                                          snapshot) {
+                                    if (snapshot.hasData) {
+                                      return GroupCard(group: snapshot.data!);
+                                    } else {
+                                      return Container();
+                                    }
+                                  });
+                            }).toList(),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+        ));
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:io';
 import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/provider/auth.dart';
@@ -143,7 +145,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
                                       : Image.file(File(image.path)));
                             });
                           },
-                          icon: const Icon(Icons.add_a_photo, size: 30),
+                          icon: const Icon(Icons.add_a_photo,
+                              size: 30, color: Color.fromARGB(255, 27, 67, 50)),
                         ),
                       ),
                     )
@@ -158,10 +161,13 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
                 ///Title entry
                 const Align(
-                  alignment: Alignment(-0.81, 0),
+                  alignment: Alignment.bottomLeft,
                   child: Text(
                     "Name",
-                    style: TextStyle(fontSize: 24, color: Colors.black),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 8, 28, 21),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
@@ -191,16 +197,19 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
                 ///Description
                 const Align(
-                  alignment: Alignment(-0.81, 0),
+                  alignment: Alignment.bottomLeft,
                   child: Text(
                     "Description",
-                    style: TextStyle(fontSize: 24, color: Colors.black),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 8, 28, 21),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4),
                   child: Container(
-                      height: 66,
+                      height: 100,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4.0),
                           border: Border.all(
@@ -226,11 +235,17 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 ),
 
                 ///Ingredients
-                const Align(
-                  alignment: Alignment(-0.81, 0),
-                  child: Text(
-                    "Ingredients",
-                    style: TextStyle(fontSize: 24, color: Colors.black),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: const Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      "Ingredients",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 8, 28, 21),
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
                 Container(
@@ -268,7 +283,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       height: 35,
                       // ignore: prefer_const_constructors
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 183, 228, 199),
+                        color: Color.fromARGB(100, 116, 198, 157),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         boxShadow: [
                           BoxShadow(
@@ -292,10 +307,13 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
                 ///Instructions
                 const Align(
-                  alignment: Alignment(-0.81, 0),
+                  alignment: Alignment.bottomLeft,
                   child: Text(
                     "Instructions",
-                    style: TextStyle(fontSize: 24, color: Colors.black),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 8, 28, 21),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
@@ -355,7 +373,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       height: 35,
                       // ignore: prefer_const_constructors
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 183, 228, 199),
+                        color: Color.fromARGB(100, 116, 198, 157),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         boxShadow: [
                           BoxShadow(
@@ -380,7 +398,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                   child: Text(
                     "Portions:",
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 NumberPicker(
