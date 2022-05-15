@@ -55,7 +55,7 @@ class CreateGroupWidget extends State<CreateGroup> {
           elevation: 0,
         ),
         body: Container(
-          constraints: BoxConstraints.expand(),
+          constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/images/blob4.png"),

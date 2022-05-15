@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crunchtime/data/storage.dart';
 import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/provider/auth.dart';
-import 'package:crunchtime/views/CreateGroup.dart';
 import 'package:crunchtime/views/JoinGroup.dart';
-import 'package:crunchtime/views/Login.dart';
 import 'package:crunchtime/views/Profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
@@ -245,7 +243,8 @@ class _HomeState extends State<Home> {
           .doc(AuthService().auth.currentUser?.uid)
           .set({
         "name": AuthService().auth.currentUser?.displayName,
-        "recipeCount": AuthService().auth.currentUser?.displayName,
+        "photo": AuthService().auth.currentUser!.photoURL!,
+        "bio": ""
       }, SetOptions(merge: true));
     } catch (e) {
       print('sign in error $e');

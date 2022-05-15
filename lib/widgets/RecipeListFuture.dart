@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchtime/views/RecipeCard.dart';
 import 'package:http/http.dart' as http;
@@ -23,12 +22,17 @@ class RecipeListFuture extends StatelessWidget {
                   crossAxisSpacing: 5.0,
                   mainAxisSpacing: 5.0,
                   crossAxisCount: 1,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   children: recipes.map<Widget>((e) => RecipeCard(e)).toList());
             }
-            return Text("No Results");
+            return const Center(
+                child: Text(
+              "No Results :(",
+              style: TextStyle(
+                  fontSize: 40, color: Color.fromARGB(204, 160, 121, 107)),
+            ));
           }
-          return Text("Waiting");
+          return const Center(child: CircularProgressIndicator());
         });
   }
 }

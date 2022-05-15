@@ -163,15 +163,18 @@ class _GroupCardState extends State<GroupCard> {
                                       builder: (context,
                                           AsyncSnapshot<QuerySnapshot>
                                               snapshot) {
-                                        return Text(
-                                            snapshot.data!.docs.length
-                                                    .toString() +
-                                                " recipes",
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: Color.fromARGB(
-                                                  255, 216, 243, 220),
-                                            ));
+                                        if (snapshot.hasData) {
+                                          return Text(
+                                              snapshot.data!.docs.length
+                                                      .toString() +
+                                                  " recipes",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Color.fromARGB(
+                                                    255, 216, 243, 220),
+                                              ));
+                                        } else
+                                          return Container();
                                       }))),
                         ),
                         GestureDetector(

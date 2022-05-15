@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:crunchtime/widgets/RecipeListFuture.dart';
@@ -12,7 +14,7 @@ class RecipeList extends StatefulWidget {
   // final List<RecipeCard> dummyList = List.filled(5, RecipeCard("Carbonara"));
 
   Widget searchBar = Container();
-  Widget icon = Icon(Icons.search);
+  Widget icon = const Icon(Icons.search);
   String searchTerm = "all";
   TextEditingController searchContent = TextEditingController();
 
@@ -55,7 +57,9 @@ class _RecipeListState extends State<RecipeList> {
                         icon: const Icon(Icons.add),
                         color: Theme.of(context).focusColor,
                         onPressed: () {
-                          Navigator.of(context).pushNamed("/createRecipe");
+                          Navigator.of(context)
+                              .pushNamed("/createRecipe")
+                              .then(onGoBack);
                         },
                       ),
                     ),
@@ -90,7 +94,7 @@ class _RecipeListState extends State<RecipeList> {
   void createSearchbar() {
     setState(() {
       if (widget.searchBar is Container) {
-        widget.icon = Icon(Icons.clear);
+        widget.icon = const Icon(Icons.clear);
         widget.searchBar = SizedBox(
           width: 150,
           height: 50,
@@ -104,14 +108,15 @@ class _RecipeListState extends State<RecipeList> {
               },
               controller: widget.searchContent,
               decoration:
-                  InputDecoration(hintText: "Search", border: InputBorder.none),
+                  const InputDecoration(hintText: "Search", border: InputBorder.none),
             ),
           ),
         );
       } else {
-        widget.icon = Icon(Icons.search);
+        widget.icon = const Icon(Icons.search);
         widget.searchBar = Container();
         widget.searchContent.text = "";
+        search("");
       }
     });
   }
@@ -124,5 +129,9 @@ class _RecipeListState extends State<RecipeList> {
         widget.searchTerm = value;
       }
     });
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
   }
 }

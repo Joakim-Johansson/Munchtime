@@ -2,10 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-
 import '../provider/auth.dart';
-import '../provider/google_sign_in.dart';
 
 class Sign_In_Widget extends StatelessWidget {
   const Sign_In_Widget({
@@ -26,7 +23,6 @@ class Sign_In_Widget extends StatelessWidget {
         label: const Text('Sign-in with google'),
         onPressed: () async {
           UserCredential user = await AuthService().signInWithGoogle();
-          print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
           await FirebaseFirestore.instance
               .collection('Users')
               .doc(AuthService().auth.currentUser?.uid)

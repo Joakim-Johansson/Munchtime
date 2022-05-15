@@ -39,23 +39,25 @@ class UserList extends StatelessWidget {
                 ),
               ),
             ]),
-        body: Column(
-            children: users
-                .map((e) => Container(
-                    child: FutureBuilder(
-                        future: FirebaseFirestore.instance
-                            .collection("Users")
-                            .doc(e)
-                            .get(),
-                        builder: (context,
-                            AsyncSnapshot<DocumentSnapshot> snapshot) {
-                          if (snapshot.hasData) {
-                            print(users);
-                            return UserCard(userDoc: snapshot.data!);
-                          } else {
-                            return Container();
-                          }
-                        })))
-                .toList()));
+        body: SingleChildScrollView(
+          child: Column(
+              children: users
+                  .map((e) => Container(
+                      child: FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection("Users")
+                              .doc(e)
+                              .get(),
+                          builder: (context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              print(users);
+                              return UserCard(userDoc: snapshot.data!);
+                            } else {
+                              return Container();
+                            }
+                          })))
+                  .toList()),
+        ));
   }
 }

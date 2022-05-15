@@ -1,7 +1,5 @@
 import 'package:crunchtime/data/storage.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 ///Shows a recipe as a small box with an image and name
 ///
@@ -65,7 +63,7 @@ class _RecipeCardState extends State<RecipeCard> {
                       builder: (BuildContext context,
                           AsyncSnapshot<String> snapshot) {
                         if (snapshot.hasData) {
-                          return Container(
+                          return SizedBox(
                             height: 400,
                             width: 400,
                             child: Image.network(
@@ -110,6 +108,6 @@ class _RecipeCardState extends State<RecipeCard> {
           )
         ],
       ),
-    ); //DETTA ÄR FELET OM DET INTE FUNKAR MED BILD EFTER RESTART
+    );
   }
 }

@@ -53,7 +53,7 @@ class Profile extends StatelessWidget {
           elevation: 0,
         ),
         body: Container(
-          constraints: BoxConstraints.expand(),
+          constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/images/hills4.png"),
