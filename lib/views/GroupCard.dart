@@ -64,28 +64,26 @@ class _GroupCardState extends State<GroupCard> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          
         ),
-        
         child: Padding(
           padding: const EdgeInsets.all(3.0),
           child: Container(
             decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/slimhill.png"),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(7),
-                      color: Color.fromARGB(255, 183, 228, 199),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 2,
-                          offset: Offset(1, 2), // changes position of shadow
-                        ),
-                      ],
-                    ),
+              image: DecorationImage(
+                image: AssetImage("assets/images/slimhill.png"),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(7),
+              color: Color.fromARGB(255, 183, 228, 199),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 2,
+                  offset: Offset(1, 2), // changes position of shadow
+                ),
+              ],
+            ),
             width: 400,
             child: Column(
               children: [
@@ -106,9 +104,8 @@ class _GroupCardState extends State<GroupCard> {
                         children: [
                           TextButton(
                             onPressed: () async {
-                              await LeaveGroup(
-                                  AuthService().auth.currentUser!,
-                                  widget.group["name"]);
+                              await LeaveGroup(AuthService().auth.currentUser!,
+                                  widget.group["code"]);
                               setState(() {});
                               return;
                             },
@@ -139,8 +136,8 @@ class _GroupCardState extends State<GroupCard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10.0, right: 10.0, bottom: 5),
+                  padding:
+                      const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -171,8 +168,7 @@ class _GroupCardState extends State<GroupCard> {
                                         .collection("recipes")
                                         .snapshots(),
                                     builder: (context,
-                                        AsyncSnapshot<QuerySnapshot>
-                                            snapshot) {
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
                                       if (snapshot.hasData) {
                                         return Text(
                                             snapshot.data!.docs.length
@@ -192,8 +188,8 @@ class _GroupCardState extends State<GroupCard> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserList(
-                                      users: widget.group["members"])),
+                                  builder: (context) =>
+                                      UserList(users: widget.group["members"])),
                             );
                           },
                           child: Container(
@@ -222,8 +218,8 @@ class _GroupCardState extends State<GroupCard> {
                                         .toString(),
                                     style: const TextStyle(
                                       fontSize: 14,
-                                      color: const Color.fromARGB(
-                                          255, 8, 28, 21),
+                                      color:
+                                          const Color.fromARGB(255, 8, 28, 21),
                                     ),
                                   ),
                                   const WidgetSpan(
@@ -284,8 +280,8 @@ class _GroupCardState extends State<GroupCard> {
                               });
                         },
                         style: ButtonStyle(
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                                 side: const BorderSide(
