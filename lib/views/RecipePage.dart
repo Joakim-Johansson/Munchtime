@@ -47,19 +47,15 @@ class _RecipesState extends State<RecipePage> {
                     onTap: () {
                       showDialog(
                           context: context,
-                          builder: (BuildContext context) => FutureBuilder(
-                              future: FirebaseFirestore.instance
-                                  .collection("Users")
-                                  .doc(AuthService().auth.currentUser?.uid)
-                                  .get(),
+                          builder: (BuildContext context) => StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection("groups").where("members", arrayContains: AuthService().auth.currentUser?.uid).snapshots(),
                               builder: (context,
-                                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (snapshot.hasData) {
-                                  Map<String, dynamic> map = snapshot.data!
-                                      .data() as Map<String, dynamic>;
                                   return SimpleDialog(
                                     title: Text('Share to group'),
-                                    children: map["groups"]!
+                                    children: snapshot.data!.docs
                                         .map<Widget>(
                                             (key) => SimpleDialogOption(
                                                 onPressed: () async {
@@ -68,7 +64,7 @@ class _RecipesState extends State<RecipePage> {
                                                       await FirebaseFirestore
                                                           .instance
                                                           .collection("groups")
-                                                          .doc(key)
+                                                          .doc(key.id)
                                                           .collection(
                                                               "recipes");
 
@@ -94,7 +90,7 @@ class _RecipesState extends State<RecipePage> {
                                                     await FirebaseFirestore
                                                         .instance
                                                         .collection("groups")
-                                                        .doc(key)
+                                                        .doc(key.id)
                                                         .collection("recipes")
                                                         .doc(widget
                                                             .recipe["name"])
@@ -116,7 +112,7 @@ class _RecipesState extends State<RecipePage> {
 
                                                   Navigator.pop(context);
                                                 },
-                                                child: Text(key.toString())))
+                                                child: Text(key["name"])))
                                         .toList(),
                                     elevation: 10,
                                     //backgroundColor: Colors.green,
