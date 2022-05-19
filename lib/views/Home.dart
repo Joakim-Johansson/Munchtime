@@ -40,31 +40,33 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            constraints: const BoxConstraints.expand(),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/hills3.png"),
-                    fit: BoxFit.cover)),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Welcome to Munch!',
-                  style: TextStyle(
-                    color: Theme.of(context).focusColor,
-                    fontFamily: 'Pattaya',
-                    fontSize: 80,
+    return SafeArea(
+      child: Scaffold(
+          body: Container(
+              constraints: const BoxConstraints.expand(),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/hills3.png"),
+                      fit: BoxFit.cover)),
+              child:
+                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Welcome to Munch!',
+                    style: TextStyle(
+                      color: Theme.of(context).focusColor,
+                      fontFamily: 'Pattaya',
+                      fontSize: 80,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: _buildWidget(context),
-              ),
-            ])));
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: _buildWidget(context),
+                ),
+              ]))),
+    );
   }
 
   Widget _buildWidget(BuildContext context) {
