@@ -103,12 +103,31 @@ class _GroupCardState extends State<GroupCard> {
                       Column(
                         children: [
                           TextButton(
-                            onPressed: () async {
-                              await LeaveGroup(AuthService().auth.currentUser!,
-                                  widget.group["code"]);
-                              setState(() {});
-                              return;
-                            },
+                            onPressed: () => showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      title: Text("Are you sure?\n Leave " +
+                                          widget.group["name"]),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () async {
+                                              Navigator.of(context).pop();
+                                              await LeaveGroup(
+                                                  AuthService()
+                                                      .auth
+                                                      .currentUser!,
+                                                  widget.group["code"]);
+                                              setState(() {});
+                                              return;
+                                            },
+                                            child: const Text("Yes")),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text("No"))
+                                      ],
+                                    )),
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(

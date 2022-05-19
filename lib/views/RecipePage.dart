@@ -49,7 +49,11 @@ class _RecipesState extends State<RecipePage> {
                           context: context,
                           builder: (BuildContext context) => StreamBuilder(
                               stream: FirebaseFirestore.instance
-                                  .collection("groups").where("members", arrayContains: AuthService().auth.currentUser?.uid).snapshots(),
+                                  .collection("groups")
+                                  .where("members",
+                                      arrayContains:
+                                          AuthService().auth.currentUser?.uid)
+                                  .snapshots(),
                               builder: (context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (snapshot.hasData) {
@@ -185,9 +189,7 @@ class _RecipesState extends State<RecipePage> {
       return <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+          child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: IconButton(
@@ -203,13 +205,30 @@ class _RecipesState extends State<RecipePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
               child: IconButton(
-                icon: const Icon(
-                  FontAwesomeIcons.trash,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  size: 23,
-                ),
-                onPressed: deleteRecipe,
-              ),
+                  icon: const Icon(
+                    FontAwesomeIcons.trash,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    size: 23,
+                  ),
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: Text("Are you sure?\n Delete " +
+                                widget.recipe["name"]),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    deleteRecipe();
+                                  },
+                                  child: const Text("No")),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Yes"))
+                            ],
+                          ))),
             )
           ]),
         )

@@ -606,18 +606,13 @@ class _CreateRecipeState extends State<CreateRecipe> {
     }
 
     if (response.statusCode == 200 && !response.data.containsKey("Error")) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                title: const Text("Recipe Created!"),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        jumpToRecipeList(context);
-                      },
-                      child: const Text("Great!"))
-                ],
-              ));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Succesfully created recipe!",
+            style: TextStyle(color: Colors.white),
+          )));
+      Navigator.of(context).pop();
     } else if (response.data.containsKey("Error")) {
       showDialog(
           context: context,
